@@ -1,0 +1,67 @@
+---
+title: "How to Get Meeting Notes Using Local Whisper AI"
+description: "Whisper is OpenAI's open-source speech recognition model. Here's how to use it locally to transcribe meetings — without sending audio to the cloud."
+pubDate: "2026-03-06"
+keywords: ["local whisper meeting notes", "whisper ai transcription", "offline meeting transcription"]
+---
+
+Whisper is OpenAI's speech recognition model, released as open source in 2022. It's remarkably accurate — competitive with commercial transcription APIs — and it runs entirely on your own hardware. That makes it a compelling option for anyone who wants meeting transcription without cloud audio.
+
+Here's how it works, and how you can use it today.
+
+## What is Whisper?
+
+Whisper is a neural network trained on 680,000 hours of multilingual audio. OpenAI released the model weights publicly, which means anyone can run it without paying for API access or sending audio to OpenAI's servers.
+
+The catch: the original Python implementation is slow on CPU, and requires a Python environment to set up. Not ideal for a tool you'd use every day.
+
+## whisper.cpp: Whisper for the real world
+
+[whisper.cpp](https://github.com/ggerganov/whisper.cpp) is a C++ port of Whisper by Georgi Gerganov. It's significantly faster than the Python original, supports Apple Silicon acceleration via Metal, and can run on NVIDIA and AMD GPUs too.
+
+More importantly, it compiles to a standalone binary. No Python, no conda environments, no dependency management. You download the binary, download a model file, and run it.
+
+whisper.cpp supports all of Whisper's model sizes — from `tiny` (fast, lower accuracy) to `large-v3` (slow, highest accuracy). For meeting transcription, `medium` or `large` typically gives the best results.
+
+## The problem with running it yourself
+
+The technical setup is manageable for developers, but it's friction. You need to:
+
+1. Download and compile whisper.cpp (or find a pre-built binary)
+2. Download the model weights (~1.5GB for `large-v3`)
+3. Record your meeting as a WAV file
+4. Run the transcription manually after each meeting
+5. Do something useful with the raw transcript output
+
+For a tool you'd use several times a day, this pipeline breaks down quickly.
+
+## How Harknotes makes this practical
+
+[Harknotes](https://loosewire.dev/harknotes) bundles whisper.cpp as a compiled binary and handles the full pipeline for you:
+
+1. **Recording** — click record in the menu bar, or let it auto-detect when a meeting app opens
+2. **Capture** — mic and system audio are captured as separate streams (important for speaker separation)
+3. **Transcription** — when you stop, whisper.cpp runs on the audio locally, with no internet required
+4. **Notes** — the transcript is structured into a summary, action items, decisions, and full text, then saved as a Markdown file
+
+The Whisper model is downloaded once on first run. After that, transcription is fully offline.
+
+## Accuracy and model selection
+
+Harknotes uses `large-v3` by default, which gives the best accuracy for English and performs well across many other languages. You can switch to a smaller model if you're on older hardware or prefer faster processing.
+
+For most meeting audio — two to eight speakers, typical background noise — `large-v3` produces transcripts that are accurate enough to be genuinely useful without editing.
+
+## Speaker identification
+
+Raw Whisper output is a single stream of text. Harknotes adds speaker diarisation using a local model called tinydiarize, which separates your microphone input (labelled "You") from system audio (other participants). You can rename speakers in the app after the meeting.
+
+It's not perfect — particularly when multiple people talk simultaneously — but it's accurate enough to make the transcript significantly more useful than a wall of undifferentiated text.
+
+## What goes to the cloud
+
+Transcription is entirely local. The only thing Harknotes sends externally is the completed text transcript, which is used to generate the AI summary via GPT-4o mini. No audio, no recording, no raw data.
+
+If you prefer, you can use the local transcript without generating an AI summary at all — it's saved to your chosen Markdown folder either way.
+
+[Download Harknotes →](https://loosewire.dev/harknotes#download)

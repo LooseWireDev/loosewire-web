@@ -1,0 +1,52 @@
+---
+title: "Meeting Transcription Without a Bot Joining Your Call"
+description: "Most meeting transcription tools send a bot into your meeting. Here's why that's a problem — and how to transcribe meetings without anyone knowing."
+pubDate: "2026-03-06"
+keywords: ["meeting transcription without bot", "private meeting transcription", "no bot meeting recorder"]
+---
+
+If you've used Otter.ai, Fireflies, or tl;dv, you'll have seen it: a bot account joins your call, sits in the participant list, and records everything. Everyone in the meeting can see it. And increasingly, everyone finds it awkward.
+
+There's a better way.
+
+## Why bots are a problem
+
+Meeting bots work by joining your call as a participant and capturing the audio stream from inside the meeting. This creates several issues:
+
+**Visibility.** The bot is visible to all participants. In client calls, this can make people uncomfortable or raise objections. In sensitive discussions — HR, legal, strategic — a visible recording indicator changes how people talk.
+
+**Consent.** In many jurisdictions, all parties must consent to being recorded. A bot makes the recording obvious, but it doesn't solve the legal question of whether everyone has properly consented. And if participants are in different locations, the rules differ.
+
+**Cloud storage.** The bot uploads your audio to the vendor's servers. That audio contains everything said in your meeting — business strategy, client details, personal conversations. You're trusting a third party with all of it.
+
+**Compliance.** For teams subject to GDPR, HIPAA, or contractual NDAs, cloud-recorded audio is a genuine risk. Many enterprise security policies ban these tools outright.
+
+## How local transcription works instead
+
+The alternative is to capture audio at the operating system level — the same way a screen recorder works. Your application captures the audio output (system sound) and your microphone input as separate streams, directly on your machine.
+
+This is what [Harknotes](https://loosewire.dev/harknotes) does. It runs as a menu bar app on macOS and Linux. When you start recording, it captures both audio streams locally. No bot joins the call. No participant sees anything different. The meeting proceeds normally.
+
+When you stop recording, a local Whisper AI model transcribes the audio on your machine. This step requires no internet connection. The audio never leaves your device.
+
+## What you do send to the cloud
+
+The only data that leaves your machine is the text transcript — sent to an AI model for summarisation. No audio. No metadata. Just the words spoken in the meeting, in text form.
+
+This is a fundamentally different privacy model. A transcript of your meeting is sensitive, but it's a fraction of the risk of handing over the raw audio.
+
+## Who this matters for
+
+**Client-facing teams.** You don't want a bot in your client calls. It signals that you're recording, and some clients will object or become guarded. With local transcription, you can take notes without the optics.
+
+**Legal, HR, and finance teams.** These conversations are sensitive by nature. Cloud recording creates liability. Local transcription keeps everything on-premises.
+
+**Linux users.** Most meeting bots don't have Linux support. Local transcription apps like Harknotes do.
+
+**Privacy-conscious individuals.** Even if you're not bound by compliance requirements, you might simply not want your meeting audio sitting on someone else's servers.
+
+## Getting started
+
+Harknotes is free to download. It works on macOS 13+ and Linux. Local transcription is unlimited on all tiers — you only pay for AI-generated summaries beyond the free tier.
+
+[Download Harknotes →](https://loosewire.dev/harknotes#download)

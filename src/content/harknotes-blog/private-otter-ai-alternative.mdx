@@ -1,0 +1,58 @@
+---
+title: "The Privacy-First Alternative to Otter.ai"
+description: "Otter.ai uploads your meeting audio to the cloud and sends a bot into your calls. Here's a privacy-first alternative that transcribes locally."
+pubDate: "2026-03-06"
+keywords: ["private otter ai alternative", "otter ai privacy", "meeting transcription no cloud"]
+---
+
+Otter.ai is one of the most popular meeting transcription tools. It's polished, accurate, and integrates with the tools you already use. But it has a fundamental architectural decision that makes it unsuitable for privacy-conscious users: it uploads your meeting audio to the cloud.
+
+Here's what that means in practice, and what a privacy-first alternative looks like.
+
+## How Otter.ai works
+
+Otter works by joining your meeting as a participant. When you connect it to Google Meet, Zoom, or Teams, an "Otter" account shows up in your participant list. That bot records the audio from inside the meeting and streams it to Otter's servers for transcription.
+
+This means:
+- Everyone in the meeting can see you're recording
+- Your audio is processed on Otter's infrastructure
+- Otter stores your transcripts and recordings on their servers
+- You're trusting their security posture with your meeting content
+
+For casual use, this is fine. But for professional environments — particularly those dealing with clients, legal matters, sensitive HR conversations, or any regulated data — this model creates real risk.
+
+## The compliance problem
+
+GDPR requires that any processing of personal data has a lawful basis, and that data subjects are informed. Recording a meeting via a third-party cloud service involves transmitting personal data — names, voices, and the content of conversations — to that service.
+
+HIPAA prohibits sharing protected health information without a Business Associate Agreement. Cloud transcription services may or may not have a BAA available, and many don't.
+
+NDA clauses often prohibit sharing confidential information with third parties. A cloud transcription tool is, technically, a third party.
+
+None of this means Otter.ai is illegal to use. But it does mean that for many professional use cases, the legal and compliance team will say no.
+
+## What a privacy-first alternative looks like
+
+The privacy-respecting approach to meeting transcription is local audio processing: capture the audio on your machine, transcribe it on your machine, and never send the audio anywhere.
+
+This is exactly what [Harknotes](https://loosewire.dev/harknotes) does.
+
+**No bot joins your meeting.** Harknotes captures audio at the operating system level — your microphone and system audio output as separate streams. No participant account. No visible recording indicator.
+
+**Transcription runs locally.** After you stop recording, whisper.cpp — a local implementation of OpenAI's Whisper model — transcribes the audio on your hardware. No internet required for this step.
+
+**Audio never leaves your machine.** The only external request Harknotes makes is to generate the AI summary — and that sends the text transcript, not the audio.
+
+**Notes saved as Markdown.** Your meeting notes land in a folder you control, in a format you own. No vendor lock-in.
+
+## The trade-offs
+
+Otter.ai has features Harknotes doesn't: real-time transcription during the meeting, team sharing, and deep integrations with calendar and CRM tools. If those are important to you, Otter is genuinely good at them.
+
+Harknotes is optimised for a different use case: people who want high-quality, private meeting notes, saved locally, without a bot in the room. It's a tool for people to whom "where is my audio?" is not a trivial question.
+
+## Pricing
+
+Otter.ai's paid plans start at $16.99/month. Harknotes is $6/month for 50 AI summaries, with a free tier that includes 10 summaries per month. Local transcription is unlimited on all plans.
+
+[Download Harknotes free →](https://loosewire.dev/harknotes#download)
