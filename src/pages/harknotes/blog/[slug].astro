@@ -3,6 +3,10 @@
 import HarknotesLayout from '../../../layouts/HarknotesLayout.astro';
 import { getCollection } from 'astro:content';
 import { articleSchema } from '../../../lib/schema';
+import Nav from '../../../components/harknotes/Nav.astro';
+import Footer from '../../../components/harknotes/Footer.astro';
+import ArticleHeader from '../../../components/blog/ArticleHeader.astro';
+import Prose from '../../../components/blog/Prose.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('harknotes-blog');
@@ -26,34 +30,26 @@ const schema = articleSchema({
   canonicalUrl={canonicalUrl}
   schema={schema}
 >
-  <nav style="padding: 20px 32px; border-bottom: 1px solid var(--hk-border-subtle);">
-    <a href="/harknotes/blog" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← Blog</a>
-  </nav>
+  <Nav showCta={false} />
 
   <article style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
-    <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary); margin-bottom: 16px;">{post.data.pubDate}</p>
-    <h1 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 24px; line-height: 1.1;">{post.data.title}</h1>
-    <p style="font-size: 18px; color: var(--hk-text-secondary); margin-bottom: 48px; line-height: 1.6; border-bottom: 1px solid var(--hk-border-subtle); padding-bottom: 32px;">{post.data.description}</p>
+    <ArticleHeader
+      title={post.data.title}
+      date={post.data.pubDate}
+      description={post.data.description}
+      readTime={post.data.readTime}
+      tldr={post.data.tldr}
+    />
 
-    <div class="prose">
+    <Prose>
       <Content />
-    </div>
+    </Prose>
 
     <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--hk-border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <a href="/harknotes" style="font-size: 14px; color: var(--hk-mint); text-decoration: none; font-weight: 500;">Try Harknotes →</a>
       <a href="/harknotes/blog" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← All articles</a>
     </div>
   </article>
-</HarknotesLayout>
 
-<style>
-  .prose { color: var(--hk-text-secondary); font-size: 16px; line-height: 1.8; }
-  .prose h2 { font-size: 24px; font-weight: 700; color: var(--hk-text-primary); margin: 40px 0 16px; letter-spacing: -0.02em; }
-  .prose h3 { font-size: 18px; font-weight: 600; color: var(--hk-text-primary); margin: 32px 0 12px; }
-  .prose p { margin-bottom: 20px; }
-  .prose ul, .prose ol { padding-left: 24px; margin-bottom: 20px; }
-  .prose li { margin-bottom: 8px; }
-  .prose strong { color: var(--hk-text-primary); font-weight: 600; }
-  .prose a { color: var(--hk-mint); }
-  .prose code { font-family: 'Geist Mono', monospace; font-size: 13px; background: var(--hk-surface-2); padding: 2px 6px; border-radius: 4px; }
-</style>
+  <Footer />
+</HarknotesLayout>

@@ -1,15 +1,15 @@
 ---
 // src/pages/harknotes/privacy.astro
 import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
+import Nav from '../../components/harknotes/Nav.astro';
+import Footer from '../../components/harknotes/Footer.astro';
 ---
 <HarknotesLayout
   title="Harknotes Privacy — Local Audio, No Cloud Recording"
   description="How Harknotes keeps your meetings private: local whisper transcription, no audio upload, only text sent for AI summarisation."
   canonicalUrl="https://loosewire.dev/harknotes/privacy"
 >
-  <nav style="padding: 20px 32px; border-bottom: 1px solid var(--hk-border-subtle);">
-    <a href="/harknotes" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← Harknotes</a>
-  </nav>
+  <Nav showCta={false} />
   <main style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
     <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Privacy</p>
     <h1 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 24px; line-height: 1.1;">
@@ -34,7 +34,7 @@ import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
       <section>
         <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 16px; letter-spacing: -0.02em;">What leaves your machine</h2>
         <ul style="padding-left: 24px; margin-bottom: 20px;">
-          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">The text transcript</strong> — sent to our API for AI summarisation. No audio. No metadata. Just the words.</li>
+          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">The text transcript</strong> — sent to OpenAI GPT-4o mini for AI summarisation. No audio. No metadata. Just the words.</li>
           <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">Your auth token</strong> — used to verify your account and check usage limits.</li>
         </ul>
         <div style="background: var(--hk-mint-subtle); border: 1px solid rgba(61,214,140,0.2); border-radius: 12px; padding: 20px 24px; font-size: 14px;">
@@ -65,4 +65,5 @@ import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
       </a>
     </div>
   </main>
+  <Footer />
 </HarknotesLayout>
