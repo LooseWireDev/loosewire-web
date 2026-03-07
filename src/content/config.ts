@@ -8,6 +8,8 @@ const harknotsBlog = defineCollection({
     pubDate: z.string(),
     updatedDate: z.string().optional(),
     keywords: z.array(z.string()).default([]),
+    tldr: z.string().optional(),
+    readTime: z.string().optional(),
   }),
 });
 

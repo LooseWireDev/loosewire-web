@@ -3,7 +3,14 @@ title: "The Best Meeting Transcription App for Linux"
 description: "Most meeting transcription tools don't support Linux. Harknotes does — with native PulseAudio and PipeWire support, local Whisper AI, and no cloud audio."
 pubDate: "2026-03-06"
 keywords: ["meeting transcription linux", "linux meeting recorder", "whisper transcription linux"]
+tldr: "Most meeting transcription tools skip Linux entirely. Harknotes runs natively on Linux with PulseAudio and PipeWire support, local Whisper transcription, and no bot joining your calls. Available as AppImage, DEB, and RPM."
+readTime: "4 min read"
 ---
+
+import Callout from '../../components/blog/Callout.astro';
+import FeatureBox from '../../components/blog/FeatureBox.astro';
+import ComparisonBox from '../../components/blog/ComparisonBox.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
 
 Linux users get left behind by most meeting tools. Otter.ai has no Linux app. Fireflies runs as a browser bot and doesn't need one — but your audio still ends up on their servers. tl;dv requires a Chrome extension that has limited Linux support.
 
@@ -17,7 +24,9 @@ On macOS, the operating system provides a unified audio session API. Capturing b
 
 On Linux, audio is handled by PulseAudio or PipeWire, depending on your distribution. Both support loopback recording — capturing system audio output — but the configuration differs, and some distros require additional setup.
 
-Harknotes handles this automatically. It detects whether you're using PulseAudio or PipeWire and configures the capture accordingly.
+<Callout type="tip" title="Automatic audio detection">
+Harknotes detects whether you're using PulseAudio or PipeWire and configures audio capture automatically. No manual setup required.
+</Callout>
 
 ## Supported distributions
 
@@ -31,6 +40,8 @@ Harknotes is tested on:
 - **openSUSE Tumbleweed** — PipeWire
 
 AppImage, DEB, and RPM packages are available, covering the major package formats across these distributions.
+
+<SectionHeading label="Getting set up" />
 
 ## Installation
 
@@ -62,13 +73,16 @@ This works on Linux the same as on macOS — no cloud processing, no data leavin
 
 You can run whisper.cpp on Linux from the command line. If you're comfortable with that workflow, it works well.
 
-Harknotes adds the parts that make it practical for daily use:
+<FeatureBox title="What Harknotes adds over raw whisper.cpp">
+
 - Manual recording via menu bar
 - Separate mic and system audio capture configured correctly
 - Post-processing into structured notes (summary, action items, decisions)
 - Markdown output to your chosen folder
 
 It's the difference between a capable tool and a tool you'll actually use.
+
+</FeatureBox>
 
 ## Comparison with other Linux options
 
