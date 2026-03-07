@@ -9,17 +9,9 @@ import LooseWireLayout from '../layouts/LooseWireLayout.astro';
   <main style="max-width: 740px; margin: 0 auto; padding: 0 32px;">
 
     <header style="padding: 100px 0 64px; text-align: center;">
-      <!-- wordmark -->
+      <!-- wordmark — TODO: replace with correct SVG from docs/styleguides/loosewire.html -->
       <div style="margin-bottom: 48px;">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block;">
-          <rect width="48" height="48" rx="12" fill="#0e1816"/>
-          <circle cx="24" cy="24" r="8" stroke="#2e6e62" stroke-width="2" fill="none"/>
-          <circle cx="24" cy="24" r="3" fill="#2e6e62"/>
-          <line x1="24" y1="8" x2="24" y2="16" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
-          <line x1="24" y1="32" x2="24" y2="40" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
-          <line x1="8" y1="24" x2="16" y2="24" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
-          <line x1="32" y1="24" x2="40" y2="24" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+        <div style="width: 48px; height: 48px; border-radius: 12px; background: #0e1816; display: inline-block;"></div>
       </div>
       <h1 style="font-family: var(--lw-font-display); font-size: clamp(36px, 6vw, 52px); font-weight: 800; letter-spacing: -0.035em; line-height: 1; color: var(--lw-text); margin-bottom: 8px;">
         Loose <span style="color: var(--lw-pine);">Wire</span>
@@ -41,9 +33,8 @@ import LooseWireLayout from '../layouts/LooseWireLayout.astro';
          onmouseover="this.style.borderColor='var(--lw-pine)'; this.style.boxShadow='0 4px 24px rgba(46,110,98,0.1)'"
          onmouseout="this.style.borderColor='var(--lw-border)'; this.style.boxShadow='none'">
         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
-          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0e0f11; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="5" stroke="#3dd68c" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="#3dd68c"/></svg>
-          </div>
+          <!-- TODO: replace with correct Harknotes icon from docs/styleguides/harknotes.html -->
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0e0f11; flex-shrink: 0;"></div>
           <div>
             <h2 style="font-family: var(--lw-font-display); font-size: 18px; font-weight: 700; color: var(--lw-text); letter-spacing: -0.02em; margin-bottom: 2px;">Harknotes</h2>
             <span style="font-family: var(--lw-font-mono); font-size: 10px; color: var(--lw-pine); letter-spacing: 0.06em;">macOS · Linux</span>
