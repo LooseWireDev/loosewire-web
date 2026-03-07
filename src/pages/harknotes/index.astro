@@ -1,0 +1,260 @@
+---
+// src/pages/harknotes/index.astro
+import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
+import { softwareAppSchema, faqPageSchema } from '../../lib/schema';
+
+const faqItems = [
+  {
+    q: 'Does a bot join my meeting?',
+    a: 'No. Harknotes captures your system audio and microphone directly on your Mac or Linux machine. No bot, no meeting link, no recording indicator visible to other participants.',
+  },
+  {
+    q: 'Does my audio ever leave my machine?',
+    a: 'Never. Transcription runs entirely locally using whisper.cpp — a compiled binary bundled with the app. Only the text transcript is sent to the AI for summarisation.',
+  },
+  {
+    q: 'Which platforms are supported?',
+    a: 'macOS 13+ and Linux (AppImage, DEB, RPM). Windows support is on the roadmap.',
+  },
+  {
+    q: 'How does speaker identification work?',
+    a: 'Harknotes captures microphone and system audio as separate streams. Your mic is labelled "You", and other speakers are identified using tinydiarize, a local speaker diarisation model.',
+  },
+  {
+    q: 'What AI model generates the notes?',
+    a: 'GPT-4o mini via a secure proxy API. The transcript text is sent for summarisation — no audio, no personal metadata.',
+  },
+  {
+    q: 'What is the free tier?',
+    a: 'The free tier includes 10 AI note summaries per month. Recording and local transcription are unlimited on all tiers.',
+  },
+  {
+    q: 'Where are my notes saved?',
+    a: 'Notes are saved as Markdown files to a folder you choose on your machine — great for Obsidian, Notion imports, or plain file storage.',
+  },
+  {
+    q: 'Do you support auto-detection of meetings?',
+    a: 'Yes. Harknotes can watch for Google Meet, Zoom, and Teams and prompt you to start recording when detected.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    softwareAppSchema(),
+    faqPageSchema(faqItems),
+  ],
+};
+---
+<HarknotesLayout
+  title="Harknotes — Private Meeting Transcription. No Bot."
+  description="Meeting transcription that doesn't join your call. Local whisper AI, speaker labels, markdown notes. macOS & Linux."
+  schema={schema}
+>
+  <!-- HERO -->
+  <header style="background: var(--hk-bg); border-bottom: 1px solid var(--hk-border-subtle);">
+    <nav style="max-width: 1100px; margin: 0 auto; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center;">
+      <a href="/" style="font-family: 'Geist', sans-serif; font-size: 14px; color: var(--hk-text-tertiary); text-decoration: none;">loosewire.dev</a>
+      <div style="display: flex; gap: 24px; align-items: center;">
+        <a href="/harknotes/blog" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">Blog</a>
+        <a href="#pricing" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">Pricing</a>
+        <a href="#download" style="font-size: 13px; font-weight: 600; color: var(--hk-text-inverse); background: var(--hk-mint); padding: 8px 18px; border-radius: 8px; text-decoration: none;">Download</a>
+      </div>
+    </nav>
+
+    <div style="max-width: 800px; margin: 0 auto; padding: 100px 32px 120px; text-align: center;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: var(--hk-mint-subtle); border: 1px solid rgba(61,214,140,0.2); border-radius: 100px; padding: 6px 14px; margin-bottom: 40px;">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--hk-mint); display: inline-block;"></span>
+        <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.06em;">No bot. No cloud audio. Local whisper.</span>
+      </div>
+      <h1 style="font-size: clamp(36px, 6vw, 64px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; color: var(--hk-text-primary); margin-bottom: 24px;">
+        Meeting notes<br/>without the<br/><span style="color: var(--hk-mint);">privacy trade-off</span>
+      </h1>
+      <p style="font-size: clamp(16px, 2vw, 20px); color: var(--hk-text-secondary); max-width: 560px; margin: 0 auto 48px; line-height: 1.6;">
+        Harknotes transcribes your meetings locally using Whisper AI. No bot joins your call. No audio leaves your machine. You get clean, structured notes saved as Markdown.
+      </p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="#download" style="font-size: 15px; font-weight: 600; color: var(--hk-text-inverse); background: var(--hk-mint); padding: 14px 28px; border-radius: 10px; text-decoration: none;">
+          Download free
+        </a>
+        <a href="#how-it-works" style="font-size: 15px; font-weight: 500; color: var(--hk-text-secondary); background: var(--hk-surface-2); padding: 14px 28px; border-radius: 10px; text-decoration: none; border: 1px solid var(--hk-border);">
+          How it works
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PROBLEM -->
+    <section style="max-width: 900px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">The problem</p>
+      <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 20px; line-height: 1.1;">
+        Every other tool sends a bot into your meeting
+      </h2>
+      <p style="font-size: 17px; color: var(--hk-text-secondary); max-width: 600px; margin: 0 auto 56px; line-height: 1.7;">
+        Otter, Fireflies, tl;dv — they all join as a participant. Everyone can see it. Your audio is uploaded to their servers. You're locked into their ecosystem.
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; text-align: left;">
+        {[
+          { icon: '👀', title: 'Visible to everyone', desc: "A bot joining your call signals to all participants that you're recording. Awkward in client calls, problematic in sensitive discussions." },
+          { icon: '☁️', title: 'Audio sent to the cloud', desc: "Your meeting audio — containing confidential business information — is uploaded to third-party servers you don't control." },
+          { icon: '🔒', title: 'Compliance risk', desc: 'GDPR, HIPAA, NDA clauses — cloud recording creates real legal exposure. Many companies ban these tools entirely.' },
+        ].map(({ icon, title, desc }) => (
+          <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
+            <div style="font-size: 28px; margin-bottom: 12px;">{icon}</div>
+            <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">{title}</h3>
+            <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">{desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" style="background: var(--hk-surface-1); border-top: 1px solid var(--hk-border-subtle); border-bottom: 1px solid var(--hk-border-subtle);">
+      <div style="max-width: 900px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">How it works</p>
+        <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 56px; line-height: 1.1;">
+          Three steps. Everything stays local.
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; text-align: left;">
+          {[
+            { n: '01', title: 'Record', desc: 'Click record in the menu bar or let Harknotes auto-detect when Google Meet, Zoom, or Teams opens. Mic and system audio captured separately.' },
+            { n: '02', title: 'Transcribe locally', desc: 'When the meeting ends, whisper.cpp runs on your machine. No internet required. Speaker diarisation identifies who said what.' },
+            { n: '03', title: 'Get structured notes', desc: 'A clean summary, action items, decisions, and full transcript are generated and saved as Markdown to your chosen folder.' },
+          ].map(({ n, title, desc }) => (
+            <div>
+              <div style="font-family: 'Geist Mono', monospace; font-size: 36px; font-weight: 600; color: var(--hk-mint); margin-bottom: 16px; opacity: 0.4;">{n}</div>
+              <h3 style="font-size: 18px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 10px; letter-spacing: -0.02em;">{title}</h3>
+              <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.7;">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section style="max-width: 1000px; margin: 0 auto; padding: 96px 32px;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; text-align: center;">Features</p>
+      <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 56px; line-height: 1.1; text-align: center;">
+        Built for privacy-conscious teams
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+        {[
+          { title: 'No bot, no trace', desc: 'Silent capture — no recording indicator visible to other participants.' },
+          { title: 'Local Whisper AI', desc: 'whisper.cpp runs as a bundled binary. Transcription works offline.' },
+          { title: 'Speaker diarisation', desc: 'Identifies speakers from mic vs system audio. Rename them in the app.' },
+          { title: 'Markdown output', desc: 'Notes saved to any folder. Works with Obsidian, Notion imports, git.' },
+          { title: 'Auto-detect meetings', desc: 'Watches for Zoom, Meet, Teams. Prompts you to record when they start.' },
+          { title: 'macOS + Linux', desc: 'Native audio capture on both platforms. AppImage, DEB, RPM available.' },
+          { title: 'Structured notes', desc: 'Summary, action items, decisions, full transcript — every time.' },
+          { title: 'Usage control', desc: "See exactly how many summaries you've used. Hard limits, no surprise bills." },
+        ].map(({ title, desc }) => (
+          <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 12px; padding: 24px;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--hk-mint); margin-bottom: 16px;"></div>
+            <h3 style="font-size: 14px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 6px;">{title}</h3>
+            <p style="font-size: 13px; color: var(--hk-text-secondary); line-height: 1.6;">{desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" style="background: var(--hk-surface-1); border-top: 1px solid var(--hk-border-subtle); border-bottom: 1px solid var(--hk-border-subtle);">
+      <div style="max-width: 900px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Pricing</p>
+        <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 16px; line-height: 1.1;">Simple, honest pricing</h2>
+        <p style="font-size: 17px; color: var(--hk-text-secondary); margin-bottom: 56px;">Recording and local transcription are unlimited on all tiers. You pay for AI summaries.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; text-align: left;">
+          {[
+            { name: 'Free', price: '$0', period: 'forever', summaries: '10 summaries / month', features: ['Unlimited recording', 'Local transcription', 'Speaker diarisation', 'Markdown export'], highlight: false },
+            { name: 'Local', price: '$6', period: '/month', summaries: '50 summaries / month', features: ['Everything in Free', 'Priority transcription', 'Email support'], highlight: true },
+            { name: 'Pro Local', price: '$12', period: '/month', summaries: '200 summaries / month', features: ['Everything in Local', 'Longer recording limit', 'Priority support'], highlight: false },
+          ].map(({ name, price, period, summaries, features, highlight }) => (
+            <div style={`background: ${highlight ? 'var(--hk-mint-subtle)' : 'var(--hk-bg)'}; border: 1px solid ${highlight ? 'rgba(61,214,140,0.3)' : 'var(--hk-border)'}; border-radius: 16px; padding: 32px;`}>
+              <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 4px;">{name}</h3>
+              <div style="margin-bottom: 8px;">
+                <span style="font-size: 36px; font-weight: 700; color: var(--hk-text-primary); letter-spacing: -0.03em;">{price}</span>
+                <span style="font-size: 14px; color: var(--hk-text-secondary);">{period}</span>
+              </div>
+              <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); margin-bottom: 24px;">{summaries}</p>
+              <ul style="list-style: none; margin-bottom: 28px;">
+                {features.map(f => (
+                  <li style="font-size: 14px; color: var(--hk-text-secondary); padding: 5px 0; display: flex; gap: 8px; align-items: flex-start;">
+                    <span style="color: var(--hk-mint); flex-shrink: 0;">✓</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <a href="#download" style={`display: block; text-align: center; padding: 11px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; ${highlight ? 'background: var(--hk-mint); color: var(--hk-text-inverse);' : 'background: var(--hk-surface-2); color: var(--hk-text-primary); border: 1px solid var(--hk-border);'}`}>
+                Get started
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section id="download" style="max-width: 800px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Download</p>
+      <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 16px; line-height: 1.1;">
+        Get Harknotes
+      </h2>
+      <p style="font-size: 17px; color: var(--hk-text-secondary); margin-bottom: 48px;">Free to download. No account required to try it.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 24px;">
+        <a href="https://github.com/LooseWireDev/harknotes/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
+          <span>macOS</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">DMG</span>
+        </a>
+        <a href="https://github.com/LooseWireDev/harknotes/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
+          <span>Linux</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">AppImage</span>
+        </a>
+        <a href="https://github.com/LooseWireDev/harknotes/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
+          <span>Linux</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">DEB</span>
+        </a>
+        <a href="https://github.com/LooseWireDev/harknotes/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
+          <span>Linux</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">RPM</span>
+        </a>
+      </div>
+      <p style="font-size: 13px; color: var(--hk-text-tertiary);">
+        View all releases on <a href="https://github.com/LooseWireDev/harknotes/releases" style="color: var(--hk-text-secondary);">GitHub</a>
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section style="background: var(--hk-surface-1); border-top: 1px solid var(--hk-border-subtle);">
+      <div style="max-width: 720px; margin: 0 auto; padding: 96px 32px;">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; text-align: center;">FAQ</p>
+        <h2 style="font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 48px; line-height: 1.1; text-align: center;">
+          Common questions
+        </h2>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          {faqItems.map(({ q, a }) => (
+            <div style="border-bottom: 1px solid var(--hk-border-subtle); padding: 24px 0;">
+              <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 10px;">{q}</h3>
+              <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.7;">{a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="border-top: 1px solid var(--hk-border-subtle); padding: 40px 32px;">
+    <div style="max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <p style="font-size: 14px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 4px;">Harknotes</p>
+        <p style="font-size: 13px; color: var(--hk-text-tertiary);">by <a href="/" style="color: var(--hk-text-secondary); text-decoration: none;">Loose Wire LLC</a></p>
+      </div>
+      <nav style="display: flex; gap: 24px; flex-wrap: wrap;">
+        <a href="/harknotes/privacy" style="font-size: 13px; color: var(--hk-text-secondary); text-decoration: none;">Privacy</a>
+        <a href="/harknotes/linux" style="font-size: 13px; color: var(--hk-text-secondary); text-decoration: none;">Linux</a>
+        <a href="/harknotes/blog" style="font-size: 13px; color: var(--hk-text-secondary); text-decoration: none;">Blog</a>
+        <a href="/harknotes/vs/otter-ai" style="font-size: 13px; color: var(--hk-text-secondary); text-decoration: none;">vs Otter.ai</a>
+        <a href="https://github.com/LooseWireDev/harknotes" style="font-size: 13px; color: var(--hk-text-secondary); text-decoration: none;">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+
+</HarknotesLayout>
