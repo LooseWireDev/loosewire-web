@@ -1,0 +1,45 @@
+---
+// src/components/ui/Menu.astro
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+<div class:list={["menu", className]}>
+  <slot />
+</div>
+
+<style>
+  .menu {
+    background: var(--hk-surface-1, var(--lw-surface));
+    border: 1px solid var(--hk-border, var(--lw-border));
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: var(--hk-shadow-lg, 0 16px 48px rgba(0,0,0,0.14));
+    min-width: 180px;
+  }
+  .menu :global(.menu-item) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--hk-text-primary, var(--lw-text));
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+  .menu :global(.menu-item:hover) {
+    background: var(--hk-surface-2, var(--lw-surface-2));
+  }
+  .menu :global(.menu-separator) {
+    height: 1px;
+    background: var(--hk-border-subtle, var(--lw-border));
+    margin: 4px 0;
+  }
+</style>

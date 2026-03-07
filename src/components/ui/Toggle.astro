@@ -1,0 +1,61 @@
+---
+// src/components/ui/Toggle.astro
+interface Props {
+  checked?: boolean;
+  name?: string;
+  label?: string;
+  class?: string;
+}
+
+const { checked = false, name, label, class: className } = Astro.props;
+---
+<label class:list={["toggle", className]}>
+  <input type="checkbox" name={name} checked={checked} class="toggle-input" />
+  <span class="toggle-track">
+    <span class="toggle-thumb"></span>
+  </span>
+  {label && <span class="toggle-label">{label}</span>}
+</label>
+
+<style>
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .toggle-track {
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--hk-surface-3, var(--lw-surface-3));
+    position: relative;
+    transition: background 0.2s;
+  }
+  .toggle-input:checked + .toggle-track {
+    background: var(--hk-mint, var(--lw-pine));
+  }
+  .toggle-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.2s;
+  }
+  .toggle-input:checked + .toggle-track .toggle-thumb {
+    transform: translateX(16px);
+  }
+  .toggle-label {
+    font-size: 14px;
+    color: var(--hk-text-primary, var(--lw-text));
+  }
+</style>
