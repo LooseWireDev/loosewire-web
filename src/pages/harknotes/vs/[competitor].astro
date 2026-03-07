@@ -1,0 +1,58 @@
+---
+// src/pages/harknotes/vs/[competitor].astro
+import HarknotesLayout from '../../../layouts/HarknotesLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('harknotes-vs');
+  return pages.map(page => ({ params: { competitor: page.data.competitorSlug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await page.render();
+const canonicalUrl = `https://loosewire.dev/harknotes/vs/${page.data.competitorSlug}`;
+---
+<HarknotesLayout
+  title={`Harknotes vs ${page.data.competitor} — Privacy-First Alternative`}
+  description={page.data.description}
+  canonicalUrl={canonicalUrl}
+>
+  <nav style="padding: 20px 32px; border-bottom: 1px solid var(--hk-border-subtle);">
+    <a href="/harknotes" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← Harknotes</a>
+  </nav>
+
+  <article style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
+    <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Comparison</p>
+    <h1 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 24px; line-height: 1.1;">
+      Harknotes vs {page.data.competitor}
+    </h1>
+    <p style="font-size: 18px; color: var(--hk-text-secondary); margin-bottom: 48px; line-height: 1.6; border-bottom: 1px solid var(--hk-border-subtle); padding-bottom: 32px;">
+      {page.data.description}
+    </p>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <div style="margin-top: 64px; padding: 32px; background: var(--hk-mint-subtle); border: 1px solid rgba(61,214,140,0.2); border-radius: 16px; text-align: center;">
+      <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 12px;">Ready to switch?</h2>
+      <p style="font-size: 15px; color: var(--hk-text-secondary); margin-bottom: 24px;">Free tier available. No account required to try it.</p>
+      <a href="/harknotes#download" style="display: inline-block; background: var(--hk-mint); color: var(--hk-text-inverse); font-size: 15px; font-weight: 600; padding: 12px 28px; border-radius: 10px; text-decoration: none;">
+        Download Harknotes →
+      </a>
+    </div>
+  </article>
+</HarknotesLayout>
+
+<style>
+  .prose { color: var(--hk-text-secondary); font-size: 16px; line-height: 1.8; }
+  .prose h2 { font-size: 24px; font-weight: 700; color: var(--hk-text-primary); margin: 40px 0 16px; letter-spacing: -0.02em; }
+  .prose h3 { font-size: 18px; font-weight: 600; color: var(--hk-text-primary); margin: 32px 0 12px; }
+  .prose p { margin-bottom: 20px; }
+  .prose table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+  .prose th { text-align: left; font-size: 12px; font-weight: 600; color: var(--hk-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; padding: 10px 12px; border-bottom: 1px solid var(--hk-border); }
+  .prose td { padding: 12px; border-bottom: 1px solid var(--hk-border-subtle); font-size: 14px; }
+  .prose strong { color: var(--hk-text-primary); font-weight: 600; }
+  .prose ul { padding-left: 24px; margin-bottom: 20px; }
+  .prose li { margin-bottom: 8px; }
+</style>
