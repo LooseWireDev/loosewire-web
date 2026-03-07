@@ -1,17 +1,75 @@
 ---
-
+// src/pages/index.astro
+import LooseWireLayout from '../layouts/LooseWireLayout.astro';
 ---
+<LooseWireLayout
+  title="Loose Wire — Small tools, built carefully"
+  description="Loose Wire LLC builds focused software tools. Currently: Harknotes, privacy-first meeting transcription."
+>
+  <main style="max-width: 740px; margin: 0 auto; padding: 0 32px;">
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+    <header style="padding: 100px 0 64px; text-align: center;">
+      <!-- wordmark -->
+      <div style="margin-bottom: 48px;">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block;">
+          <rect width="48" height="48" rx="12" fill="#0e1816"/>
+          <circle cx="24" cy="24" r="8" stroke="#2e6e62" stroke-width="2" fill="none"/>
+          <circle cx="24" cy="24" r="3" fill="#2e6e62"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#2e6e62" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1 style="font-family: var(--lw-font-display); font-size: clamp(36px, 6vw, 52px); font-weight: 800; letter-spacing: -0.035em; line-height: 1; color: var(--lw-text); margin-bottom: 8px;">
+        Loose <span style="color: var(--lw-pine);">Wire</span>
+      </h1>
+      <p style="font-family: var(--lw-font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--lw-text-dim); text-transform: uppercase; margin-bottom: 32px;">
+        Small tools, built carefully
+      </p>
+      <p style="font-family: var(--lw-font-display); font-size: 18px; font-weight: 400; color: var(--lw-text-mid); max-width: 480px; margin: 0 auto; line-height: 1.6;">
+        We build <strong style="color: var(--lw-text); font-weight: 600;">focused software</strong> that respects your privacy and does one thing well.
+      </p>
+    </header>
+
+    <section style="padding: 0 0 80px;">
+      <p style="font-family: var(--lw-font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lw-text-dim); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--lw-border);">
+        Products
+      </p>
+
+      <a href="/harknotes" style="display: block; background: var(--lw-surface); border: 1px solid var(--lw-border); border-radius: 16px; padding: 32px; text-decoration: none; transition: border-color 0.15s, box-shadow 0.15s;"
+         onmouseover="this.style.borderColor='var(--lw-pine)'; this.style.boxShadow='0 4px 24px rgba(46,110,98,0.1)'"
+         onmouseout="this.style.borderColor='var(--lw-border)'; this.style.boxShadow='none'">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0e0f11; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="5" stroke="#3dd68c" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="#3dd68c"/></svg>
+          </div>
+          <div>
+            <h2 style="font-family: var(--lw-font-display); font-size: 18px; font-weight: 700; color: var(--lw-text); letter-spacing: -0.02em; margin-bottom: 2px;">Harknotes</h2>
+            <span style="font-family: var(--lw-font-mono); font-size: 10px; color: var(--lw-pine); letter-spacing: 0.06em;">macOS · Linux</span>
+          </div>
+        </div>
+        <p style="font-size: 15px; color: var(--lw-text-mid); line-height: 1.6; margin-bottom: 16px;">
+          Privacy-first meeting transcription. No bot joins your calls. Whisper AI runs locally — audio never leaves your machine.
+        </p>
+        <span style="font-size: 13px; color: var(--lw-pine); font-weight: 600;">Learn more →</span>
+      </a>
+    </section>
+
+    <section style="padding: 40px 0 80px; border-top: 1px solid var(--lw-border);">
+      <p style="font-family: var(--lw-font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lw-text-dim); margin-bottom: 20px;">
+        From the blog
+      </p>
+      <a href="/blog" style="font-family: var(--lw-font-display); font-size: 15px; color: var(--lw-pine); font-weight: 600; text-decoration: none;">View all articles →</a>
+    </section>
+
+  </main>
+
+  <footer style="border-top: 1px solid var(--lw-border); padding: 32px; text-align: center;">
+    <p style="font-size: 13px; color: var(--lw-text-dim);">
+      © 2026 Loose Wire LLC ·
+      <a href="/harknotes" style="color: var(--lw-text-mid); text-decoration: none;">Harknotes</a> ·
+      <a href="/blog" style="color: var(--lw-text-mid); text-decoration: none;">Blog</a>
+    </p>
+  </footer>
+</LooseWireLayout>
