@@ -1,0 +1,65 @@
+---
+// src/pages/harknotes/linux.astro
+import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
+---
+<HarknotesLayout
+  title="Harknotes for Linux — Local Meeting Transcription"
+  description="Harknotes runs natively on Linux. AppImage, DEB, and RPM packages. PulseAudio and PipeWire support. whisper.cpp transcription, no cloud."
+  canonicalUrl="https://loosewire.dev/harknotes/linux"
+>
+  <nav style="padding: 20px 32px; border-bottom: 1px solid var(--hk-border-subtle);">
+    <a href="/harknotes" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← Harknotes</a>
+  </nav>
+  <main style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
+    <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Linux</p>
+    <h1 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 24px; line-height: 1.1;">
+      Harknotes for Linux
+    </h1>
+    <p style="font-size: 18px; color: var(--hk-text-secondary); margin-bottom: 48px; line-height: 1.6; border-bottom: 1px solid var(--hk-border-subtle); padding-bottom: 32px;">
+      Native Linux support with PulseAudio and PipeWire. The only privacy-first meeting transcription tool built for Linux.
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 40px; color: var(--hk-text-secondary); font-size: 16px; line-height: 1.8;">
+
+      <section>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 20px; letter-spacing: -0.02em;">Download</h2>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          {[
+            { format: 'AppImage', desc: 'Universal — runs on any Linux distro', href: 'https://github.com/LooseWireDev/harknotes/releases/latest' },
+            { format: 'DEB', desc: 'Debian, Ubuntu, Linux Mint, Pop!_OS', href: 'https://github.com/LooseWireDev/harknotes/releases/latest' },
+            { format: 'RPM', desc: 'Fedora, RHEL, openSUSE', href: 'https://github.com/LooseWireDev/harknotes/releases/latest' },
+          ].map(({ format, desc, href }) => (
+            <a href={href} style="display: flex; align-items: center; justify-content: space-between; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 12px; padding: 20px 24px; text-decoration: none;">
+              <div>
+                <p style="font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 4px;">{format}</p>
+                <p style="font-size: 13px; color: var(--hk-text-secondary);">{desc}</p>
+              </div>
+              <span style="color: var(--hk-mint); font-size: 13px; font-weight: 600;">Download →</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 16px; letter-spacing: -0.02em;">Audio support</h2>
+        <p style="margin-bottom: 16px;">Harknotes captures audio using PulseAudio or PipeWire — whichever your system uses. Both system audio (loopback) and microphone are captured as separate streams for accurate speaker diarisation.</p>
+        <ul style="padding-left: 24px;">
+          <li style="margin-bottom: 8px;"><strong style="color: var(--hk-text-primary);">PulseAudio</strong> — supported on Ubuntu 20.04+, older Debian-based systems</li>
+          <li style="margin-bottom: 8px;"><strong style="color: var(--hk-text-primary);">PipeWire</strong> — supported on Fedora 34+, Ubuntu 22.10+, modern distros</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 16px; letter-spacing: -0.02em;">Tested distributions</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px;">
+          {['Ubuntu 22.04+', 'Fedora 39+', 'Debian 12', 'Linux Mint 21', 'Pop!_OS 22.04', 'openSUSE Tumbleweed'].map(distro => (
+            <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--hk-text-secondary);">
+              {distro}
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </main>
+</HarknotesLayout>
