@@ -1,0 +1,121 @@
+---
+// src/pages/harknotes/roadmap.astro
+import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
+import Nav from '../../components/harknotes/Nav.astro';
+import Footer from '../../components/harknotes/Footer.astro';
+import { Icon } from 'astro-icon/components';
+
+const upNext = [
+  {
+    icon: 'lucide:users',
+    title: 'Speaker diarisation',
+    desc: 'Identify who said what in your meetings. Speakers detected from mic vs system audio and labelled in your transcript.',
+  },
+  {
+    icon: 'lucide:monitor',
+    title: 'Windows support',
+    desc: 'Native Windows app with the same silent audio capture. No bot, no trace — on every platform.',
+  },
+];
+
+const later = [
+  {
+    icon: 'lucide:cloud',
+    title: 'Cloud syncing',
+    desc: 'Optionally sync your notes across devices. End-to-end encrypted, always under your control.',
+  },
+  {
+    icon: 'lucide:file-text',
+    title: 'Custom markdown templates',
+    desc: 'Design your own note templates. Control the structure, headings, and sections that matter to you.',
+  },
+  {
+    icon: 'lucide:sparkles',
+    title: 'Custom AI prompts',
+    desc: 'Tell the AI what to focus on. Tailor summaries to your role, meeting type, or workflow.',
+  },
+];
+
+const exploring = [
+  {
+    icon: 'lucide:globe',
+    title: 'Multi-language transcription',
+    desc: 'Transcribe meetings in languages beyond English. Powered by Whisper\'s multilingual models, running locally.',
+  },
+];
+---
+<HarknotesLayout
+  title="Roadmap — Harknotes"
+  description="See what's coming next to Harknotes. Speaker diarisation, Windows support, cloud sync, custom templates, and more."
+>
+  <header style="background: var(--hk-bg); border-bottom: 1px solid var(--hk-border-subtle);">
+    <Nav showCta={false} />
+    <div style="max-width: 720px; margin: 0 auto; padding: 64px 32px 80px; text-align: center;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Roadmap</p>
+      <h1 style="font-size: clamp(32px, 5vw, 52px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 16px; line-height: 1.1;">
+        What's coming to Harknotes
+      </h1>
+      <p style="font-size: 17px; color: var(--hk-text-secondary); max-width: 520px; margin: 0 auto; line-height: 1.7;">
+        Harknotes is built by an independent dev, shipping in the open. Here's what's on the workbench.
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- UP NEXT -->
+    <section style="max-width: 900px; margin: 0 auto; padding: 96px 32px 0;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Up next</p>
+      <h2 style="font-size: clamp(24px, 3.5vw, 36px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 32px; line-height: 1.1;">
+        Actively being worked on
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        {upNext.map(({ icon, title, desc }) => (
+          <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
+            <Icon name={icon} style="width: 28px; height: 28px; color: var(--hk-mint); margin-bottom: 12px;" />
+            <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">{title}</h3>
+            <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">{desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- LATER -->
+    <section style="max-width: 900px; margin: 0 auto; padding: 96px 32px 0;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Later</p>
+      <h2 style="font-size: clamp(24px, 3.5vw, 36px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 32px; line-height: 1.1;">
+        On the horizon
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        {later.map(({ icon, title, desc }) => (
+          <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
+            <Icon name={icon} style="width: 28px; height: 28px; color: var(--hk-text-secondary); margin-bottom: 12px;" />
+            <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">{title}</h3>
+            <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">{desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- EXPLORING -->
+    <section style="max-width: 900px; margin: 0 auto; padding: 96px 32px;">
+      <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Exploring</p>
+      <h2 style="font-size: clamp(24px, 3.5vw, 36px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 32px; line-height: 1.1;">
+        Ideas we're considering
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        {exploring.map(({ icon, title, desc }) => (
+          <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
+            <Icon name={icon} style="width: 28px; height: 28px; color: var(--hk-text-secondary); margin-bottom: 12px;" />
+            <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">{title}</h3>
+            <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">{desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+
+</HarknotesLayout>

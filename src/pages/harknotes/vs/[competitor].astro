@@ -5,10 +5,11 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const pages = await getCollection('harknotes-vs');
-  return pages.map(page => ({ params: { competitor: page.data.competitorSlug }, props: { page } }));
+  return pages.map(page => ({ params: { competitor: page.data.competitorSlug }, props: { page, allPages: pages } }));
 }
 
-const { page } = Astro.props;
+const { page, allPages } = Astro.props;
+const otherComparisons = allPages.filter(p => p.data.competitorSlug !== page.data.competitorSlug);
 const { Content } = await page.render();
 const canonicalUrl = `https://loosewire.dev/harknotes/vs/${page.data.competitorSlug}`;
 ---
@@ -16,6 +17,11 @@ const canonicalUrl = `https://loosewire.dev/harknotes/vs/${page.data.competitorS
   title={`Harknotes vs ${page.data.competitor} — Privacy-First Alternative`}
   description={page.data.description}
   canonicalUrl={canonicalUrl}
+  ogType="article"
+  articleMeta={{
+    publishedTime: page.data.pubDate,
+    section: 'Comparison',
+  }}
 >
   <nav style="padding: 20px 32px; border-bottom: 1px solid var(--hk-border-subtle);">
     <a href="/harknotes" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← Harknotes</a>
@@ -40,6 +46,23 @@ const canonicalUrl = `https://loosewire.dev/harknotes/vs/${page.data.competitorS
       <a href="/harknotes#download" style="display: inline-block; background: var(--hk-mint); color: var(--hk-text-inverse); font-size: 15px; font-weight: 600; padding: 12px 28px; border-radius: 10px; text-decoration: none;">
         Download Harknotes →
       </a>
+    </div>
+
+    {otherComparisons.length > 0 && (
+      <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--hk-border-subtle);">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">More comparisons</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          {otherComparisons.map(comp => (
+            <a href={`/harknotes/vs/${comp.data.competitorSlug}`} style="font-size: 15px; color: var(--hk-mint); text-decoration: none; font-weight: 500;">
+              Harknotes vs {comp.data.competitor} →
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div style="margin-top: 24px;">
+      <a href="/harknotes/blog" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">Read the Harknotes blog →</a>
     </div>
   </article>
 </HarknotesLayout>

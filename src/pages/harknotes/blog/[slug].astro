@@ -10,10 +10,14 @@ import Prose from '../../../components/blog/Prose.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('harknotes-blog');
-  return posts.map(post => ({ params: { slug: post.slug }, props: { post } }));
+  return posts.map(post => ({ params: { slug: post.slug }, props: { post, allPosts: posts } }));
 }
 
-const { post } = Astro.props;
+const { post, allPosts } = Astro.props;
+const otherPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
+  .slice(0, 3);
 const { Content } = await post.render();
 const canonicalUrl = `https://loosewire.dev/harknotes/blog/${post.slug}`;
 const schema = articleSchema({
@@ -28,7 +32,13 @@ const schema = articleSchema({
   title={`${post.data.title} — Harknotes Blog`}
   description={post.data.description}
   canonicalUrl={canonicalUrl}
+  ogType="article"
   schema={schema}
+  articleMeta={{
+    publishedTime: post.data.pubDate,
+    modifiedTime: post.data.updatedDate,
+    section: 'Meeting Transcription',
+  }}
 >
   <Nav showCta={false} />
 
@@ -49,6 +59,20 @@ const schema = articleSchema({
       <a href="/harknotes" style="font-size: 14px; color: var(--hk-mint); text-decoration: none; font-weight: 500;">Try Harknotes →</a>
       <a href="/harknotes/blog" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← All articles</a>
     </div>
+
+    {otherPosts.length > 0 && (
+      <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--hk-border-subtle);">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">More articles</p>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          {otherPosts.map(p => (
+            <a href={`/harknotes/blog/${p.slug}`} style="text-decoration: none;">
+              <p style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 4px;">{p.data.title}</p>
+              <p style="font-size: 13px; color: var(--hk-text-secondary); line-height: 1.5;">{p.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
   </article>
 
   <Footer />
