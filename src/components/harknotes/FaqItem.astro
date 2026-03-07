@@ -1,0 +1,49 @@
+---
+// src/components/harknotes/FaqItem.astro
+interface Props {
+  question: string;
+  answer: string;
+}
+
+const { question, answer } = Astro.props;
+---
+<details class="hk-faq-item">
+  <summary class="hk-faq-question">{question}</summary>
+  <p class="hk-faq-answer">{answer}</p>
+</details>
+
+<style>
+  .hk-faq-item {
+    border-bottom: 1px solid var(--hk-border-subtle);
+    padding: 24px 0;
+  }
+  .hk-faq-question {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--hk-text-primary);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .hk-faq-question::after {
+    content: '+';
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--hk-text-tertiary);
+    transition: transform 0.2s;
+  }
+  .hk-faq-item[open] .hk-faq-question::after {
+    content: '-';
+  }
+  .hk-faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .hk-faq-answer {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+// src/components/harknotes/Logo.astro
+interface Props {
+  size?: number;
+  class?: string;
+}
+
+const { size = 30, class: className } = Astro.props;
+const uid = `hk-${Math.random().toString(36).slice(2, 8)}`;
+---
+<svg width={size} height={size} viewBox="0 0 512 512" fill="none" class={className} aria-label="Harknotes logo">
+  <defs>
+    <linearGradient id={`${uid}-bg`} x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#0d2520"/>
+      <stop offset="100%" stop-color="#061210"/>
+    </linearGradient>
+    <radialGradient id={`${uid}-gl`} cx="50%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="#1a4a3a" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill={`url(#${uid}-bg)`}/>
+  <rect width="512" height="512" rx="112" fill={`url(#${uid}-gl)`}/>
+  <rect x="98"  y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+  <rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+  <rect x="98"  y="232" width="316" height="48"  rx="24" fill="#3dd68c"/>
+  <rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+  <rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+</svg>

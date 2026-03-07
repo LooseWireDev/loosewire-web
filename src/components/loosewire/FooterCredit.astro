@@ -1,0 +1,42 @@
+---
+// src/components/loosewire/FooterCredit.astro
+import Logo from './Logo.astro';
+
+interface Props {
+  variant?: 'light' | 'dark';
+}
+
+const { variant = 'light' } = Astro.props;
+---
+<div class:list={["lw-footer-credit", `lw-footer-credit--${variant}`]}>
+  <div class="lw-footer-credit-left">
+    <Logo size={14} />
+    <span class="lw-footer-credit-text">&copy; {new Date().getFullYear()} Loose Wire LLC</span>
+  </div>
+  <slot />
+</div>
+
+<style>
+  .lw-footer-credit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .lw-footer-credit-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lw-footer-credit-text {
+    font-family: var(--lw-font-mono);
+    font-size: 11px;
+  }
+  .lw-footer-credit--light .lw-footer-credit-text {
+    color: var(--lw-text-dim, #94aaa4);
+  }
+  .lw-footer-credit--dark .lw-footer-credit-text {
+    color: #4e5762;
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+// src/components/harknotes/ComparisonTable.astro
+interface Props {
+  competitor: string;
+  rows: { label: string; harknotes: string; competitor: string }[];
+}
+
+const { competitor, rows } = Astro.props;
+---
+<div class="hk-comparison-table">
+  <div class="hk-comparison-header">
+    <span></span>
+    <span>Harknotes</span>
+    <span>{competitor}</span>
+  </div>
+  {rows.map(({ label, harknotes, competitor: comp }) => (
+    <div class="hk-comparison-row">
+      <span class="hk-comparison-label">{label}</span>
+      <span class="hk-comparison-value">{harknotes}</span>
+      <span class="hk-comparison-value">{comp}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .hk-comparison-table {
+    border: 1px solid var(--hk-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .hk-comparison-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--hk-surface-2);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--hk-border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--hk-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: 'Geist Mono', monospace;
+  }
+  .hk-comparison-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--hk-border-subtle);
+    font-size: 14px;
+  }
+  .hk-comparison-row:last-child {
+    border-bottom: none;
+  }
+  .hk-comparison-label {
+    color: var(--hk-text-primary);
+    font-weight: 500;
+  }
+  .hk-comparison-value {
+    color: var(--hk-text-secondary);
+  }
+</style>

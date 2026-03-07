@@ -1,0 +1,33 @@
+---
+// src/components/harknotes/Wordmark.astro
+import Logo from './Logo.astro';
+
+interface Props {
+  logoSize?: number;
+  fontSize?: string;
+  class?: string;
+}
+
+const { logoSize = 30, fontSize = '16px', class: className } = Astro.props;
+---
+<div class:list={["hk-wordmark", className]}>
+  <Logo size={logoSize} />
+  <span class="hk-wordmark-text" style={`font-size: ${fontSize};`}>hark<span class="accent">notes</span></span>
+</div>
+
+<style>
+  .hk-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hk-wordmark-text {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--hk-text-primary);
+  }
+  .hk-wordmark-text .accent {
+    color: var(--hk-mint);
+  }
+</style>
