@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harknotes — Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════════
+   THEME TOKENS — dark (default)
+   ═══════════════════════════════════════════════════════ */
+:root,
+[data-theme="dark"] {
+  --mint:          #3dd68c;
+  --mint-dark:     #28b874;
+  --mint-forest:   #1e9460;
+  --mint-subtle:   rgba(61,214,140,0.12);
+  --mint-glow:     rgba(61,214,140,0.07);
+
+  --bg:            #0e0f11;
+  --bg-elevated:   #131517;
+  --surface-1:     #181a1d;
+  --surface-2:     #1e2124;
+  --surface-3:     #252a2e;
+
+  --border-subtle: rgba(255,255,255,0.05);
+  --border:        rgba(255,255,255,0.09);
+  --border-strong: rgba(255,255,255,0.16);
+
+  --text-primary:   #f0f2f4;
+  --text-secondary: #8c939e;
+  --text-tertiary:  #4e5762;
+  --text-inverse:   #0a1a14;
+
+  --record-red:      #ef4444;
+  --record-red-dim:  rgba(239,68,68,0.12);
+  --warning:         #f59e0b;
+  --warning-dim:     rgba(245,158,11,0.12);
+  --error:           #f87171;
+
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.6);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-mint: 0 0 24px rgba(61,214,140,0.18), 0 4px 12px rgba(0,0,0,0.4);
+
+  /* Demo canvas */
+  --demo-bg:     #111316;
+  --demo-border: rgba(255,255,255,0.07);
+
+  /* Checker pattern for transparency demos */
+  --checker-a: #1a1c1f;
+  --checker-b: #141618;
+
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════════════
+   THEME TOKENS — light
+   ═══════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  --mint:          #1c9e62;
+  --mint-dark:     #158050;
+  --mint-forest:   #0f6640;
+  --mint-subtle:   rgba(28,158,98,0.1);
+  --mint-glow:     rgba(28,158,98,0.06);
+
+  --bg:            #f5f6f8;
+  --bg-elevated:   #ffffff;
+  --surface-1:     #ffffff;
+  --surface-2:     #f0f2f5;
+  --surface-3:     #e8eaee;
+
+  --border-subtle: rgba(0,0,0,0.06);
+  --border:        rgba(0,0,0,0.1);
+  --border-strong: rgba(0,0,0,0.18);
+
+  --text-primary:   #0f1117;
+  --text-secondary: #4a5264;
+  --text-tertiary:  #9199a8;
+  --text-inverse:   #ffffff;
+
+  --record-red:      #dc2626;
+  --record-red-dim:  rgba(220,38,38,0.08);
+  --warning:         #d97706;
+  --warning-dim:     rgba(217,119,6,0.1);
+  --error:           #ef4444;
+
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-mint: 0 0 20px rgba(28,158,98,0.15), 0 4px 12px rgba(0,0,0,0.08);
+
+  --demo-bg:     #eef0f4;
+  --demo-border: rgba(0,0,0,0.08);
+
+  --checker-a: #e8eaee;
+  --checker-b: #dfe1e6;
+
+  color-scheme: light;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BASE RESET
+   ═══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Geist', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT — fixed sidebar + scrolling main
+   ═══════════════════════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 256px;
+  height: 100vh;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.sidebar-top {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.sidebar-wordmark {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+}
+.sidebar-wordmark .accent { color: var(--mint); }
+
+.sidebar-version {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.04em;
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0 24px;
+}
+
+.nav-group {
+  margin-bottom: 4px;
+}
+
+.nav-group-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: 16px 24px 6px;
+  display: block;
+}
+
+.nav-link {
+  display: block;
+  padding: 7px 24px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.12s, background 0.12s, border-color 0.12s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--surface-1);
+}
+
+.nav-link.active {
+  color: var(--mint);
+  border-left-color: var(--mint);
+  background: var(--mint-glow);
+  font-weight: 500;
+}
+
+/* Theme switcher in sidebar */
+.theme-switcher {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 6px;
+}
+
+.theme-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-family: 'Geist', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.theme-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+  background: var(--surface-1);
+}
+
+.theme-btn.active {
+  background: var(--mint-subtle);
+  border-color: rgba(61,214,140,0.25);
+  color: var(--mint);
+}
+
+[data-theme="light"] .theme-btn.active {
+  border-color: rgba(28,158,98,0.3);
+}
+
+/* ── Main content ── */
+.main {
+  margin-left: 256px;
+  flex: 1;
+  min-width: 0;
+}
+
+.content {
+  max-width: 860px;
+  padding: 72px 64px 96px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION STRUCTURE
+   ═══════════════════════════════════════════════════════ */
+.section {
+  margin-bottom: 96px;
+  scroll-margin-top: 40px;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.section-title {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.section-desc {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-bottom: 48px;
+}
+
+.subsection {
+  margin-bottom: 56px;
+}
+
+.subsection-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ═══════════════════════════════════════════════════════
+   DEMO CANVAS
+   ═══════════════════════════════════════════════════════ */
+.demo {
+  background: var(--demo-bg);
+  border: 1px solid var(--demo-border);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 8px;
+}
+
+.demo-sm { padding: 24px 32px; }
+.demo-lg { padding: 56px; }
+
+.demo-checker {
+  background-image:
+    linear-gradient(45deg, var(--checker-a) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--checker-a) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--checker-a) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--checker-a) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  background-color: var(--checker-b);
+}
+
+.demo-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+}
+
+/* layout helpers */
+.row       { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.row-mid   { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.row-end   { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+.col       { display: flex; flex-direction: column; gap: 16px; }
+.col-sm    { display: flex; flex-direction: column; gap: 10px; }
+.col-lg    { display: flex; flex-direction: column; gap: 24px; }
+.grid-2    { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3    { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid-4    { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+
+
+/* ═══════════════════════════════════════════════════════
+   TOKEN TABLE
+   ═══════════════════════════════════════════════════════ */
+.token-table { width: 100%; border-collapse: collapse; }
+.token-table th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-align: left;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-1);
+}
+.token-table th:first-child { border-radius: 10px 0 0 0; }
+.token-table th:last-child  { border-radius: 0 10px 0 0; }
+.token-table td {
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+.token-table tr:last-child td { border-bottom: none; }
+.token-table tr:hover td { background: var(--surface-1); }
+.token-table .t-name  { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--mint); }
+.token-table .t-value { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--text-tertiary); }
+.token-table .t-swatch {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  display: inline-block;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   COLOR CARDS
+   ═══════════════════════════════════════════════════════ */
+.color-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+.color-swatch { height: 80px; }
+.color-info { padding: 12px 14px; background: var(--surface-1); }
+.color-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.color-token { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--mint); margin-top: 2px; display: block; }
+.color-hex  { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-tertiary); }
+.color-desc { font-size: 11px; color: var(--text-tertiary); margin-top: 6px; line-height: 1.4; }
+
+
+/* ═══════════════════════════════════════════════════════
+   TYPOGRAPHY SPECIMENS
+   ═══════════════════════════════════════════════════════ */
+.type-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0 32px;
+  align-items: baseline;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.type-row:last-child { border-bottom: none; }
+.type-meta-col { text-align: right; }
+.type-token-name { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--mint); display: block; }
+.type-spec       { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--text-tertiary); display: block; margin-top: 3px; }
+
+
+/* ═══════════════════════════════════════════════════════
+   SPACING ROWS
+   ═══════════════════════════════════════════════════════ */
+.space-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 200px;
+  gap: 0 24px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.space-row:last-child { border-bottom: none; }
+.space-token { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--mint); }
+.space-bar-wrap { display: flex; align-items: center; }
+.space-bar {
+  height: 20px;
+  background: var(--mint-subtle);
+  border-left: 2px solid var(--mint);
+  border-radius: 0 4px 4px 0;
+}
+.space-desc { font-size: 12px; color: var(--text-tertiary); text-align: right; }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — BUTTONS
+   ═══════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-family: 'Geist', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0 16px;
+  height: 34px;
+  white-space: nowrap;
+  transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  text-decoration: none;
+}
+.btn-sm { height: 28px; padding: 0 12px; font-size: 12px; border-radius: 6px; }
+.btn-lg { height: 42px; padding: 0 22px; font-size: 14px; border-radius: 10px; }
+
+.btn-primary {
+  background: var(--mint);
+  color: var(--text-inverse);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 1px 3px rgba(0,0,0,0.3);
+}
+.btn-primary:hover  { filter: brightness(1.08); transform: translateY(-1px); box-shadow: var(--shadow-mint); }
+.btn-primary:active { filter: brightness(0.95); transform: translateY(0); }
+
+.btn-secondary {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover  { background: var(--surface-3); border-color: var(--border-strong); }
+.btn-secondary:active { background: var(--surface-1); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.btn-ghost:hover  { background: var(--surface-1); color: var(--text-primary); }
+.btn-ghost:active { background: var(--surface-2); }
+
+.btn-danger {
+  background: var(--record-red-dim);
+  color: var(--record-red);
+  border: 1px solid rgba(239,68,68,0.2);
+}
+.btn-danger:hover { background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.35); }
+
+.btn-record {
+  background: var(--record-red);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.btn-record:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 0 20px rgba(239,68,68,0.4), 0 4px 12px rgba(0,0,0,0.3); }
+.btn-record:active { filter: brightness(0.95); transform: translateY(0); }
+.btn-record.is-recording { animation: btn-record-pulse 2s ease-in-out infinite; }
+
+@keyframes btn-record-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+}
+
+.btn:disabled { opacity: 0.36; pointer-events: none; }
+
+.btn-icon {
+  width: 34px; height: 34px; padding: 0;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.btn-icon:hover { background: var(--surface-3); color: var(--text-primary); border-color: var(--border-strong); }
+.btn-icon.btn-sm { width: 28px; height: 28px; border-radius: 6px; }
+.btn-icon.btn-lg { width: 42px; height: 42px; border-radius: 10px; }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — INPUTS
+   ═══════════════════════════════════════════════════════ */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); letter-spacing: -0.01em; }
+.field-hint { font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
+.field-hint.is-error { color: var(--record-red); }
+
+.input {
+  height: 38px;
+  padding: 0 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.input::placeholder { color: var(--text-tertiary); }
+.input:hover { border-color: var(--border-strong); }
+.input:focus { border-color: var(--mint-dark); box-shadow: 0 0 0 3px var(--mint-subtle); }
+.input:disabled { opacity: 0.38; cursor: not-allowed; }
+.input.is-error { border-color: var(--record-red) !important; }
+.input.is-error:focus { box-shadow: 0 0 0 3px var(--record-red-dim) !important; }
+
+.input-icon-wrap { position: relative; }
+.input-icon-wrap .input { padding-left: 36px; }
+.input-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; }
+
+textarea.input { height: auto; min-height: 88px; padding: 10px 12px; resize: vertical; line-height: 1.5; }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — BADGE
+   ═══════════════════════════════════════════════════════ */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 0 8px; height: 22px;
+  border-radius: 9999px;
+  font-size: 12px; font-weight: 500;
+  white-space: nowrap;
+}
+.badge-mint    { background: var(--mint-subtle); color: var(--mint); border: 1px solid rgba(61,214,140,0.2); }
+.badge-red     { background: var(--record-red-dim); color: var(--record-red); border: 1px solid rgba(239,68,68,0.2); }
+.badge-warning { background: var(--warning-dim); color: var(--warning); border: 1px solid rgba(245,158,11,0.2); }
+.badge-neutral { background: var(--surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.badge-dot.pulse { animation: dot-pulse 1.6s ease-in-out infinite; }
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.75); }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — TOGGLE
+   ═══════════════════════════════════════════════════════ */
+.toggle { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+.toggle-track {
+  position: relative; width: 38px; height: 22px;
+  background: var(--surface-3); border: 1px solid var(--border);
+  border-radius: 11px;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--text-tertiary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), background 0.2s;
+}
+.toggle.on .toggle-track { background: var(--mint-subtle); border-color: rgba(61,214,140,0.3); }
+.toggle.on .toggle-thumb { transform: translateX(16px); background: var(--mint); }
+.toggle-label { font-size: 14px; color: var(--text-secondary); }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — CARDS
+   ═══════════════════════════════════════════════════════ */
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+.card-interactive {
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s cubic-bezier(0.16,1,0.3,1);
+}
+.card-interactive:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — MEETING CARD
+   ═══════════════════════════════════════════════════════ */
+.meeting-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.15s;
+}
+.meeting-card:hover { background: var(--surface-2); border-color: var(--border-strong); }
+.meeting-title { font-size: 14px; font-weight: 500; letter-spacing: -0.01em; color: var(--text-primary); margin-bottom: 4px; }
+.meeting-meta  { font-size: 12px; color: var(--text-tertiary); display: flex; gap: 10px; align-items: center; }
+.meeting-meta-sep { opacity: 0.4; }
+.meeting-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — USAGE METER
+   ═══════════════════════════════════════════════════════ */
+.usage {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+.usage-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.usage-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.usage-val   { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--text-tertiary); }
+.usage-val strong { color: var(--text-primary); font-weight: 600; }
+.usage-track { height: 5px; background: var(--surface-3); border-radius: 9999px; overflow: hidden; margin-bottom: 10px; }
+.usage-fill  { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, var(--mint-dark), var(--mint)); transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
+.usage-fill.warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
+.usage-fill.danger { background: linear-gradient(90deg, var(--record-red), #f87171); }
+.usage-foot { font-size: 11px; color: var(--text-tertiary); }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — DROPDOWN MENU
+   ═══════════════════════════════════════════════════════ */
+.dropdown {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px 0;
+  min-width: 200px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.menu-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px;
+  font-size: 13px; color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+.menu-item:hover { background: var(--surface-1); color: var(--text-primary); }
+.menu-item.danger { color: var(--record-red); }
+.menu-item.danger:hover { background: var(--record-red-dim); }
+.menu-sep { height: 1px; background: var(--border-subtle); margin: 4px 0; }
+.menu-shortcut { margin-left: auto; font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--text-tertiary); }
+
+
+/* ═══════════════════════════════════════════════════════
+   COMPONENTS — TOAST
+   ═══════════════════════════════════════════════════════ */
+.toast {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  min-width: 300px; max-width: 400px;
+}
+.toast-icon { flex-shrink: 0; margin-top: 1px; }
+.toast-body { flex: 1; }
+.toast-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.toast-msg   { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+.toast-close { flex-shrink: 0; color: var(--text-tertiary); cursor: pointer; padding: 2px; }
+.toast-close:hover { color: var(--text-primary); }
+.toast.is-success { border-color: rgba(61,214,140,0.2); }
+.toast.is-success .toast-icon { color: var(--mint); }
+.toast.is-warning { border-color: rgba(245,158,11,0.2); }
+.toast.is-warning .toast-icon { color: var(--warning); }
+.toast.is-error   { border-color: rgba(239,68,68,0.2); }
+.toast.is-error   .toast-icon { color: var(--record-red); }
+
+
+/* ═══════════════════════════════════════════════════════
+   APP PATTERNS — Recording states
+   ═══════════════════════════════════════════════════════ */
+.record-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--record-red); flex-shrink: 0;
+  animation: rec-blink 1.2s ease-in-out infinite;
+}
+@keyframes rec-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+
+.waveform {
+  display: flex; align-items: center; gap: 2.5px; height: 20px;
+}
+.waveform-bar {
+  width: 2.5px; border-radius: 2px; background: var(--record-red);
+  animation: wave 1s ease-in-out infinite;
+}
+.waveform-bar:nth-child(1)  { animation-delay: 0s;     }
+.waveform-bar:nth-child(2)  { animation-delay: 0.08s;  }
+.waveform-bar:nth-child(3)  { animation-delay: 0.16s;  }
+.waveform-bar:nth-child(4)  { animation-delay: 0.04s;  }
+.waveform-bar:nth-child(5)  { animation-delay: 0.12s;  }
+.waveform-bar:nth-child(6)  { animation-delay: 0.20s;  }
+.waveform-bar:nth-child(7)  { animation-delay: 0.06s;  }
+.waveform-bar:nth-child(8)  { animation-delay: 0.14s;  }
+.waveform-bar:nth-child(9)  { animation-delay: 0.22s;  }
+.waveform-bar:nth-child(10) { animation-delay: 0.10s;  }
+@keyframes wave {
+  0%, 100% { height: 3px;  opacity: 0.4; }
+  50%       { height: 18px; opacity: 1;   }
+}
+
+.state-bar {
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.state-bar.is-recording { background: var(--record-red-dim); border-color: rgba(239,68,68,0.2); }
+.state-bar.is-done      { border-color: rgba(61,214,140,0.2); }
+.state-bar-left  { display: flex; align-items: center; gap: 10px; }
+.state-bar-label { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+.state-bar-sub   { font-size: 12px; color: var(--text-tertiary); }
+.mono-timer { font-family: 'Geist Mono', monospace; font-size: 13px; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+
+/* ═══════════════════════════════════════════════════════
+   APP PATTERNS — Pipeline
+   ═══════════════════════════════════════════════════════ */
+.pipeline { display: flex; align-items: center; }
+.pipeline-step { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-tertiary); }
+.pipeline-step.done   { color: var(--text-secondary); }
+.pipeline-step.active { color: var(--mint); }
+.pipeline-node {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--surface-3); border: 1.5px solid var(--border-strong);
+  flex-shrink: 0;
+}
+.pipeline-step.done   .pipeline-node { background: var(--mint-dark); border-color: var(--mint-dark); }
+.pipeline-step.active .pipeline-node {
+  background: var(--mint); border-color: var(--mint);
+  box-shadow: 0 0 8px rgba(61,214,140,0.6);
+  animation: node-pulse 1.6s ease-in-out infinite;
+}
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61,214,140,0.5); }
+  50%       { box-shadow: 0 0 0 5px rgba(61,214,140,0); }
+}
+.pipeline-connector { width: 28px; height: 1px; background: var(--border); margin: 0 8px; }
+
+
+/* ═══════════════════════════════════════════════════════
+   DO / DON'T
+   ═══════════════════════════════════════════════════════ */
+.verdict-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.verdict { border-radius: 14px; overflow: hidden; border: 1px solid; }
+.verdict.do   { border-color: rgba(61,214,140,0.25); }
+.verdict.dont { border-color: rgba(239,68,68,0.2); }
+.verdict-head { padding: 10px 18px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+.verdict.do   .verdict-head { background: rgba(61,214,140,0.08); color: var(--mint); }
+.verdict.dont .verdict-head { background: rgba(239,68,68,0.07); color: var(--record-red); }
+.verdict-body { padding: 24px; background: var(--surface-1); }
+
+
+/* ═══════════════════════════════════════════════════════
+   ELEVATION SCALE
+   ═══════════════════════════════════════════════════════ */
+.elevation-card {
+  padding: 20px 22px;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.el-level { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--text-tertiary); letter-spacing: 0.08em; text-transform: uppercase; }
+.el-name  { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.el-use   { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+.el-token { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--mint); margin-top: 4px; }
+
+
+/* ═══════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════ */
+.hero {
+  padding: 56px 0 80px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 80px;
+}
+.hero-title {
+  font-size: 42px; font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1.05; color: var(--text-primary);
+  margin-bottom: 16px;
+}
+.hero-title .accent { color: var(--mint); }
+.hero-subtitle {
+  font-size: 17px; color: var(--text-secondary);
+  line-height: 1.7; max-width: 540px;
+  margin-bottom: 28px;
+}
+.hero-meta { display: flex; gap: 24px; align-items: center; }
+.hero-meta-item { display: flex; align-items: center; gap: 6px; font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-tertiary); }
+.hero-meta-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--mint); }
+
+
+/* ═══════════════════════════════════════════════════════
+   MOTION TOKENS TABLE
+   ═══════════════════════════════════════════════════════ */
+.motion-token-row {
+  display: grid; grid-template-columns: 140px 220px 1fr;
+  gap: 0 24px; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.motion-token-row:last-child { border-bottom: none; }
+
+
+/* ═══════════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+
+/* ICON INLINE SVG HELPER */
+.icon-bg { display: inline-flex; }
+
+/* Spin utility for loading */
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; transform-origin: center; }
+
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-logo">
+      <svg width="30" height="30" viewBox="0 0 512 512" fill="none">
+        <defs>
+          <linearGradient id="sb-bg" x1="0" y1="0" x2="512" y2="512">
+            <stop offset="0%" stop-color="#0d2520"/>
+            <stop offset="100%" stop-color="#061210"/>
+          </linearGradient>
+          <radialGradient id="sb-gl" cx="50%" cy="25%" r="60%">
+            <stop offset="0%" stop-color="#1a4a3a" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="512" height="512" rx="112" fill="url(#sb-bg)"/>
+        <rect width="512" height="512" rx="112" fill="url(#sb-gl)"/>
+        <rect x="98"  y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+        <rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+        <rect x="98"  y="232" width="316" height="48"  rx="24" fill="#3dd68c"/>
+        <rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+        <rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+      </svg>
+      <span class="sidebar-wordmark">hark<span class="accent">notes</span></span>
+    </div>
+    <span class="sidebar-version">Design System v1.0</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <span class="nav-group-label">Foundation</span>
+      <a class="nav-link active" href="#brand">Brand & Logo</a>
+      <a class="nav-link" href="#color">Color System</a>
+      <a class="nav-link" href="#typography">Typography</a>
+      <a class="nav-link" href="#spacing">Spacing & Radius</a>
+      <a class="nav-link" href="#elevation">Elevation</a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Components</span>
+      <a class="nav-link" href="#buttons">Buttons</a>
+      <a class="nav-link" href="#inputs">Inputs</a>
+      <a class="nav-link" href="#badges">Badges</a>
+      <a class="nav-link" href="#toggles">Toggles</a>
+      <a class="nav-link" href="#cards">Cards</a>
+      <a class="nav-link" href="#menus">Menus</a>
+      <a class="nav-link" href="#toasts">Toasts</a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">App Patterns</span>
+      <a class="nav-link" href="#recording">Recording States</a>
+      <a class="nav-link" href="#usage">Usage Meter</a>
+      <a class="nav-link" href="#meetings">Meeting List</a>
+      <a class="nav-link" href="#pipeline">Status Pipeline</a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">Guidelines</span>
+      <a class="nav-link" href="#motion">Motion</a>
+      <a class="nav-link" href="#voice">Voice & Tone</a>
+      <a class="nav-link" href="#dos">Do's & Don'ts</a>
+    </div>
+  </nav>
+
+  <div class="theme-switcher">
+    <button class="theme-btn active" data-mode="dark">
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M6 .278a.768.768 0 01.08.858 7.208 7.208 0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 01.81.316.733.733 0 01-.031.893A8.349 8.349 0 018.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 016 .278z"/></svg>
+      Dark
+    </button>
+    <button class="theme-btn" data-mode="light">
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-2A.5.5 0 018 0zm0 13a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-2A.5.5 0 018 13zm8-5a.5.5 0 01-.5.5h-2a.5.5 0 010-1h2a.5.5 0 01.5.5zM3 8a.5.5 0 01-.5.5h-2a.5.5 0 010-1h2A.5.5 0 013 8zm10.657-5.657a.5.5 0 010 .707l-1.414 1.415a.5.5 0 11-.707-.708l1.414-1.414a.5.5 0 01.707 0zm-9.193 9.193a.5.5 0 010 .707L3.05 13.657a.5.5 0 01-.707-.707l1.414-1.414a.5.5 0 01.707 0zm9.193 2.121a.5.5 0 01-.707 0l-1.414-1.414a.5.5 0 01.707-.707l1.414 1.414a.5.5 0 010 .707zM4.464 4.465a.5.5 0 01-.707 0L2.343 3.05a.5.5 0 11.707-.707l1.414 1.414a.5.5 0 010 .707z"/></svg>
+      Light
+    </button>
+    <button class="theme-btn" data-mode="system">
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 010 1H5a.5.5 0 010-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 00-.254.302A1.46 1.46 0 001 4v6c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 00.538.143L2.5 11h11l.scrapers.115-.001a1.464 1.464 0 00.538-.143.758.758 0 00.302-.254A1.464 1.464 0 0015 10V4a1.464 1.464 0 00-.145-.602.758.758 0 00-.302-.254A1.464 1.464 0 0014.115 3H1.884a1.464 1.464 0 00-.486.145z"/></svg>
+      Auto
+    </button>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+<main class="main">
+<div class="content">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px;">
+      <svg width="52" height="52" viewBox="0 0 512 512" fill="none">
+        <defs>
+          <linearGradient id="hero-bg" x1="0" y1="0" x2="512" y2="512">
+            <stop offset="0%" stop-color="#0d2520"/>
+            <stop offset="100%" stop-color="#061210"/>
+          </linearGradient>
+          <radialGradient id="hero-gl" cx="50%" cy="25%" r="60%">
+            <stop offset="0%" stop-color="#1a4a3a" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="512" height="512" rx="112" fill="url(#hero-bg)"/>
+        <rect width="512" height="512" rx="112" fill="url(#hero-gl)"/>
+        <rect x="98"  y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+        <rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+        <rect x="98"  y="232" width="316" height="48"  rx="24" fill="#3dd68c"/>
+        <rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+        <rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+      </svg>
+      <div>
+        <h1 class="hero-title" style="font-size:28px;margin-bottom:4px;">hark<span class="accent">notes</span></h1>
+        <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--text-tertiary);">Design System</span>
+      </div>
+    </div>
+    <p class="hero-subtitle">A single source of truth for the Harknotes visual language. Use these tokens and components to build every screen of the app — desktop, onboarding, and marketing site.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-dot"></div>Geist + Geist Mono</div>
+      <div class="hero-meta-item"><div class="hero-meta-dot"></div>Dark / Light / System</div>
+      <div class="hero-meta-item"><div class="hero-meta-dot"></div>v1.0 · March 2026</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       BRAND & LOGO
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="brand">
+    <span class="section-eyebrow">Foundation</span>
+    <h2 class="section-title">Brand & Logo</h2>
+    <p class="section-desc">The Harknotes mark is a waveform-H — the letterform constructed from equaliser bars, evoking audio capture. It works as a squircle app icon, a monochrome menu-bar template, and a full wordmark lockup.</p>
+
+    <div class="subsection">
+      <p class="subsection-title">App Icon — Size Scale</p>
+      <div class="demo demo-checker">
+        <div class="row-end" style="gap:32px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="120" height="120" viewBox="0 0 512 512" fill="none">
+              <defs>
+                <linearGradient id="ic1-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient>
+                <radialGradient id="ic1-gl" cx="50%" cy="25%" r="60%"><stop offset="0%" stop-color="#1a4a3a" stop-opacity="0.9"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/></radialGradient>
+              </defs>
+              <rect width="512" height="512" rx="112" fill="url(#ic1-bg)"/>
+              <rect width="512" height="512" rx="112" fill="url(#ic1-gl)"/>
+              <rect x="98"  y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+              <rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+              <rect x="98"  y="232" width="316" height="48"  rx="24" fill="#3dd68c"/>
+              <rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+              <rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">512px</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="80" height="80" viewBox="0 0 512 512" fill="none">
+              <defs><linearGradient id="ic2-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient><radialGradient id="ic2-gl" cx="50%" cy="25%" r="60%"><stop offset="0%" stop-color="#1a4a3a" stop-opacity="0.9"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/></radialGradient></defs>
+              <rect width="512" height="512" rx="112" fill="url(#ic2-bg)"/><rect width="512" height="512" rx="112" fill="url(#ic2-gl)"/>
+              <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">128px · Dock</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="48" height="48" viewBox="0 0 512 512" fill="none">
+              <defs><linearGradient id="ic3-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs>
+              <rect width="512" height="512" rx="112" fill="url(#ic3-bg)"/>
+              <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">64px</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="32" height="32" viewBox="0 0 512 512" fill="none">
+              <defs><linearGradient id="ic4-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs>
+              <rect width="512" height="512" rx="112" fill="url(#ic4-bg)"/>
+              <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">32px</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="22" height="22" viewBox="0 0 512 512" fill="none">
+              <defs><linearGradient id="ic5-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs>
+              <rect width="512" height="512" rx="112" fill="url(#ic5-bg)"/>
+              <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">22px · Tray</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="16" height="16" viewBox="0 0 512 512" fill="none">
+              <defs><linearGradient id="ic6-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs>
+              <rect width="512" height="512" rx="112" fill="url(#ic6-bg)"/>
+              <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">16px</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Wordmark Lockups</p>
+      <div class="demo col" style="gap:36px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <svg width="44" height="44" viewBox="0 0 512 512" fill="none"><defs><linearGradient id="wm1-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient><radialGradient id="wm1-gl" cx="50%" cy="25%" r="60%"><stop offset="0%" stop-color="#1a4a3a" stop-opacity="0.9"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/></radialGradient></defs><rect width="512" height="512" rx="112" fill="url(#wm1-bg)"/><rect width="512" height="512" rx="112" fill="url(#wm1-gl)"/><rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/></svg>
+          <span style="font-family:'Geist',sans-serif;font-size:30px;font-weight:700;letter-spacing:-0.03em;color:var(--text-primary);">hark<span style="color:var(--mint);">notes</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="26" height="26" viewBox="0 0 512 512" fill="none"><defs><linearGradient id="wm2-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#wm2-bg)"/><rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/></svg>
+          <span style="font-family:'Geist',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.025em;color:var(--text-primary);">hark<span style="color:var(--mint);">notes</span></span>
+        </div>
+        <div style="background:#f0f4f2;padding:20px 24px;border-radius:12px;display:inline-flex;align-items:center;gap:10px;align-self:flex-start;">
+          <svg width="30" height="30" viewBox="0 0 512 512" fill="none"><defs><linearGradient id="wm3-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#wm3-bg)"/><rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/></svg>
+          <span style="font-family:'Geist',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.03em;color:#0a1a14;">hark<span style="color:#1e9460;">notes</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Menu Bar States</p>
+      <div class="demo col" style="gap:24px;align-items:flex-start;">
+        <div style="display:flex;gap:32px;align-items:flex-end;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center;">
+            <div style="background:#2c2c2e;border-radius:8px;padding:6px 14px;display:inline-flex;align-items:center;gap:16px;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="1.5" y="3" width="2.5" height="12" rx="1.25" fill="#e5e5e7"/>
+                <rect x="5.5" y="5.5" width="2"  height="7"  rx="1"    fill="#e5e5e7" opacity="0.55"/>
+                <rect x="1.5" y="7.5" width="15" height="3"  rx="1.5"  fill="#e5e5e7"/>
+                <rect x="10.5" y="5.5" width="2" height="7"  rx="1"    fill="#e5e5e7" opacity="0.55"/>
+                <rect x="14"  y="3"   width="2.5" height="12" rx="1.25" fill="#e5e5e7"/>
+              </svg>
+              <span style="font-size:11px;color:#999;font-family:system-ui;">10:41</span>
+            </div>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">Idle — dark bar</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center;">
+            <div style="background:#d4d4d6;border-radius:8px;padding:6px 14px;display:inline-flex;align-items:center;gap:16px;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="1.5" y="3" width="2.5" height="12" rx="1.25" fill="#1d1d1f"/>
+                <rect x="5.5" y="5.5" width="2"  height="7"  rx="1"    fill="#1d1d1f" opacity="0.45"/>
+                <rect x="1.5" y="7.5" width="15" height="3"  rx="1.5"  fill="#1d1d1f"/>
+                <rect x="10.5" y="5.5" width="2" height="7"  rx="1"    fill="#1d1d1f" opacity="0.45"/>
+                <rect x="14"  y="3"   width="2.5" height="12" rx="1.25" fill="#1d1d1f"/>
+              </svg>
+              <span style="font-size:11px;color:#444;font-family:system-ui;">10:41</span>
+            </div>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">Idle — light bar</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center;">
+            <div style="background:#2c2c2e;border-radius:8px;padding:6px 14px;display:inline-flex;align-items:center;gap:16px;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="1.5" y="3" width="2.5" height="12" rx="1.25" fill="#3dd68c"/>
+                <rect x="5.5" y="5.5" width="2"  height="7"  rx="1"    fill="#3dd68c" opacity="0.55"/>
+                <rect x="1.5" y="7.5" width="11.5" height="3" rx="1.5" fill="#3dd68c"/>
+                <rect x="10.5" y="5.5" width="2" height="7"  rx="1"    fill="#3dd68c" opacity="0.55"/>
+                <rect x="13.5" y="3"  width="2.5" height="8"  rx="1.25" fill="#3dd68c"/>
+                <circle cx="15" cy="14.5" r="2.5" fill="#ef4444"/>
+              </svg>
+              <span style="font-size:11px;color:#e5e5e7;font-family:'Geist Mono',monospace;letter-spacing:0.04em;">12:34</span>
+            </div>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">Recording active</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-tertiary);line-height:1.6;max-width:480px;">
+          The tray icon uses macOS <strong style="color:var(--text-secondary);">template images</strong> — monochrome, adapting automatically to light/dark menu bars. The recording state breaks from template mode to use colour: mint H + red dot, so the user always knows the app is capturing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       COLOR SYSTEM
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="color">
+    <span class="section-eyebrow">Foundation</span>
+    <h2 class="section-title">Color System</h2>
+    <p class="section-desc">One brand color — mint — against near-black backgrounds. Never introduce new hues. Use opacity variants of existing colors to extend the palette. All values are CSS custom properties; the theme switches automatically.</p>
+
+    <div class="subsection">
+      <p class="subsection-title">Brand</p>
+      <div class="grid-4" style="gap:14px;">
+        <div class="color-card">
+          <div class="color-swatch" style="background:#3dd68c;"></div>
+          <div class="color-info">
+            <div class="color-name">Mint</div>
+            <span class="color-token">--mint</span>
+            <div class="color-hex">#3dd68c</div>
+            <div class="color-desc">CTAs, active states, the brand</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#28b874;"></div>
+          <div class="color-info">
+            <div class="color-name">Mint Dark</div>
+            <span class="color-token">--mint-dark</span>
+            <div class="color-hex">#28b874</div>
+            <div class="color-desc">Hover, gradient endpoints</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#1e9460;"></div>
+          <div class="color-info">
+            <div class="color-name">Forest</div>
+            <span class="color-token">--mint-forest</span>
+            <div class="color-hex">#1e9460</div>
+            <div class="color-desc">Light-bg wordmark, done states</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:rgba(61,214,140,0.12);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info">
+            <div class="color-name">Mint Subtle</div>
+            <span class="color-token">--mint-subtle</span>
+            <div class="color-hex">mint @ 12%</div>
+            <div class="color-desc">Focus rings, badge fills</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Backgrounds</p>
+      <div class="grid-auto" style="gap:14px;">
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--bg);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">BG</div><span class="color-token">--bg</span><div class="color-desc">App window</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--bg-elevated);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">BG Elevated</div><span class="color-token">--bg-elevated</span><div class="color-desc">Sidebar, panels</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--surface-1);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">Surface 1</div><span class="color-token">--surface-1</span><div class="color-desc">Cards, list rows</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--surface-2);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">Surface 2</div><span class="color-token">--surface-2</span><div class="color-desc">Hover on surface-1</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--surface-3);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">Surface 3</div><span class="color-token">--surface-3</span><div class="color-desc">Inputs, toggles</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Semantic</p>
+      <div class="grid-auto" style="gap:14px;">
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--record-red);"></div>
+          <div class="color-info"><div class="color-name">Record Red</div><span class="color-token">--record-red</span><div class="color-desc">Recording, destructive</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--warning);"></div>
+          <div class="color-info"><div class="color-name">Warning</div><span class="color-token">--warning</span><div class="color-desc">Usage near limit</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--text-primary);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">Text Primary</div><span class="color-token">--text-primary</span></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--text-secondary);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">Text Secondary</div><span class="color-token">--text-secondary</span></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:var(--text-tertiary);border-bottom:1px solid var(--border-subtle);"></div>
+          <div class="color-info"><div class="color-name">Text Tertiary</div><span class="color-token">--text-tertiary</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TYPOGRAPHY
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="typography">
+    <span class="section-eyebrow">Foundation</span>
+    <h2 class="section-title">Typography</h2>
+    <p class="section-desc">Geist for all UI text — clean and slightly technical without being sterile. Geist Mono for timestamps, code, counters, and any number that should feel precise and metered.</p>
+
+    <div class="subsection">
+      <p class="subsection-title">Geist — UI Scale</p>
+      <div class="demo" style="padding: 40px;">
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">display</span><span class="type-spec">32px / 800<br>-0.04em / 1.1</span></div>
+          <div style="font-size:32px;font-weight:800;letter-spacing:-0.04em;line-height:1.1;color:var(--text-primary);">Meeting notes in seconds.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">heading-1</span><span class="type-spec">24px / 700<br>-0.03em / 1.15</span></div>
+          <div style="font-size:24px;font-weight:700;letter-spacing:-0.03em;line-height:1.15;color:var(--text-primary);">Today's Meetings</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">heading-2</span><span class="type-spec">18px / 600<br>-0.02em / 1.2</span></div>
+          <div style="font-size:18px;font-weight:600;letter-spacing:-0.02em;line-height:1.2;color:var(--text-primary);">Q3 Planning — All Hands</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">heading-3</span><span class="type-spec">15px / 600<br>-0.01em / 1.3</span></div>
+          <div style="font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text-primary);">Action Items</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">body</span><span class="type-spec">14px / 400<br>0 / 1.65</span></div>
+          <div style="font-size:14px;line-height:1.65;color:var(--text-secondary);max-width:440px;">Audio never leaves your machine. Transcription runs locally via whisper.cpp — only the text transcript is sent to the cloud for summarisation.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">body-sm</span><span class="type-spec">13px / 400<br>0 / 1.55</span></div>
+          <div style="font-size:13px;line-height:1.55;color:var(--text-secondary);">Meeting detected: Zoom · 45 minutes remaining in your plan this month.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">label</span><span class="type-spec">11px / 600<br>0.12em / 1.2</span></div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-tertiary);">Recorded Today</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Geist Mono — Data & Code</p>
+      <div class="demo" style="padding:40px;">
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">mono-timer</span><span class="type-spec">Mono / 20px / 600</span></div>
+          <div style="font-family:'Geist Mono',monospace;font-size:20px;font-weight:600;color:var(--mint);letter-spacing:0.06em;">00:47:23</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">mono-usage</span><span class="type-spec">Mono / 12px / 400</span></div>
+          <div style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--text-tertiary);letter-spacing:0.04em;">4h 20m of 20h used</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta-col"><span class="type-token-name">mono-token</span><span class="type-spec">Mono / 11px / 400</span></div>
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--mint);background:var(--mint-glow);padding:2px 8px;border-radius:4px;border:1px solid rgba(61,214,140,0.15);">--mint: #3dd68c</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SPACING
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="spacing">
+    <span class="section-eyebrow">Foundation</span>
+    <h2 class="section-title">Spacing & Radius</h2>
+    <p class="section-desc">4px base unit. All spacing is a multiple of 4. Never use arbitrary pixel values — always reach for a token.</p>
+
+    <div class="subsection">
+      <p class="subsection-title">Spacing Scale</p>
+      <div class="demo" style="padding:32px 40px;">
+        <div class="space-row"><span class="space-token">--space-1 · 4px</span><div class="space-bar-wrap"><div class="space-bar" style="width:4px;"></div></div><span class="space-desc">Icon gap, tight nudges</span></div>
+        <div class="space-row"><span class="space-token">--space-2 · 8px</span><div class="space-bar-wrap"><div class="space-bar" style="width:8px;"></div></div><span class="space-desc">Badge padding, close siblings</span></div>
+        <div class="space-row"><span class="space-token">--space-3 · 12px</span><div class="space-bar-wrap"><div class="space-bar" style="width:12px;"></div></div><span class="space-desc">Small button padding, input padding</span></div>
+        <div class="space-row"><span class="space-token">--space-4 · 16px</span><div class="space-bar-wrap"><div class="space-bar" style="width:16px;"></div></div><span class="space-desc">Default button padding, component gap</span></div>
+        <div class="space-row"><span class="space-token">--space-5 · 20px</span><div class="space-bar-wrap"><div class="space-bar" style="width:20px;"></div></div><span class="space-desc">Card internal padding</span></div>
+        <div class="space-row"><span class="space-token">--space-6 · 24px</span><div class="space-bar-wrap"><div class="space-bar" style="width:24px;"></div></div><span class="space-desc">Card padding, section gap</span></div>
+        <div class="space-row"><span class="space-token">--space-8 · 32px</span><div class="space-bar-wrap"><div class="space-bar" style="width:32px;"></div></div><span class="space-desc">Between components in a view</span></div>
+        <div class="space-row"><span class="space-token">--space-12 · 48px</span><div class="space-bar-wrap"><div class="space-bar" style="width:48px;"></div></div><span class="space-desc">Page-level padding</span></div>
+        <div class="space-row"><span class="space-token">--space-16 · 64px</span><div class="space-bar-wrap"><div class="space-bar" style="width:64px;"></div></div><span class="space-desc">Major section breaks</span></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Border Radius</p>
+      <div class="demo">
+        <div class="row-mid" style="gap:32px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:56px;height:56px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;"></div>
+            <div style="text-align:center;"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--mint);display:block;">--radius-sm</span><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">6px</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:56px;height:56px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;"></div>
+            <div style="text-align:center;"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--mint);display:block;">--radius-md</span><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">8px · buttons</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:56px;height:56px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;"></div>
+            <div style="text-align:center;"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--mint);display:block;">--radius-lg</span><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">12px · menus</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:56px;height:56px;background:var(--surface-2);border:1px solid var(--border);border-radius:16px;"></div>
+            <div style="text-align:center;"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--mint);display:block;">--radius-xl</span><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">16px · cards</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:56px;height:56px;background:var(--surface-2);border:1px solid var(--border);border-radius:20px;"></div>
+            <div style="text-align:center;"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--mint);display:block;">--radius-2xl</span><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">20px · modals</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:80px;height:28px;background:var(--surface-2);border:1px solid var(--border);border-radius:9999px;"></div>
+            <div style="text-align:center;"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--mint);display:block;">--radius-full</span><span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">pill · badges</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       ELEVATION
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="elevation">
+    <span class="section-eyebrow">Foundation</span>
+    <h2 class="section-title">Elevation</h2>
+    <p class="section-desc">Depth comes from background lightness and border strength — not shadows. Shadows are reserved for floating elements. Each level sits on the level below it.</p>
+
+    <div class="demo">
+      <div class="grid-4" style="gap:14px;">
+        <div class="elevation-card" style="background:var(--bg);">
+          <span class="el-level">Level 0</span>
+          <span class="el-name">Background</span>
+          <span class="el-use">Main app window canvas</span>
+          <span class="el-token">--bg</span>
+        </div>
+        <div class="elevation-card" style="background:var(--bg-elevated);">
+          <span class="el-level">Level 1</span>
+          <span class="el-name">Elevated</span>
+          <span class="el-use">Sidebar, toolbar panels</span>
+          <span class="el-token">--bg-elevated</span>
+        </div>
+        <div class="elevation-card" style="background:var(--surface-1);border-color:var(--border);">
+          <span class="el-level">Level 2</span>
+          <span class="el-name">Surface</span>
+          <span class="el-use">Cards, list items</span>
+          <span class="el-token">--surface-1</span>
+        </div>
+        <div class="elevation-card" style="background:var(--surface-2);border-color:var(--border);box-shadow:var(--shadow-md);">
+          <span class="el-level">Level 3</span>
+          <span class="el-name">Floating</span>
+          <span class="el-use">Dropdowns, popovers</span>
+          <span class="el-token">--surface-2 + shadow</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       BUTTONS
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="buttons">
+    <span class="section-eyebrow">Components</span>
+    <h2 class="section-title">Buttons</h2>
+    <p class="section-desc">Five variants. Use <code style="font-family:'Geist Mono',monospace;font-size:13px;background:var(--surface-2);padding:1px 6px;border-radius:4px;border:1px solid var(--border);">.btn-primary</code> sparingly — one per screen maximum. The record button is a reserved class for the main CTA only.</p>
+
+    <div class="subsection">
+      <p class="subsection-title">Variants</p>
+      <div class="demo">
+        <div class="row-mid" style="gap:12px;">
+          <button class="btn btn-primary">Export notes</button>
+          <button class="btn btn-secondary">Rename</button>
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-danger">Delete meeting</button>
+          <button class="btn btn-record">
+            <svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="currentColor"/></svg>
+            Record
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Sizes</p>
+      <div class="demo">
+        <div class="row-end" style="gap:12px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+            <button class="btn btn-primary btn-sm">Small</button>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">h:28 / 12px</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+            <button class="btn btn-primary">Default</button>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">h:34 / 13px</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+            <button class="btn btn-primary btn-lg">Large</button>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">h:42 / 14px</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+            <div style="display:flex;gap:8px;align-items:flex-end;">
+              <button class="btn btn-icon btn-sm"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg></button>
+              <button class="btn btn-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg></button>
+              <button class="btn btn-icon btn-lg"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg></button>
+            </div>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">Icon buttons</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">States</p>
+      <div class="demo">
+        <div class="row-mid" style="gap:12px;flex-wrap:wrap;">
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary" style="filter:brightness(1.08);transform:translateY(-1px);box-shadow:var(--shadow-mint);">Hover ↑</button>
+          <button class="btn btn-primary" style="filter:brightness(0.95);">Active</button>
+          <button class="btn btn-primary" disabled>Disabled</button>
+          <button class="btn btn-record is-recording">
+            <svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="currentColor"/></svg>
+            Recording…
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       INPUTS
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="inputs">
+    <span class="section-eyebrow">Components</span>
+    <h2 class="section-title">Inputs</h2>
+    <p class="section-desc">Flat, no-frills inputs. Focus ring is mint, matching the brand. Error state uses red with a matching soft glow ring.</p>
+
+    <div class="demo" style="padding:40px;">
+      <div class="col-lg" style="max-width:440px;">
+        <div class="field">
+          <label class="field-label">Output folder</label>
+          <div class="input-icon-wrap">
+            <svg class="input-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color:var(--text-tertiary);"><path d="M.54 3.87L.5 3a2 2 0 012-2h3.19a2 2 0 011.7.9l.81 1.21H15a1 1 0 011 1V14a1 1 0 01-1 1H1a1 1 0 01-1-1V4a.5.5 0 00.54-.13z"/></svg>
+            <input class="input" type="text" value="~/Documents/Meetings" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">Email address</label>
+          <input class="input" type="email" placeholder="you@example.com" />
+          <span class="field-hint">Used for login and billing notifications.</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Email — error state</label>
+          <input class="input is-error" type="email" value="not-an-email" style="border-color:var(--record-red);box-shadow:0 0 0 3px var(--record-red-dim);" />
+          <span class="field-hint is-error">Please enter a valid email address.</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Meeting notes (optional)</label>
+          <textarea class="input" style="min-height:80px;padding:10px 12px;resize:vertical;" placeholder="Add context about this meeting…"></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">Plan (read-only)</label>
+          <input class="input" type="text" value="Pro · 20 hrs/month" disabled />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       BADGES
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="badges">
+    <span class="section-eyebrow">Components</span>
+    <h2 class="section-title">Badges</h2>
+    <p class="section-desc">Status labels. Dots animate for live states — use sparingly to avoid visual noise.</p>
+
+    <div class="demo">
+      <div class="row-mid" style="gap:10px;flex-wrap:wrap;">
+        <span class="badge badge-mint">Pro</span>
+        <span class="badge badge-mint"><span class="badge-dot pulse"></span>Recording</span>
+        <span class="badge badge-mint">Transcribed</span>
+        <span class="badge badge-red"><span class="badge-dot pulse"></span>Live</span>
+        <span class="badge badge-red">Limit reached</span>
+        <span class="badge badge-warning">Usage at 90%</span>
+        <span class="badge badge-neutral">Free Tier</span>
+        <span class="badge badge-neutral">47 min</span>
+        <span class="badge badge-neutral">No notes</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TOGGLES
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="toggles">
+    <span class="section-eyebrow">Components</span>
+    <h2 class="section-title">Toggles</h2>
+
+    <div class="demo" style="padding:40px;">
+      <div class="col-sm" style="gap:20px;max-width:340px;">
+        <label class="toggle on"><div class="toggle-track"><div class="toggle-thumb"></div></div><span class="toggle-label">Auto-detect meetings</span></label>
+        <label class="toggle"><div class="toggle-track"><div class="toggle-thumb"></div></div><span class="toggle-label">Start recording automatically</span></label>
+        <label class="toggle on"><div class="toggle-track"><div class="toggle-thumb"></div></div><span class="toggle-label">Save transcript with notes</span></label>
+        <label class="toggle"><div class="toggle-track"><div class="toggle-thumb"></div></div><span class="toggle-label">Launch at login</span></label>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       CARDS
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="cards">
+    <span class="section-eyebrow">Components</span>
+    <h2 class="section-title">Cards</h2>
+
+    <div class="demo col" style="gap:12px;">
+      <div class="card">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px;">Static card</div>
+        <div style="font-size:16px;font-weight:600;letter-spacing:-0.01em;margin-bottom:6px;">Whisper Model</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;">Running <code style="font-family:'Geist Mono',monospace;font-size:12px;background:var(--surface-2);padding:1px 6px;border-radius:4px;border:1px solid var(--border);">ggml-base.en.bin</code> — 74MB on disk. Transcription takes ~0.3× real-time on Apple Silicon.</div>
+      </div>
+      <div class="card card-interactive">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mint);">Recommended ↗</div>
+          <span class="badge badge-mint">Most popular</span>
+        </div>
+        <div style="font-size:16px;font-weight:600;letter-spacing:-0.01em;margin-bottom:6px;">Upgrade to Power</div>
+        <div style="font-size:14px;color:var(--text-secondary);">60 hours/month · Overage billing · $20/mo</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       MENUS
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="menus">
+    <span class="section-eyebrow">Components</span>
+    <h2 class="section-title">Menus & Dropdowns</h2>
+
+    <div class="demo">
+      <div class="row" style="gap:40px;align-items:flex-start;">
+        <div class="dropdown">
+          <div class="menu-item">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color:var(--text-tertiary);flex-shrink:0;"><path d="M12.854.146a.5.5 0 00-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 000-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 01.5.5v.5h.5a.5.5 0 01.5.5v.5h.5a.5.5 0 01.5.5v.5h.5a.5.5 0 01.5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 016 13.5V13h-.5a.5.5 0 01-.5-.5V12h-.5a.5.5 0 01-.5-.5V11h-.5a.5.5 0 01-.5-.5V10h-.5a.499.499 0 01-.175-.032l-.179.178a.5.5 0 00-.11.168l-2 5a.5.5 0 00.65.65l5-2a.5.5 0 00.168-.11l.178-.178z"/></svg>
+            Rename meeting
+          </div>
+          <div class="menu-item">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color:var(--text-tertiary);flex-shrink:0;"><path d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z"/><path d="M7.646 11.854a.5.5 0 00.708 0l3-3a.5.5 0 00-.708-.708L8.5 10.293V1.5a.5.5 0 00-1 0v8.793L5.354 8.146a.5.5 0 10-.708.708l3 3z"/></svg>
+            Export markdown
+            <span class="menu-shortcut">⌘E</span>
+          </div>
+          <div class="menu-item">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color:var(--text-tertiary);flex-shrink:0;"><path d="M1 8a7 7 0 110 14A7 7 0 011 8zm7-6.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM7 4a1 1 0 012 0v4a1 1 0 01-1 1H5a1 1 0 010-2h2V4z"/></svg>
+            Open in Finder
+          </div>
+          <div class="menu-sep"></div>
+          <div class="menu-item danger">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0;"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 110-2h3a1 1 0 01.5-.5h4a.5.5 0 01.5.5h3a1 1 0 011 1z"/></svg>
+            Delete meeting
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TOASTS
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="toasts">
+    <span class="section-eyebrow">Components</span>
+    <h2 class="section-title">Toasts</h2>
+    <p class="section-desc">Non-blocking feedback. Appear bottom-right. Auto-dismiss after 4 seconds. Never use for required actions — that's what modals are for.</p>
+
+    <div class="demo col" style="gap:10px;align-items:flex-start;">
+      <div class="toast is-success">
+        <svg class="toast-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-3.97-3.03a.75.75 0 00-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 00-1.06 1.061L6.97 11.03a.75.75 0 001.079-.02l3.992-4.99a.75.75 0 00-.01-1.05z"/></svg>
+        <div class="toast-body"><div class="toast-title">Notes saved</div><div class="toast-msg">Q3 Planning exported to Meetings/2026-03-02.md</div></div>
+        <svg class="toast-close" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/></svg>
+      </div>
+      <div class="toast is-warning">
+        <svg class="toast-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8.982 1.566a1.13 1.13 0 00-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 01-1.1 0L7.1 5.995A.905.905 0 018 5zm.002 6a1 1 0 110 2 1 1 0 010-2z"/></svg>
+        <div class="toast-body"><div class="toast-title">Usage at 90%</div><div class="toast-msg">18h of 20h used. Overage kicks in at $0.02/min.</div></div>
+        <svg class="toast-close" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/></svg>
+      </div>
+      <div class="toast is-error">
+        <svg class="toast-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg>
+        <div class="toast-body"><div class="toast-title">Transcription failed</div><div class="toast-msg">whisper.cpp exited with code 1. Check audio input device.</div></div>
+        <svg class="toast-close" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/></svg>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       RECORDING STATES
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="recording">
+    <span class="section-eyebrow">App Patterns</span>
+    <h2 class="section-title">Recording States</h2>
+    <p class="section-desc">The most important UI moment in the app. Each state must be instantly recognisable at a glance — including when the window isn't focused.</p>
+
+    <div class="demo col" style="gap:10px;">
+
+      <div class="state-bar">
+        <div class="state-bar-left">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color:var(--text-tertiary);"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6 5.5l4 2.5-4 2.5z" fill="currentColor"/></svg>
+          <span class="state-bar-label" style="color:var(--text-secondary);">Idle — ready to record</span>
+        </div>
+        <button class="btn btn-record btn-sm"><svg width="6" height="6" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="currentColor"/></svg> Record</button>
+      </div>
+
+      <div class="state-bar is-recording">
+        <div class="state-bar-left">
+          <div class="record-dot"></div>
+          <span class="state-bar-label">Recording</span>
+          <span class="mono-timer">00:23:41</span>
+          <div class="waveform">
+            <div class="waveform-bar" style="height:3px;"></div>
+            <div class="waveform-bar" style="height:12px;"></div>
+            <div class="waveform-bar" style="height:7px;"></div>
+            <div class="waveform-bar" style="height:16px;"></div>
+            <div class="waveform-bar" style="height:5px;"></div>
+            <div class="waveform-bar" style="height:14px;"></div>
+            <div class="waveform-bar" style="height:9px;"></div>
+            <div class="waveform-bar" style="height:11px;"></div>
+            <div class="waveform-bar" style="height:4px;"></div>
+            <div class="waveform-bar" style="height:13px;"></div>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm">Stop</button>
+      </div>
+
+      <div class="state-bar">
+        <div class="state-bar-left">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="spin" style="transform-origin:center;">
+            <circle cx="8" cy="8" r="6" stroke="var(--border-strong)" stroke-width="1.5"/>
+            <path d="M8 2a6 6 0 016 6" stroke="var(--mint)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="state-bar-label" style="color:var(--text-secondary);">Transcribing with whisper.cpp…</span>
+          <span class="badge badge-mint">local</span>
+        </div>
+        <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">~45s remaining</span>
+      </div>
+
+      <div class="state-bar">
+        <div class="state-bar-left">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="spin" style="transform-origin:center;">
+            <circle cx="8" cy="8" r="6" stroke="var(--border-strong)" stroke-width="1.5"/>
+            <path d="M8 2a6 6 0 016 6" stroke="var(--mint)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="state-bar-label" style="color:var(--text-secondary);">Generating notes with GPT-4o mini…</span>
+          <span class="badge badge-neutral">cloud</span>
+        </div>
+        <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">~5s remaining</span>
+      </div>
+
+      <div class="state-bar is-done">
+        <div class="state-bar-left">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--mint)"><path d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-3.97-3.03a.75.75 0 00-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 00-1.06 1.061L6.97 11.03a.75.75 0 001.079-.02l3.992-4.99a.75.75 0 00-.01-1.05z"/></svg>
+          <span class="state-bar-label">Notes ready</span>
+          <span class="state-bar-sub">Q3 Planning · 47 min</span>
+        </div>
+        <button class="btn btn-secondary btn-sm">View</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       USAGE METER
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="usage">
+    <span class="section-eyebrow">App Patterns</span>
+    <h2 class="section-title">Usage Meter</h2>
+    <p class="section-desc">Shown in settings and as a persistent footer in the main view. Color shifts communicate urgency without needing extra copy.</p>
+
+    <div class="demo col" style="gap:12px;max-width:420px;">
+      <div class="usage">
+        <div class="usage-head"><span class="usage-label">Monthly Usage</span><span class="usage-val"><strong>4h 20m</strong> of 20h</span></div>
+        <div class="usage-track"><div class="usage-fill" style="width:22%;"></div></div>
+        <span class="usage-foot">Pro plan · resets March 31</span>
+      </div>
+      <div class="usage">
+        <div class="usage-head"><span class="usage-label">Monthly Usage</span><span class="usage-val"><strong>18h 10m</strong> of 20h</span></div>
+        <div class="usage-track"><div class="usage-fill warn" style="width:91%;"></div></div>
+        <span class="usage-foot" style="color:var(--warning);">90% used · overage at $0.02/min after limit</span>
+      </div>
+      <div class="usage">
+        <div class="usage-head"><span class="usage-label">Monthly Usage</span><span class="usage-val"><strong>20h 00m</strong> of 20h</span></div>
+        <div class="usage-track"><div class="usage-fill danger" style="width:100%;"></div></div>
+        <span class="usage-foot" style="color:var(--error);">Limit reached — overage billing active</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       MEETING LIST
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="meetings">
+    <span class="section-eyebrow">App Patterns</span>
+    <h2 class="section-title">Meeting List</h2>
+    <p class="section-desc">The main view. Dense but scannable — title, date, duration, app, and status at a glance. No unnecessary decoration.</p>
+
+    <div class="demo col" style="gap:8px;">
+      <div class="meeting-card">
+        <div style="flex:1;min-width:0;">
+          <div class="meeting-title">Q3 Planning — All Hands</div>
+          <div class="meeting-meta">
+            <span>Today · 10:30 AM</span>
+            <span class="meeting-meta-sep">·</span>
+            <span>47 min</span>
+            <span class="meeting-meta-sep">·</span>
+            <span>Zoom</span>
+          </div>
+        </div>
+        <div class="meeting-actions">
+          <span class="badge badge-mint">Transcribed</span>
+          <button class="btn btn-icon btn-sm"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg></button>
+        </div>
+      </div>
+      <div class="meeting-card">
+        <div style="flex:1;min-width:0;">
+          <div class="meeting-title">1:1 with Ian</div>
+          <div class="meeting-meta">
+            <span>Yesterday · 2:00 PM</span>
+            <span class="meeting-meta-sep">·</span>
+            <span>28 min</span>
+            <span class="meeting-meta-sep">·</span>
+            <span>Google Meet</span>
+          </div>
+        </div>
+        <div class="meeting-actions">
+          <span class="badge badge-mint">Transcribed</span>
+          <button class="btn btn-icon btn-sm"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg></button>
+        </div>
+      </div>
+      <div class="meeting-card">
+        <div style="flex:1;min-width:0;">
+          <div class="meeting-title">Design Review</div>
+          <div class="meeting-meta">
+            <span>Mar 1 · 11:00 AM</span>
+            <span class="meeting-meta-sep">·</span>
+            <span>1h 12 min</span>
+            <span class="meeting-meta-sep">·</span>
+            <span>Teams</span>
+          </div>
+        </div>
+        <div class="meeting-actions">
+          <span class="badge badge-neutral">No notes</span>
+          <button class="btn btn-icon btn-sm"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PIPELINE
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="pipeline">
+    <span class="section-eyebrow">App Patterns</span>
+    <h2 class="section-title">Status Pipeline</h2>
+    <p class="section-desc">Communicates the 4 processing stages after stopping a recording. Lives just below the recording state bar while processing is in-progress.</p>
+
+    <div class="demo col" style="gap:24px;">
+      <div>
+        <p style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);margin-bottom:16px;">Stage 2 — transcribing</p>
+        <div class="pipeline">
+          <div class="pipeline-step done"><div class="pipeline-node"></div><span>Recorded</span></div>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-step active"><div class="pipeline-node"></div><span>Transcribing</span></div>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-step"><div class="pipeline-node"></div><span>Summarising</span></div>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-step"><div class="pipeline-node"></div><span>Saved</span></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);margin-bottom:16px;">Stage 3 — summarising</p>
+        <div class="pipeline">
+          <div class="pipeline-step done"><div class="pipeline-node"></div><span>Recorded</span></div>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-step done"><div class="pipeline-node"></div><span>Transcribed</span></div>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-step active"><div class="pipeline-node"></div><span>Summarising</span></div>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-step"><div class="pipeline-node"></div><span>Saved</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       MOTION
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="motion">
+    <span class="section-eyebrow">Guidelines</span>
+    <h2 class="section-title">Motion</h2>
+    <p class="section-desc">Motion communicates state. It should never draw attention to itself — if you notice the animation, it's too much.</p>
+
+    <div class="subsection">
+      <p class="subsection-title">Easing & Duration</p>
+      <div class="demo" style="padding:32px 40px;">
+        <div class="motion-token-row">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--mint);">--ease-out</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">cubic-bezier(0.16,1,0.3,1)</span>
+          <span style="font-size:13px;color:var(--text-secondary);">Enter animations — fast start, eases to rest</span>
+        </div>
+        <div class="motion-token-row">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--mint);">--ease-in</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">cubic-bezier(0.4,0,1,1)</span>
+          <span style="font-size:13px;color:var(--text-secondary);">Exit animations — slow start, fast exit</span>
+        </div>
+        <div class="motion-token-row">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--mint);">--ease-inout</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">cubic-bezier(0.65,0,0.35,1)</span>
+          <span style="font-size:13px;color:var(--text-secondary);">Transforms, position changes</span>
+        </div>
+        <div class="motion-token-row" style="border-bottom:none;padding-top:24px;margin-top:8px;border-top:1px solid var(--border-subtle);">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--mint);">120ms</span>
+          <span style="font-size:13px;color:var(--text-secondary);grid-column:2/4;">Hover, colour transitions, micro-feedback</span>
+        </div>
+        <div class="motion-token-row">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--mint);">200ms</span>
+          <span style="font-size:13px;color:var(--text-secondary);grid-column:2/4;">Toggles, expanding elements</span>
+        </div>
+        <div class="motion-token-row" style="border-bottom:none;">
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--mint);">350ms</span>
+          <span style="font-size:13px;color:var(--text-secondary);grid-column:2/4;">Page transitions, modal open/close</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p class="subsection-title">Live Animations</p>
+      <div class="demo">
+        <div class="row-mid" style="gap:40px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--record-red-dim);border:1px solid rgba(239,68,68,0.2);border-radius:9999px;font-size:13px;font-weight:500;color:var(--record-red);">
+              <div class="record-dot"></div>
+              Recording
+            </div>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">rec-blink · 1.2s</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div class="waveform" style="height:24px;">
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+              <div class="waveform-bar" style="background:var(--mint);"></div>
+            </div>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">wave-dance · 1s</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <span class="badge badge-mint"><span class="badge-dot pulse"></span>Processing</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">dot-pulse · 1.6s</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <button class="btn btn-record is-recording"><svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="currentColor"/></svg>Recording</button>
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text-tertiary);">btn-record-pulse · 2s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       VOICE & TONE
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="voice">
+    <span class="section-eyebrow">Guidelines</span>
+    <h2 class="section-title">Voice & Tone</h2>
+    <p class="section-desc">Harknotes is a professional tool. The copy should be invisible — direct, precise, honest. It never cheers or apologises.</p>
+
+    <div class="demo grid-2" style="gap:14px;">
+      <div style="padding:24px;background:var(--mint-subtle);border:1px solid rgba(61,214,140,0.18);border-radius:14px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mint);margin-bottom:16px;">✓ Write like this</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text-secondary);line-height:1.5;">
+          <span>"Notes saved to Meetings/2026-03-02.md"</span>
+          <span>"18h of 20h used this month"</span>
+          <span>"Transcribing with whisper.cpp"</span>
+          <span>"Stop recording"</span>
+          <span>"Transcription failed — audio device not found"</span>
+        </div>
+      </div>
+      <div style="padding:24px;background:var(--record-red-dim);border:1px solid rgba(239,68,68,0.18);border-radius:14px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--record-red);margin-bottom:16px;">✗ Not like this</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text-secondary);line-height:1.5;">
+          <span>"Your notes are ready! 🎉"</span>
+          <span>"Uh oh! You're almost out of time"</span>
+          <span>"Our magical AI is working hard…"</span>
+          <span>"Click here to finish"</span>
+          <span>"Oops! Something went wrong"</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+      <div style="padding:20px 22px;background:var(--surface-1);border:1px solid var(--border);border-radius:14px;"><strong style="color:var(--text-primary);font-size:14px;">Direct.</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;">Say what happened. Skip emotional framing.</p></div>
+      <div style="padding:20px 22px;background:var(--surface-1);border:1px solid var(--border);border-radius:14px;"><strong style="color:var(--text-primary);font-size:14px;">Precise.</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;">Use numbers, file paths, durations. Never "some" or "a few".</p></div>
+      <div style="padding:20px 22px;background:var(--surface-1);border:1px solid var(--border);border-radius:14px;"><strong style="color:var(--text-primary);font-size:14px;">Quiet.</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;">Good copy disappears. You only notice bad copy.</p></div>
+      <div style="padding:20px 22px;background:var(--surface-1);border:1px solid var(--border);border-radius:14px;"><strong style="color:var(--text-primary);font-size:14px;">Honest.</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;">When something fails, say what failed and why.</p></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       DO'S & DON'TS
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="dos">
+    <span class="section-eyebrow">Guidelines</span>
+    <h2 class="section-title">Do's & Don'ts</h2>
+
+    <div class="col-lg">
+
+      <div class="verdict-grid">
+        <div class="verdict do">
+          <div class="verdict-head">✓ One primary action per view</div>
+          <div class="verdict-body row-mid" style="gap:10px;">
+            <button class="btn btn-primary">Export notes</button>
+            <button class="btn btn-secondary">Rename</button>
+            <button class="btn btn-ghost">Cancel</button>
+          </div>
+        </div>
+        <div class="verdict dont">
+          <div class="verdict-head">✗ Multiple competing primaries</div>
+          <div class="verdict-body row-mid" style="gap:10px;">
+            <button class="btn btn-primary">Export</button>
+            <button class="btn btn-primary">Share</button>
+            <button class="btn btn-primary">Rename</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="verdict-grid">
+        <div class="verdict do">
+          <div class="verdict-head">✓ Dark background on icon always</div>
+          <div class="verdict-body demo-checker" style="border-radius:8px;padding:20px;display:flex;justify-content:center;">
+            <svg width="60" height="60" viewBox="0 0 512 512" fill="none">
+              <defs><linearGradient id="dd1-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs>
+              <rect width="512" height="512" rx="112" fill="url(#dd1-bg)"/>
+              <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+          </div>
+        </div>
+        <div class="verdict dont">
+          <div class="verdict-head">✗ Light or white icon background</div>
+          <div class="verdict-body demo-checker" style="border-radius:8px;padding:20px;display:flex;justify-content:center;">
+            <svg width="60" height="60" viewBox="0 0 512 512" fill="none">
+              <rect width="512" height="512" rx="112" fill="white"/>
+              <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="verdict-grid">
+        <div class="verdict do">
+          <div class="verdict-head">✓ Mint for brand moments only</div>
+          <div class="verdict-body col-sm" style="gap:10px;">
+            <span class="badge badge-mint">Pro Plan</span>
+            <div style="height:5px;width:100px;border-radius:3px;background:linear-gradient(90deg,var(--mint-dark),var(--mint));"></div>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">token value in mint</span>
+          </div>
+        </div>
+        <div class="verdict dont">
+          <div class="verdict-head">✗ Mint for everything</div>
+          <div class="verdict-body col-sm" style="gap:8px;">
+            <span style="font-size:14px;font-weight:600;color:var(--mint);">Meeting title in mint</span>
+            <span style="font-size:12px;color:var(--mint);">Timestamp in mint</span>
+            <span style="font-size:11px;color:var(--mint);">Duration in mint</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div style="padding-top:48px;border-top:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="22" height="22" viewBox="0 0 512 512" fill="none"><defs><linearGradient id="ft-bg" x1="0" y1="0" x2="512" y2="512"><stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#ft-bg)"/><rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/><rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/><rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/><rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/></svg>
+      <span style="font-size:14px;font-weight:700;letter-spacing:-0.025em;color:var(--text-secondary);">hark<span style="color:var(--mint);">notes</span></span>
+    </div>
+    <span style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--text-tertiary);">Design System v1.0 · 2026</span>
+  </div>
+
+</div>
+</main>
+</div>
+
+<script>
+// ─── Theme switching ───────────────────────────────────────────────
+const html = document.documentElement;
+const themeBtns = document.querySelectorAll('.theme-btn');
+let currentMode = localStorage.getItem('hn-theme') || 'dark';
+
+function applyTheme(mode) {
+  currentMode = mode;
+  localStorage.setItem('hn-theme', mode);
+
+  if (mode === 'system') {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+  } else {
+    html.setAttribute('data-theme', mode);
+  }
+
+  themeBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+}
+
+themeBtns.forEach(btn => {
+  btn.addEventListener('click', () => applyTheme(btn.dataset.mode));
+});
+
+// Listen for system preference changes when in 'system' mode
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (currentMode === 'system') {
+    html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+  }
+});
+
+applyTheme(currentMode);
+
+// ─── Sidebar active state on scroll ───────────────────────────────
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-15% 0px -75% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// ─── Interactive toggles ───────────────────────────────────────────
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', () => t.classList.toggle('on'));
+});
+</script>
+</body>
+</html>
