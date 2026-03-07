@@ -12,7 +12,7 @@ export function softwareAppSchema() {
       { '@type': 'Offer', price: '12', priceCurrency: 'USD', name: 'Pro Local' },
     ],
     url: 'https://loosewire.dev/harknotes',
-    downloadUrl: 'https://github.com/LooseWireDev/harknotes/releases/latest',
+    downloadUrl: 'https://github.com/LooseWireDev/harknotes-releases/releases/latest',
     author: {
       '@type': 'Organization',
       name: 'Loose Wire LLC',

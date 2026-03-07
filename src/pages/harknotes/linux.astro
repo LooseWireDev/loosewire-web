@@ -25,9 +25,9 @@ import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
         <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 20px; letter-spacing: -0.02em;">Download</h2>
         <div style="display: flex; flex-direction: column; gap: 10px;">
           {[
-            { format: 'AppImage', desc: 'Universal — runs on any Linux distro', href: 'https://github.com/LooseWireDev/harknotes/releases/latest' },
-            { format: 'DEB', desc: 'Debian, Ubuntu, Linux Mint, Pop!_OS', href: 'https://github.com/LooseWireDev/harknotes/releases/latest' },
-            { format: 'RPM', desc: 'Fedora, RHEL, openSUSE', href: 'https://github.com/LooseWireDev/harknotes/releases/latest' },
+            { format: 'AppImage', desc: 'Universal — runs on any Linux distro', href: 'https://github.com/LooseWireDev/harknotes-releases/releases/latest' },
+            { format: 'DEB', desc: 'Debian, Ubuntu, Linux Mint, Pop!_OS', href: 'https://github.com/LooseWireDev/harknotes-releases/releases/latest' },
+            { format: 'RPM', desc: 'Fedora, RHEL, openSUSE', href: 'https://github.com/LooseWireDev/harknotes-releases/releases/latest' },
           ].map(({ format, desc, href }) => (
             <a href={href} style="display: flex; align-items: center; justify-content: space-between; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 12px; padding: 20px 24px; text-decoration: none;">
               <div>
