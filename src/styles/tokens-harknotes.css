@@ -1,0 +1,61 @@
+/* src/styles/tokens-harknotes.css */
+:root,
+[data-theme="dark"] {
+  --hk-mint:          #3dd68c;
+  --hk-mint-dark:     #28b874;
+  --hk-mint-forest:   #1e9460;
+  --hk-mint-subtle:   rgba(61,214,140,0.12);
+  --hk-mint-glow:     rgba(61,214,140,0.07);
+
+  --hk-bg:            #0e0f11;
+  --hk-bg-elevated:   #131517;
+  --hk-surface-1:     #181a1d;
+  --hk-surface-2:     #1e2124;
+  --hk-surface-3:     #252a2e;
+
+  --hk-border-subtle: rgba(255,255,255,0.05);
+  --hk-border:        rgba(255,255,255,0.09);
+  --hk-border-strong: rgba(255,255,255,0.16);
+
+  --hk-text-primary:   #f0f2f4;
+  --hk-text-secondary: #8c939e;
+  --hk-text-tertiary:  #4e5762;
+  --hk-text-inverse:   #0a1a14;
+
+  --hk-shadow-sm:   0 1px 3px rgba(0,0,0,0.5);
+  --hk-shadow-md:   0 4px 16px rgba(0,0,0,0.6);
+  --hk-shadow-lg:   0 16px 48px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.4);
+  --hk-shadow-mint: 0 0 24px rgba(61,214,140,0.18), 0 4px 12px rgba(0,0,0,0.4);
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --hk-mint:          #1c9e62;
+  --hk-mint-dark:     #158050;
+  --hk-mint-forest:   #0f6640;
+  --hk-mint-subtle:   rgba(28,158,98,0.1);
+  --hk-mint-glow:     rgba(28,158,98,0.06);
+
+  --hk-bg:            #f5f6f8;
+  --hk-bg-elevated:   #ffffff;
+  --hk-surface-1:     #ffffff;
+  --hk-surface-2:     #f0f2f5;
+  --hk-surface-3:     #e8eaee;
+
+  --hk-border-subtle: rgba(0,0,0,0.06);
+  --hk-border:        rgba(0,0,0,0.1);
+  --hk-border-strong: rgba(0,0,0,0.18);
+
+  --hk-text-primary:   #0f1117;
+  --hk-text-secondary: #4a5264;
+  --hk-text-tertiary:  #9199a8;
+  --hk-text-inverse:   #ffffff;
+
+  --hk-shadow-sm:   0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --hk-shadow-md:   0 4px 16px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.06);
+  --hk-shadow-lg:   0 16px 48px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.08);
+  --hk-shadow-mint: 0 0 20px rgba(28,158,98,0.15), 0 4px 12px rgba(0,0,0,0.08);
+
+  color-scheme: light;
+}

@@ -1,0 +1,6 @@
+/* src/styles/global.css */
+@import './tokens-loosewire.css';
+@import './tokens-harknotes.css';
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }

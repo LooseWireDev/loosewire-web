@@ -1,0 +1,26 @@
+/* src/styles/tokens-loosewire.css */
+:root {
+  --lw-pine:         #2e6e62;
+  --lw-pine-light:   #3d8a7c;
+  --lw-pine-dim:     #1e4e46;
+  --lw-pine-subtle:  rgba(46,110,98,0.07);
+  --lw-pine-glow:    rgba(46,110,98,0.04);
+
+  --lw-bg:           #f6f8f7;
+  --lw-bg-warm:      #f0f4f3;
+  --lw-surface:      #ffffff;
+  --lw-surface-2:    #eef2f1;
+  --lw-surface-3:    #e4eae8;
+
+  --lw-border:       rgba(0,0,0,0.07);
+  --lw-border-strong: rgba(0,0,0,0.13);
+
+  --lw-text:         #1a2422;
+  --lw-text-mid:     #5a7a74;
+  --lw-text-dim:     #94aaa4;
+  --lw-text-inverse: #f6f8f7;
+
+  --lw-font-display: 'Nunito Sans', sans-serif;
+  --lw-font-body:    'DM Sans', sans-serif;
+  --lw-font-mono:    'Geist Mono', monospace;
+}
