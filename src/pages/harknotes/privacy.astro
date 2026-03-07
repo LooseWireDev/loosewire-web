@@ -1,0 +1,68 @@
+---
+// src/pages/harknotes/privacy.astro
+import HarknotesLayout from '../../layouts/HarknotesLayout.astro';
+---
+<HarknotesLayout
+  title="Harknotes Privacy — Local Audio, No Cloud Recording"
+  description="How Harknotes keeps your meetings private: local whisper transcription, no audio upload, only text sent for AI summarisation."
+  canonicalUrl="https://loosewire.dev/harknotes/privacy"
+>
+  <nav style="padding: 20px 32px; border-bottom: 1px solid var(--hk-border-subtle);">
+    <a href="/harknotes" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← Harknotes</a>
+  </nav>
+  <main style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
+    <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Privacy</p>
+    <h1 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 24px; line-height: 1.1;">
+      Your meetings stay on your machine
+    </h1>
+    <p style="font-size: 18px; color: var(--hk-text-secondary); margin-bottom: 48px; line-height: 1.6; border-bottom: 1px solid var(--hk-border-subtle); padding-bottom: 32px;">
+      Harknotes is built around a single principle: your audio never leaves your device. Here's exactly what stays local and what doesn't.
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 40px; color: var(--hk-text-secondary); font-size: 16px; line-height: 1.8;">
+
+      <section>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 16px; letter-spacing: -0.02em;">What stays on your machine</h2>
+        <ul style="padding-left: 24px; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">All audio</strong> — mic and system audio captured, processed, and deleted locally. Never transmitted.</li>
+          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">WAV files</strong> — temporary audio files created during recording are deleted after transcription.</li>
+          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">Transcript and notes</strong> — saved as Markdown to the folder you choose. No sync, no cloud backup.</li>
+          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">Whisper model weights</strong> — downloaded once to your machine. Transcription runs entirely offline.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 16px; letter-spacing: -0.02em;">What leaves your machine</h2>
+        <ul style="padding-left: 24px; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">The text transcript</strong> — sent to our API for AI summarisation. No audio. No metadata. Just the words.</li>
+          <li style="margin-bottom: 10px;"><strong style="color: var(--hk-text-primary);">Your auth token</strong> — used to verify your account and check usage limits.</li>
+        </ul>
+        <div style="background: var(--hk-mint-subtle); border: 1px solid rgba(61,214,140,0.2); border-radius: 12px; padding: 20px 24px; font-size: 14px;">
+          The text transcript is processed by GPT-4o mini and discarded. We don't store transcripts on our servers.
+        </div>
+      </section>
+
+      <section>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 16px; letter-spacing: -0.02em;">How whisper.cpp works</h2>
+        <p style="margin-bottom: 16px;">
+          Harknotes bundles <a href="https://github.com/ggerganov/whisper.cpp" style="color: var(--hk-mint);">whisper.cpp</a> — a C++ implementation of OpenAI's Whisper speech recognition model — as a compiled binary. When you stop recording, Harknotes spawns this binary as a child process on your machine.
+        </p>
+        <p>No internet connection is required for transcription. The Whisper model weights (downloaded once on first run) run entirely on your CPU or GPU.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size: 22px; font-weight: 700; color: var(--hk-text-primary); margin-bottom: 16px; letter-spacing: -0.02em;">No bot, no visible recording</h2>
+        <p>
+          Unlike Otter.ai, Fireflies, or tl;dv, Harknotes does not join your meeting as a participant. It captures audio at the operating system level — the same way screen recorders work. Other participants cannot see any recording indicator.
+        </p>
+      </section>
+
+    </div>
+
+    <div style="margin-top: 64px; text-align: center;">
+      <a href="/harknotes#download" style="display: inline-block; background: var(--hk-mint); color: var(--hk-text-inverse); font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: 10px; text-decoration: none;">
+        Download Harknotes →
+      </a>
+    </div>
+  </main>
+</HarknotesLayout>
