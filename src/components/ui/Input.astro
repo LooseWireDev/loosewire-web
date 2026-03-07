@@ -1,0 +1,47 @@
+---
+// src/components/ui/Input.astro
+interface Props {
+  type?: string;
+  placeholder?: string;
+  label?: string;
+  name?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const { type = 'text', placeholder, label, name, class: className, ...rest } = Astro.props;
+---
+<div class:list={["input-group", className]}>
+  {label && <label class="input-label" for={name}>{label}</label>}
+  <input class="input-field" type={type} placeholder={placeholder} name={name} id={name} {...rest} />
+</div>
+
+<style>
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .input-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--hk-text-primary, var(--lw-text));
+  }
+  .input-field {
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--hk-border, var(--lw-border));
+    background: var(--hk-surface-1, var(--lw-surface));
+    color: var(--hk-text-primary, var(--lw-text));
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input-field:focus {
+    border-color: var(--hk-mint, var(--lw-pine));
+  }
+  .input-field::placeholder {
+    color: var(--hk-text-tertiary, var(--lw-text-dim));
+  }
+</style>

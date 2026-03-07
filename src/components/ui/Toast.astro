@@ -1,0 +1,45 @@
+---
+// src/components/ui/Toast.astro
+interface Props {
+  variant?: 'info' | 'success' | 'warning' | 'error';
+  class?: string;
+}
+
+const { variant = 'info', class: className } = Astro.props;
+---
+<div class:list={[`toast toast--${variant}`, className]} role="alert">
+  <slot />
+</div>
+
+<style>
+  .toast {
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    box-shadow: var(--hk-shadow-md, 0 4px 16px rgba(0,0,0,0.1));
+  }
+  .toast--info {
+    background: var(--hk-surface-2, var(--lw-surface-2));
+    border: 1px solid var(--hk-border, var(--lw-border));
+    color: var(--hk-text-primary, var(--lw-text));
+  }
+  .toast--success {
+    background: var(--hk-mint-subtle, var(--lw-pine-subtle));
+    border: 1px solid rgba(61,214,140,0.2);
+    color: var(--hk-mint, var(--lw-pine));
+  }
+  .toast--warning {
+    background: var(--hk-warning-dim, rgba(245,158,11,0.12));
+    border: 1px solid rgba(245,158,11,0.2);
+    color: var(--hk-warning, #f59e0b);
+  }
+  .toast--error {
+    background: rgba(248,113,113,0.12);
+    border: 1px solid rgba(248,113,113,0.2);
+    color: var(--hk-error, #f87171);
+  }
+</style>

@@ -1,0 +1,20 @@
+---
+// src/components/ui/Card.astro
+interface Props {
+  class?: string;
+  padding?: string;
+}
+
+const { class: className, padding = '24px' } = Astro.props;
+---
+<div class:list={["card", className]} style={`padding: ${padding};`}>
+  <slot />
+</div>
+
+<style>
+  .card {
+    background: var(--hk-surface-1, var(--lw-surface));
+    border: 1px solid var(--hk-border, var(--lw-border));
+    border-radius: 14px;
+  }
+</style>

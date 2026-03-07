@@ -1,0 +1,41 @@
+---
+// src/components/ui/Badge.astro
+interface Props {
+  variant?: 'default' | 'mint' | 'red' | 'warning';
+  class?: string;
+}
+
+const { variant = 'default', class: className } = Astro.props;
+---
+<span class:list={[`badge badge--${variant}`, className]}>
+  <slot />
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .badge--default {
+    background: var(--hk-surface-2, var(--lw-surface-2));
+    color: var(--hk-text-secondary, var(--lw-text-mid));
+  }
+  .badge--mint {
+    background: var(--hk-mint-subtle, var(--lw-pine-subtle));
+    color: var(--hk-mint, var(--lw-pine));
+  }
+  .badge--red {
+    background: var(--hk-record-red-dim, rgba(239,68,68,0.12));
+    color: var(--hk-record-red, #ef4444);
+  }
+  .badge--warning {
+    background: var(--hk-warning-dim, rgba(245,158,11,0.12));
+    color: var(--hk-warning, #f59e0b);
+  }
+</style>

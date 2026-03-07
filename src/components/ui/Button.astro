@@ -1,0 +1,50 @@
+---
+// src/components/ui/Button.astro
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const { variant = 'primary', size = 'md', href, class: className, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+<Tag
+  href={href}
+  class:list={[`btn btn--${variant} btn--${size}`, className]}
+  {...rest}
+>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  }
+  .btn--sm { font-size: 13px; padding: 8px 16px; border-radius: 8px; }
+  .btn--md { font-size: 14px; padding: 11px 22px; border-radius: 10px; }
+  .btn--lg { font-size: 15px; padding: 14px 28px; border-radius: 10px; }
+  .btn--primary {
+    background: var(--hk-mint, var(--lw-pine));
+    color: var(--hk-text-inverse, var(--lw-text-inverse));
+  }
+  .btn--secondary {
+    background: var(--hk-surface-2, var(--lw-surface-2));
+    color: var(--hk-text-primary, var(--lw-text));
+    border: 1px solid var(--hk-border, var(--lw-border));
+  }
+  .btn--ghost {
+    background: transparent;
+    color: var(--hk-text-secondary, var(--lw-text-mid));
+  }
+</style>
