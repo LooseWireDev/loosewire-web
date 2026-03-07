@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "deploy": "wrangler deploy",
     "astro": "astro",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@vitest/ui": "^4.0.18",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "wrangler": "^4.71.0"
   }
 }
