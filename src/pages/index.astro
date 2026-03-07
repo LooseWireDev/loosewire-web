@@ -1,6 +1,10 @@
 ---
 // src/pages/index.astro
 import LooseWireLayout from '../layouts/LooseWireLayout.astro';
+import Logo from '../components/loosewire/Logo.astro';
+import Wordmark from '../components/loosewire/Wordmark.astro';
+import HarknotesLogo from '../components/harknotes/Logo.astro';
+import FooterCredit from '../components/loosewire/FooterCredit.astro';
 ---
 <LooseWireLayout
   title="Loose Wire — Small tools, built carefully"
@@ -9,9 +13,8 @@ import LooseWireLayout from '../layouts/LooseWireLayout.astro';
   <main style="max-width: 740px; margin: 0 auto; padding: 0 32px;">
 
     <header style="padding: 100px 0 64px; text-align: center;">
-      <!-- wordmark — TODO: replace with correct SVG from docs/styleguides/loosewire.html -->
       <div style="margin-bottom: 48px;">
-        <div style="width: 48px; height: 48px; border-radius: 12px; background: #0e1816; display: inline-block;"></div>
+        <Logo size={48} />
       </div>
       <h1 style="font-family: var(--lw-font-display); font-size: clamp(36px, 6vw, 52px); font-weight: 800; letter-spacing: -0.035em; line-height: 1; color: var(--lw-text); margin-bottom: 8px;">
         Loose <span style="color: var(--lw-pine);">Wire</span>
@@ -29,12 +32,9 @@ import LooseWireLayout from '../layouts/LooseWireLayout.astro';
         Products
       </p>
 
-      <a href="/harknotes" style="display: block; background: var(--lw-surface); border: 1px solid var(--lw-border); border-radius: 16px; padding: 32px; text-decoration: none; transition: border-color 0.15s, box-shadow 0.15s;"
-         onmouseover="this.style.borderColor='var(--lw-pine)'; this.style.boxShadow='0 4px 24px rgba(46,110,98,0.1)'"
-         onmouseout="this.style.borderColor='var(--lw-border)'; this.style.boxShadow='none'">
+      <a href="/harknotes" class="product-card">
         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
-          <!-- TODO: replace with correct Harknotes icon from docs/styleguides/harknotes.html -->
-          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0e0f11; flex-shrink: 0;"></div>
+          <HarknotesLogo size={40} />
           <div>
             <h2 style="font-family: var(--lw-font-display); font-size: 18px; font-weight: 700; color: var(--lw-text); letter-spacing: -0.02em; margin-bottom: 2px;">Harknotes</h2>
             <span style="font-family: var(--lw-font-mono); font-size: 10px; color: var(--lw-pine); letter-spacing: 0.06em;">macOS · Linux</span>
@@ -56,11 +56,30 @@ import LooseWireLayout from '../layouts/LooseWireLayout.astro';
 
   </main>
 
-  <footer style="border-top: 1px solid var(--lw-border); padding: 32px; text-align: center;">
-    <p style="font-size: 13px; color: var(--lw-text-dim);">
-      © 2026 Loose Wire LLC ·
-      <a href="/harknotes" style="color: var(--lw-text-mid); text-decoration: none;">Harknotes</a> ·
-      <a href="/blog" style="color: var(--lw-text-mid); text-decoration: none;">Blog</a>
-    </p>
+  <footer style="border-top: 1px solid var(--lw-border); padding: 32px;">
+    <div style="max-width: 740px; margin: 0 auto;">
+      <FooterCredit>
+        <div style="display: flex; gap: 16px;">
+          <a href="/harknotes" style="font-size: 12px; color: var(--lw-text-dim); text-decoration: none;">Harknotes</a>
+          <a href="/blog" style="font-size: 12px; color: var(--lw-text-dim); text-decoration: none;">Blog</a>
+        </div>
+      </FooterCredit>
+    </div>
   </footer>
 </LooseWireLayout>
+
+<style>
+  .product-card {
+    display: block;
+    background: var(--lw-surface);
+    border: 1px solid var(--lw-border);
+    border-radius: 16px;
+    padding: 32px;
+    text-decoration: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .product-card:hover {
+    border-color: var(--lw-pine);
+    box-shadow: 0 4px 24px rgba(46,110,98,0.1);
+  }
+</style>
