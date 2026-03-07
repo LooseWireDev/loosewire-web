@@ -1,0 +1,36 @@
+---
+// src/components/loosewire/Nav.astro
+import Wordmark from './Wordmark.astro';
+---
+<nav class="lw-nav">
+  <a href="/" class="lw-nav-home">
+    <Wordmark logoSize={24} fontSize="16px" />
+  </a>
+  <div class="lw-nav-links">
+    <slot />
+  </div>
+</nav>
+
+<style>
+  .lw-nav {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lw-nav-home {
+    text-decoration: none;
+  }
+  .lw-nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .lw-nav-links :global(a) {
+    font-size: 14px;
+    color: var(--lw-text-mid);
+    text-decoration: none;
+  }
+</style>

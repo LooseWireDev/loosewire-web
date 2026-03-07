@@ -1,0 +1,33 @@
+---
+// src/components/loosewire/Wordmark.astro
+import Logo from './Logo.astro';
+
+interface Props {
+  logoSize?: number;
+  fontSize?: string;
+  class?: string;
+}
+
+const { logoSize = 36, fontSize = '22px', class: className } = Astro.props;
+---
+<div class:list={["lw-wordmark", className]}>
+  <Logo size={logoSize} />
+  <span class="lw-wordmark-text" style={`font-size: ${fontSize};`}>loose<span class="accent">wire</span></span>
+</div>
+
+<style>
+  .lw-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .lw-wordmark-text {
+    font-family: var(--lw-font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--lw-text);
+  }
+  .lw-wordmark-text .accent {
+    color: var(--lw-pine);
+  }
+</style>

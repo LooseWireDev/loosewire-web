@@ -1,0 +1,52 @@
+---
+// src/components/harknotes/Nav.astro
+import Wordmark from './Wordmark.astro';
+
+interface Props {
+  showCta?: boolean;
+}
+
+const { showCta = true } = Astro.props;
+---
+<nav class="hk-nav">
+  <a href="/harknotes" class="hk-nav-home">
+    <Wordmark logoSize={24} fontSize="15px" />
+  </a>
+  <div class="hk-nav-links">
+    <a href="/harknotes/blog">Blog</a>
+    <a href="#pricing">Pricing</a>
+    {showCta && <a href="#download" class="hk-nav-cta">Download</a>}
+  </div>
+</nav>
+
+<style>
+  .hk-nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .hk-nav-home {
+    text-decoration: none;
+  }
+  .hk-nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .hk-nav-links a {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+    text-decoration: none;
+  }
+  .hk-nav-cta {
+    font-size: 13px !important;
+    font-weight: 600;
+    color: var(--hk-text-inverse) !important;
+    background: var(--hk-mint);
+    padding: 8px 18px;
+    border-radius: 8px;
+  }
+</style>

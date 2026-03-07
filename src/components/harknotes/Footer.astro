@@ -1,0 +1,69 @@
+---
+// src/components/harknotes/Footer.astro
+import Logo from '../loosewire/Logo.astro';
+---
+<footer class="hk-footer">
+  <div class="hk-footer-inner">
+    <div class="hk-footer-brand">
+      <p class="hk-footer-name">Harknotes</p>
+      <p class="hk-footer-by">
+        by
+        <Logo size={12} />
+        <a href="/" class="hk-footer-parent">loosewire</a>
+      </p>
+    </div>
+    <nav class="hk-footer-nav">
+      <a href="/harknotes/privacy">Privacy</a>
+      <a href="/harknotes/linux">Linux</a>
+      <a href="/harknotes/blog">Blog</a>
+      <a href="/harknotes/vs/otter-ai">vs Otter.ai</a>
+      <a href="https://github.com/LooseWireDev/harknotes">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .hk-footer {
+    border-top: 1px solid var(--hk-border-subtle);
+    padding: 40px 32px;
+  }
+  .hk-footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .hk-footer-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--hk-text-primary);
+    margin-bottom: 4px;
+  }
+  .hk-footer-by {
+    font-size: 13px;
+    color: var(--hk-text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .hk-footer-parent {
+    font-family: var(--lw-font-display, 'Nunito Sans', sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--hk-text-tertiary);
+    text-decoration: none;
+  }
+  .hk-footer-nav {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hk-footer-nav a {
+    font-size: 13px;
+    color: var(--hk-text-secondary);
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+// src/components/harknotes/StepCard.astro
+interface Props {
+  number: string;
+  title: string;
+  description: string;
+}
+
+const { number, title, description } = Astro.props;
+---
+<div class="hk-step-card">
+  <div class="hk-step-card-number">{number}</div>
+  <h3 class="hk-step-card-title">{title}</h3>
+  <p class="hk-step-card-desc">{description}</p>
+</div>
+
+<style>
+  .hk-step-card-number {
+    font-family: 'Geist Mono', monospace;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--hk-mint);
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+  .hk-step-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--hk-text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .hk-step-card-desc {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+    line-height: 1.7;
+  }
+</style>

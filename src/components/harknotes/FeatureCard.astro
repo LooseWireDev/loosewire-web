@@ -1,0 +1,41 @@
+---
+// src/components/harknotes/FeatureCard.astro
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+<div class="hk-feature-card">
+  <div class="hk-feature-card-dot"></div>
+  <h3 class="hk-feature-card-title">{title}</h3>
+  <p class="hk-feature-card-desc">{description}</p>
+</div>
+
+<style>
+  .hk-feature-card {
+    background: var(--hk-surface-1);
+    border: 1px solid var(--hk-border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .hk-feature-card-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--hk-mint);
+    margin-bottom: 16px;
+  }
+  .hk-feature-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--hk-text-primary);
+    margin-bottom: 6px;
+  }
+  .hk-feature-card-desc {
+    font-size: 13px;
+    color: var(--hk-text-secondary);
+    line-height: 1.6;
+  }
+</style>

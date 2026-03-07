@@ -1,0 +1,100 @@
+---
+// src/components/harknotes/PricingCard.astro
+interface Props {
+  name: string;
+  price: string;
+  period: string;
+  summaries: string;
+  features: string[];
+  highlight?: boolean;
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const { name, price, period, summaries, features, highlight = false, ctaHref = '#download', ctaLabel = 'Get started' } = Astro.props;
+---
+<div class:list={["hk-pricing-card", { "hk-pricing-card--highlight": highlight }]}>
+  <h3 class="hk-pricing-card-name">{name}</h3>
+  <div class="hk-pricing-card-price">
+    <span class="hk-pricing-card-amount">{price}</span>
+    <span class="hk-pricing-card-period">{period}</span>
+  </div>
+  <p class="hk-pricing-card-summaries">{summaries}</p>
+  <ul class="hk-pricing-card-features">
+    {features.map(f => <li><span class="check">&#10003;</span> {f}</li>)}
+  </ul>
+  <a href={ctaHref} class:list={["hk-pricing-card-cta", { "hk-pricing-card-cta--highlight": highlight }]}>
+    {ctaLabel}
+  </a>
+</div>
+
+<style>
+  .hk-pricing-card {
+    background: var(--hk-bg);
+    border: 1px solid var(--hk-border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .hk-pricing-card--highlight {
+    background: var(--hk-mint-subtle);
+    border-color: rgba(61,214,140,0.3);
+  }
+  .hk-pricing-card-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--hk-text-primary);
+    margin-bottom: 4px;
+  }
+  .hk-pricing-card-price {
+    margin-bottom: 8px;
+  }
+  .hk-pricing-card-amount {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--hk-text-primary);
+    letter-spacing: -0.03em;
+  }
+  .hk-pricing-card-period {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+  }
+  .hk-pricing-card-summaries {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--hk-mint);
+    margin-bottom: 24px;
+  }
+  .hk-pricing-card-features {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+  .hk-pricing-card-features li {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+    padding: 5px 0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .check {
+    color: var(--hk-mint);
+    flex-shrink: 0;
+  }
+  .hk-pricing-card-cta {
+    display: block;
+    text-align: center;
+    padding: 11px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--hk-surface-2);
+    color: var(--hk-text-primary);
+    border: 1px solid var(--hk-border);
+  }
+  .hk-pricing-card-cta--highlight {
+    background: var(--hk-mint);
+    color: var(--hk-text-inverse);
+    border: none;
+  }
+</style>

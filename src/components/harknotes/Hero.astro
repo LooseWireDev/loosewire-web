@@ -1,0 +1,104 @@
+---
+// src/components/harknotes/Hero.astro
+interface Props {
+  badge?: string;
+  headline: string;
+  highlightedText?: string;
+  subtitle: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const { badge, headline, highlightedText, subtitle, primaryCta, secondaryCta } = Astro.props;
+---
+<div class="hk-hero">
+  {badge && (
+    <div class="hk-hero-badge">
+      <span class="hk-hero-badge-dot"></span>
+      <span>{badge}</span>
+    </div>
+  )}
+  <h1 class="hk-hero-headline" set:html={highlightedText
+    ? headline.replace(highlightedText, `<span class="hk-hero-highlight">${highlightedText}</span>`)
+    : headline} />
+  <p class="hk-hero-subtitle">{subtitle}</p>
+  {(primaryCta || secondaryCta) && (
+    <div class="hk-hero-actions">
+      {primaryCta && <a href={primaryCta.href} class="hk-hero-primary">{primaryCta.label}</a>}
+      {secondaryCta && <a href={secondaryCta.href} class="hk-hero-secondary">{secondaryCta.label}</a>}
+    </div>
+  )}
+</div>
+
+<style>
+  .hk-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 100px 32px 120px;
+    text-align: center;
+  }
+  .hk-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--hk-mint-subtle);
+    border: 1px solid rgba(61,214,140,0.2);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 40px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--hk-mint);
+    letter-spacing: 0.06em;
+  }
+  .hk-hero-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--hk-mint);
+    display: inline-block;
+  }
+  .hk-hero-headline {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--hk-text-primary);
+    margin-bottom: 24px;
+  }
+  .hk-hero-headline :global(.hk-hero-highlight) {
+    color: var(--hk-mint);
+  }
+  .hk-hero-subtitle {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--hk-text-secondary);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+  .hk-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hk-hero-primary {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--hk-text-inverse);
+    background: var(--hk-mint);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  .hk-hero-secondary {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--hk-text-secondary);
+    background: var(--hk-surface-2);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--hk-border);
+  }
+</style>
