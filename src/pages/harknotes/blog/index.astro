@@ -2,6 +2,8 @@
 // src/pages/harknotes/blog/index.astro
 import HarknotesLayout from '../../../layouts/HarknotesLayout.astro';
 import { getCollection } from 'astro:content';
+import Nav from '../../../components/harknotes/Nav.astro';
+import Footer from '../../../components/harknotes/Footer.astro';
 
 const posts = (await getCollection('harknotes-blog')).sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
@@ -11,9 +13,7 @@ const posts = (await getCollection('harknotes-blog')).sort(
   title="Harknotes Blog — Meeting Transcription Insights"
   description="Articles on privacy-first meeting transcription, local AI, and productivity."
 >
-  <nav style="padding: 20px 32px; border-bottom: 1px solid var(--hk-border-subtle);">
-    <a href="/harknotes" style="font-size: 14px; color: var(--hk-text-secondary); text-decoration: none;">← Harknotes</a>
-  </nav>
+  <Nav showCta={false} />
 
   <main style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
     <h1 style="font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 8px;">Blog</h1>
@@ -36,4 +36,6 @@ const posts = (await getCollection('harknotes-blog')).sort(
       ))}
     </div>
   </main>
+
+  <Footer />
 </HarknotesLayout>
