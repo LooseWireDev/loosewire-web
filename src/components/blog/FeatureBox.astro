@@ -1,0 +1,54 @@
+---
+// src/components/blog/FeatureBox.astro
+interface Props {
+  title: string;
+  icon?: string;
+}
+
+const { title, icon = '→' } = Astro.props;
+---
+<div class="feature-box">
+  <div class="feature-box-header">
+    <span class="feature-box-icon">{icon}</span>
+    <span class="feature-box-title">{title}</span>
+  </div>
+  <div class="feature-box-body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .feature-box {
+    background: var(--hk-surface-1);
+    border: 1px solid var(--hk-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .feature-box-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feature-box-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: var(--hk-mint-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .feature-box-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--hk-text-primary);
+  }
+  .feature-box-body {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+    line-height: 1.6;
+  }
+</style>

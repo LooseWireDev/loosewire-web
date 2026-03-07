@@ -1,0 +1,40 @@
+---
+// src/components/blog/SectionHeading.astro
+interface Props {
+  icon?: string;
+  label?: string;
+}
+
+const { icon, label } = Astro.props;
+---
+<div class="section-heading">
+  {icon && <span class="section-heading-icon">{icon}</span>}
+  {label && <span class="section-heading-label">{label}</span>}
+  <span class="section-heading-line"></span>
+</div>
+
+<style>
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 48px 0 24px;
+  }
+  .section-heading-icon {
+    font-size: 16px;
+  }
+  .section-heading-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hk-mint);
+    white-space: nowrap;
+  }
+  .section-heading-line {
+    flex: 1;
+    height: 1px;
+    background: var(--hk-border-subtle);
+  }
+</style>

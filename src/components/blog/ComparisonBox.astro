@@ -1,0 +1,65 @@
+---
+// src/components/blog/ComparisonBox.astro
+interface Props {
+  leftLabel?: string;
+  rightLabel?: string;
+}
+
+const { leftLabel = 'Cloud-based', rightLabel = 'Local (Harknotes)' } = Astro.props;
+---
+<div class="comparison-box">
+  <div class="comparison-box-col comparison-box-col--left">
+    <div class="comparison-box-label comparison-box-label--left">{leftLabel}</div>
+    <div class="comparison-box-content"><slot name="left" /></div>
+  </div>
+  <div class="comparison-box-col comparison-box-col--right">
+    <div class="comparison-box-label comparison-box-label--right">{rightLabel}</div>
+    <div class="comparison-box-content"><slot name="right" /></div>
+  </div>
+</div>
+
+<style>
+  .comparison-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+  .comparison-box-col {
+    padding: 20px;
+  }
+  .comparison-box-col--left {
+    background: rgba(248,113,113,0.06);
+  }
+  .comparison-box-col--right {
+    background: var(--hk-mint-subtle);
+  }
+  .comparison-box-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .comparison-box-label--left {
+    color: var(--hk-error, #f87171);
+  }
+  .comparison-box-label--right {
+    color: var(--hk-mint);
+  }
+  .comparison-box-content {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+    line-height: 1.6;
+  }
+  .comparison-box-content :global(ul) {
+    list-style: none;
+    padding: 0;
+  }
+  .comparison-box-content :global(li) {
+    padding: 4px 0;
+  }
+</style>
