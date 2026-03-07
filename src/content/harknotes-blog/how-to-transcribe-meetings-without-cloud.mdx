@@ -3,7 +3,14 @@ title: "How to Transcribe Meetings Without Uploading to the Cloud"
 description: "You don't have to send your meeting audio to third-party servers. Here's how to transcribe meetings locally, with no cloud upload required."
 pubDate: "2026-03-06"
 keywords: ["transcribe meetings without cloud", "local meeting transcription", "offline meeting transcription"]
+tldr: "You can transcribe meetings locally using whisper.cpp — either manually, via a shell script, or through Harknotes which bundles the full pipeline. Audio never leaves your device; only the text transcript is sent for optional AI summarisation."
+readTime: "5 min read"
 ---
+
+import Callout from '../../components/blog/Callout.astro';
+import FeatureBox from '../../components/blog/FeatureBox.astro';
+import ComparisonBox from '../../components/blog/ComparisonBox.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
 
 Every major meeting transcription service — Otter, Fireflies, tl;dv, Fathom — works by uploading your audio to their cloud infrastructure. That's how they run speech recognition at scale, and it's a reasonable trade-off for many people.
 
@@ -22,6 +29,8 @@ There are a few reasons you might want local transcription:
 **Cost.** Cloud transcription services charge per minute or per seat. Local transcription using open-source models is free beyond the compute cost on your hardware.
 
 **Offline use.** Local transcription works without an internet connection. Useful if you're recording in environments with restricted connectivity.
+
+<SectionHeading label="Three approaches" />
 
 ## Option 1: Use whisper.cpp directly
 
@@ -66,11 +75,15 @@ On Linux, you'd use PulseAudio or PipeWire for capture. This is more involved bu
 
 If you want local transcription without managing the infrastructure yourself, [Harknotes](https://loosewire.dev/harknotes) handles the full pipeline:
 
+<FeatureBox title="Harknotes pipeline">
+
 1. **Record** — click the menu bar icon to start capturing
 2. **Transcribe** — whisper.cpp runs locally when you stop recording
 3. **Notes** — summary, action items, and transcript saved as Markdown
 
 Harknotes bundles whisper.cpp as a compiled binary and downloads the model on first run. After setup, it works completely offline for the transcription step.
+
+</FeatureBox>
 
 The only cloud call it makes is for AI summarisation — sending the text transcript (not audio) to generate structured notes. You can skip this step if you want the raw transcript only.
 
@@ -85,6 +98,10 @@ The only cloud call it makes is for AI summarisation — sending the text transc
 ## What about quality?
 
 Whisper's `large-v3` model is genuinely excellent. For clear meeting audio with two to eight speakers, accuracy is typically over 95% for English. Other languages vary but are generally competitive with cloud alternatives.
+
+<Callout type="tip" title="Performance tip">
+On Apple Silicon or machines with a dedicated GPU, Whisper transcription is often faster than real-time. On CPU-only hardware, expect a few minutes of processing for a long meeting.
+</Callout>
 
 The main limitation is speed on CPU. On a modern Apple Silicon Mac or a machine with a dedicated GPU, transcription is fast — often faster than real-time. On older hardware or CPU-only machines, you may wait a few minutes for a long meeting to process.
 

@@ -3,7 +3,14 @@ title: "Meeting Transcription Without a Bot Joining Your Call"
 description: "Most meeting transcription tools send a bot into your meeting. Here's why that's a problem — and how to transcribe meetings without anyone knowing."
 pubDate: "2026-03-06"
 keywords: ["meeting transcription without bot", "private meeting transcription", "no bot meeting recorder"]
+tldr: "Meeting bots are visible, awkward, and upload your audio to the cloud. Harknotes captures audio locally at the OS level, transcribes with Whisper AI on-device, and only sends the text transcript for summarisation — no bot, no cloud audio."
+readTime: "4 min read"
 ---
+
+import Callout from '../../components/blog/Callout.astro';
+import FeatureBox from '../../components/blog/FeatureBox.astro';
+import ComparisonBox from '../../components/blog/ComparisonBox.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
 
 If you've used Otter.ai, Fireflies, or tl;dv, you'll have seen it: a bot account joins your call, sits in the participant list, and records everything. Everyone in the meeting can see it. And increasingly, everyone finds it awkward.
 
@@ -21,6 +28,8 @@ Meeting bots work by joining your call as a participant and capturing the audio 
 
 **Compliance.** For teams subject to GDPR, HIPAA, or contractual NDAs, cloud-recorded audio is a genuine risk. Many enterprise security policies ban these tools outright.
 
+<SectionHeading label="The alternative" />
+
 ## How local transcription works instead
 
 The alternative is to capture audio at the operating system level — the same way a screen recorder works. Your application captures the audio output (system sound) and your microphone input as separate streams, directly on your machine.
@@ -29,11 +38,36 @@ This is what [Harknotes](https://loosewire.dev/harknotes) does. It runs as a men
 
 When you stop recording, a local Whisper AI model transcribes the audio on your machine. This step requires no internet connection. The audio never leaves your device.
 
+<Callout type="tip" title="Audio stays on your machine">
+Harknotes captures and transcribes audio entirely on-device using whisper.cpp. The only data sent externally is the text transcript, used for AI summarisation. No audio ever leaves your machine.
+</Callout>
+
 ## What you do send to the cloud
 
 The only data that leaves your machine is the text transcript — sent to an AI model for summarisation. No audio. No metadata. Just the words spoken in the meeting, in text form.
 
 This is a fundamentally different privacy model. A transcript of your meeting is sensitive, but it's a fraction of the risk of handing over the raw audio.
+
+<ComparisonBox>
+  <div slot="left">
+    <h4>Bot-based tools</h4>
+    <ul>
+      <li>Bot joins your call visibly</li>
+      <li>Audio uploaded to vendor servers</li>
+      <li>Compliance risk with GDPR, HIPAA, NDAs</li>
+      <li>Everyone knows you're recording</li>
+    </ul>
+  </div>
+  <div slot="right">
+    <h4>Local transcription (Harknotes)</h4>
+    <ul>
+      <li>No bot — OS-level audio capture</li>
+      <li>Audio stays on your device</li>
+      <li>Only text transcript sent for summarisation</li>
+      <li>Meeting proceeds normally</li>
+    </ul>
+  </div>
+</ComparisonBox>
 
 ## Who this matters for
 

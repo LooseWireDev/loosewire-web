@@ -3,7 +3,14 @@ title: "The Privacy-First Alternative to Otter.ai"
 description: "Otter.ai uploads your meeting audio to the cloud and sends a bot into your calls. Here's a privacy-first alternative that transcribes locally."
 pubDate: "2026-03-06"
 keywords: ["private otter ai alternative", "otter ai privacy", "meeting transcription no cloud"]
+tldr: "Otter.ai sends a bot into your meetings and uploads audio to their servers. Harknotes captures audio locally, transcribes on-device with Whisper, and only sends the text transcript for AI summaries. No bot, no cloud audio, starting at $6/mo vs Otter's $16.99/mo."
+readTime: "5 min read"
 ---
+
+import Callout from '../../components/blog/Callout.astro';
+import FeatureBox from '../../components/blog/FeatureBox.astro';
+import ComparisonBox from '../../components/blog/ComparisonBox.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
 
 Otter.ai is one of the most popular meeting transcription tools. It's polished, accurate, and integrates with the tools you already use. But it has a fundamental architectural decision that makes it unsuitable for privacy-conscious users: it uploads your meeting audio to the cloud.
 
@@ -31,11 +38,19 @@ NDA clauses often prohibit sharing confidential information with third parties. 
 
 None of this means Otter.ai is illegal to use. But it does mean that for many professional use cases, the legal and compliance team will say no.
 
+<Callout type="tip" title="The core difference">
+Otter.ai uploads your meeting audio to their servers. Harknotes keeps audio on your device and only sends the text transcript for AI summarisation. This is a fundamentally different privacy model.
+</Callout>
+
+<SectionHeading label="The privacy-first approach" />
+
 ## What a privacy-first alternative looks like
 
 The privacy-respecting approach to meeting transcription is local audio processing: capture the audio on your machine, transcribe it on your machine, and never send the audio anywhere.
 
 This is exactly what [Harknotes](https://loosewire.dev/harknotes) does.
+
+<FeatureBox title="How Harknotes works differently">
 
 **No bot joins your meeting.** Harknotes captures audio at the operating system level — your microphone and system audio output as separate streams. No participant account. No visible recording indicator.
 
@@ -44,6 +59,8 @@ This is exactly what [Harknotes](https://loosewire.dev/harknotes) does.
 **Audio never leaves your machine.** The only external request Harknotes makes is to generate the AI summary — and that sends the text transcript, not the audio.
 
 **Notes saved as Markdown.** Your meeting notes land in a folder you control, in a format you own. No vendor lock-in.
+
+</FeatureBox>
 
 ## The trade-offs
 
