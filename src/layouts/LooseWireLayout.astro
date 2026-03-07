@@ -7,10 +7,13 @@ interface Props {
   description: string;
   canonicalUrl?: string;
   ogImage?: string;
+  ogType?: string;
+  schema?: object;
+  noindex?: boolean;
 }
 
-const { title, description, canonicalUrl, ogImage } = Astro.props;
-const canonical = canonicalUrl ?? Astro.url.href;
+const { title, description, canonicalUrl, ogImage, ogType, schema, noindex } = Astro.props;
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, 'https://loosewire.dev').href;
 const image = ogImage ?? 'https://loosewire.dev/og-loosewire.png';
 ---
 <!doctype html>
@@ -22,16 +25,21 @@ const image = ogImage ?? 'https://loosewire.dev/og-loosewire.png';
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
 
+  <meta property="og:site_name" content="Loose Wire" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={image} />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType ?? 'website'} />
+  <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
+
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

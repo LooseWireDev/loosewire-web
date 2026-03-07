@@ -26,7 +26,7 @@ const faqItems = [
   },
   {
     q: 'How does speaker identification work?',
-    a: 'Harknotes captures microphone and system audio as separate streams. Your mic is labelled "You", and other speakers are identified using tinydiarize, a local speaker diarisation model.',
+    a: 'Harknotes captures microphone and system audio as separate streams. Your mic is labelled "You". Full speaker diarisation — identifying individual speakers — is on the roadmap.',
   },
   {
     q: 'What AI model generates the notes?',
@@ -52,14 +52,14 @@ const schema = {
 
 const steps = [
   { n: '01', title: 'Record', desc: 'Click record in the menu bar. Mic and system audio captured separately.' },
-  { n: '02', title: 'Transcribe locally', desc: 'When the meeting ends, whisper.cpp runs on your machine. No internet required. Speaker diarisation identifies who said what.' },
+  { n: '02', title: 'Transcribe locally', desc: 'When the meeting ends, whisper.cpp runs on your machine. No internet required. Your mic and system audio are transcribed separately.' },
   { n: '03', title: 'Get structured notes', desc: 'A clean summary, action items, decisions, and full transcript are generated and saved as Markdown to your chosen folder.' },
 ];
 
 const features = [
   { title: 'No bot, no trace', desc: 'Silent capture — no recording indicator visible to other participants.' },
   { title: 'Local Whisper AI', desc: 'whisper.cpp runs as a bundled binary. Transcription works offline.' },
-  { title: 'Speaker diarisation', desc: 'Identifies speakers from mic vs system audio. Rename them in the app.' },
+  { title: 'Mic vs system audio', desc: 'Captures your mic and system audio as separate streams. Your voice is always labelled "You".' },
   { title: 'Markdown output', desc: 'Notes saved to any folder. Works with Obsidian, Notion imports, git.' },
   { title: 'macOS + Linux', desc: 'Native audio capture on both platforms. AppImage, DEB, RPM available.' },
   { title: 'Structured notes', desc: 'Summary, action items, decisions, full transcript — every time.' },
@@ -67,7 +67,7 @@ const features = [
 ];
 
 const pricingTiers = [
-  { name: 'Free', price: '$0', period: 'forever', summaries: '10 summaries / month', features: ['Unlimited recording', 'Local transcription', 'Speaker diarisation', 'Markdown export'], highlight: false },
+  { name: 'Free', price: '$0', period: 'forever', summaries: '10 summaries / month', features: ['Unlimited recording', 'Local transcription', 'Mic & system audio separation', 'Markdown export'], highlight: false },
   { name: 'Local', price: '$6', period: '/month', summaries: '50 summaries / month', features: ['Everything in Free', 'Priority transcription', 'Email support'], highlight: true },
   { name: 'Pro Local', price: '$12', period: '/month', summaries: '200 summaries / month', features: ['Everything in Local', 'Longer recording limit', 'Priority support'], highlight: false },
 ];

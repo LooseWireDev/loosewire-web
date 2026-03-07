@@ -1,0 +1,23 @@
+---
+import LooseWireLayout from '../layouts/LooseWireLayout.astro';
+---
+<LooseWireLayout
+  title="Page not found — Loose Wire"
+  description="The page you're looking for doesn't exist."
+  noindex={true}
+>
+  <main style="max-width: 520px; margin: 0 auto; padding: 120px 32px; text-align: center;">
+    <p style="font-family: var(--lw-font-mono); font-size: 64px; font-weight: 800; color: var(--lw-pine); margin-bottom: 16px;">404</p>
+    <h1 style="font-family: var(--lw-font-display); font-size: 24px; font-weight: 700; color: var(--lw-text); margin-bottom: 12px;">
+      Page not found
+    </h1>
+    <p style="font-size: 16px; color: var(--lw-text-mid); margin-bottom: 40px; line-height: 1.6;">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="/" style="font-size: 14px; font-weight: 600; color: var(--lw-pine); text-decoration: none;">Home</a>
+      <a href="/harknotes" style="font-size: 14px; font-weight: 600; color: var(--lw-pine); text-decoration: none;">Harknotes</a>
+      <a href="/blog" style="font-size: 14px; font-weight: 600; color: var(--lw-pine); text-decoration: none;">Blog</a>
+    </div>
+  </main>
+</LooseWireLayout>
