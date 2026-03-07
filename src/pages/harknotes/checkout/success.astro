@@ -1,0 +1,36 @@
+---
+import HarknotesLayout from '../../../layouts/HarknotesLayout.astro';
+import Nav from '../../../components/harknotes/Nav.astro';
+---
+<HarknotesLayout
+  title="Thanks for subscribing — Harknotes"
+  description="Subscription confirmed. Redirecting back to Harknotes."
+  canonicalUrl="https://loosewire.dev/harknotes/checkout/success"
+>
+  <Nav showCta={false} />
+  <main style="max-width: 520px; margin: 0 auto; padding: 120px 32px; text-align: center;">
+    <div style="width: 64px; height: 64px; margin: 0 auto 24px; border-radius: 50%; background: var(--hk-mint-subtle); display: flex; align-items: center; justify-content: center;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--hk-mint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <h1 style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 12px;">
+      Thanks for subscribing!
+    </h1>
+    <p style="font-size: 16px; color: var(--hk-text-secondary); line-height: 1.6; margin-bottom: 32px;">
+      Redirecting you back to Harknotes...
+    </p>
+    <a
+      href="harknotes://subscription-updated"
+      style="display: inline-block; padding: 10px 24px; background: var(--hk-mint); color: var(--hk-text-inverse); font-weight: 600; font-size: 14px; border-radius: 8px; text-decoration: none; transition: opacity 0.15s;"
+    >
+      Open Harknotes
+    </a>
+  </main>
+
+  <script is:inline>
+    setTimeout(function() {
+      window.location.href = "harknotes://subscription-updated";
+    }, 2000);
+  </script>
+</HarknotesLayout>
