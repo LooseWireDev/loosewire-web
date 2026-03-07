@@ -1,0 +1,77 @@
+---
+// src/components/blog/ArticleHeader.astro
+interface Props {
+  title: string;
+  date: string;
+  description: string;
+  readTime?: string;
+  tldr?: string;
+}
+
+const { title, date, description, readTime, tldr } = Astro.props;
+---
+<header class="article-header">
+  <div class="article-header-meta">
+    <span>{date}</span>
+    {readTime && <span>&middot; {readTime}</span>}
+  </div>
+  <h1 class="article-header-title">{title}</h1>
+  <p class="article-header-desc">{description}</p>
+  {tldr && (
+    <div class="article-header-tldr">
+      <span class="article-header-tldr-label">TL;DR</span>
+      <p>{tldr}</p>
+    </div>
+  )}
+</header>
+
+<style>
+  .article-header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--hk-border-subtle);
+  }
+  .article-header-meta {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--hk-text-tertiary);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
+  }
+  .article-header-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--hk-text-primary);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .article-header-desc {
+    font-size: 18px;
+    color: var(--hk-text-secondary);
+    line-height: 1.6;
+  }
+  .article-header-tldr {
+    margin-top: 24px;
+    background: var(--hk-mint-subtle);
+    border: 1px solid rgba(61,214,140,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+  .article-header-tldr-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hk-mint);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .article-header-tldr p {
+    font-size: 14px;
+    color: var(--hk-text-secondary);
+    line-height: 1.6;
+  }
+</style>

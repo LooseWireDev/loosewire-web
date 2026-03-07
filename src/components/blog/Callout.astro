@@ -1,0 +1,68 @@
+---
+// src/components/blog/Callout.astro
+interface Props {
+  type?: 'info' | 'tip' | 'warning';
+  title?: string;
+}
+
+const { type = 'info', title } = Astro.props;
+const icons = { info: 'i', tip: '!', warning: '⚠' };
+---
+<aside class:list={[`callout callout--${type}`]}>
+  <div class="callout-header">
+    <span class="callout-icon">{icons[type]}</span>
+    {title && <span class="callout-title">{title}</span>}
+  </div>
+  <div class="callout-body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .callout--info {
+    background: var(--hk-surface-2);
+    border: 1px solid var(--hk-border);
+  }
+  .callout--tip {
+    background: var(--hk-mint-subtle);
+    border: 1px solid rgba(61,214,140,0.2);
+  }
+  .callout--warning {
+    background: var(--hk-warning-dim, rgba(245,158,11,0.12));
+    border: 1px solid rgba(245,158,11,0.2);
+  }
+  .callout-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .callout-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .callout--info .callout-icon { background: var(--hk-surface-3); color: var(--hk-text-secondary); }
+  .callout--tip .callout-icon { background: rgba(61,214,140,0.2); color: var(--hk-mint); }
+  .callout--warning .callout-icon { background: rgba(245,158,11,0.2); color: var(--hk-warning, #f59e0b); }
+  .callout-title {
+    font-weight: 600;
+    color: var(--hk-text-primary);
+    font-size: 13px;
+  }
+  .callout-body {
+    color: var(--hk-text-secondary);
+  }
+</style>
