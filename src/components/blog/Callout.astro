@@ -1,16 +1,18 @@
 ---
 // src/components/blog/Callout.astro
+import { Icon } from 'astro-icon/components';
+
 interface Props {
   type?: 'info' | 'tip' | 'warning';
   title?: string;
 }
 
 const { type = 'info', title } = Astro.props;
-const icons = { info: 'i', tip: '!', warning: '⚠' };
+const iconNames = { info: 'lucide:info', tip: 'lucide:lightbulb', warning: 'lucide:triangle-alert' };
 ---
 <aside class:list={[`callout callout--${type}`]}>
   <div class="callout-header">
-    <span class="callout-icon">{icons[type]}</span>
+    <Icon name={iconNames[type]} class="callout-icon" />
     {title && <span class="callout-title">{title}</span>}
   </div>
   <div class="callout-body">
@@ -45,18 +47,13 @@ const icons = { info: 'i', tip: '!', warning: '⚠' };
     margin-bottom: 8px;
   }
   .callout-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
   }
-  .callout--info .callout-icon { background: var(--hk-surface-3); color: var(--hk-text-secondary); }
-  .callout--tip .callout-icon { background: rgba(61,214,140,0.2); color: var(--hk-mint); }
-  .callout--warning .callout-icon { background: rgba(245,158,11,0.2); color: var(--hk-warning, #f59e0b); }
+  .callout--info .callout-icon { color: var(--hk-text-secondary); }
+  .callout--tip .callout-icon { color: var(--hk-mint); }
+  .callout--warning .callout-icon { color: var(--hk-warning, #f59e0b); }
   .callout-title {
     font-weight: 600;
     color: var(--hk-text-primary);

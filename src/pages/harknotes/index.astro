@@ -9,6 +9,7 @@ import FeatureCard from '../../components/harknotes/FeatureCard.astro';
 import PricingCard from '../../components/harknotes/PricingCard.astro';
 import FaqItem from '../../components/harknotes/FaqItem.astro';
 import Footer from '../../components/harknotes/Footer.astro';
+import { Icon } from 'astro-icon/components';
 
 const faqItems = [
   {
@@ -101,17 +102,21 @@ const pricingTiers = [
         Otter, Fireflies, tl;dv — they all join as a participant. Everyone can see it. Your audio is uploaded to their servers. You're locked into their ecosystem.
       </p>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; text-align: left;">
-        {[
-          { icon: '👀', title: 'Visible to everyone', desc: "A bot joining your call signals to all participants that you're recording. Awkward in client calls, problematic in sensitive discussions." },
-          { icon: '☁️', title: 'Audio sent to the cloud', desc: "Your meeting audio — containing confidential business information — is uploaded to third-party servers you don't control." },
-          { icon: '🔒', title: 'Compliance risk', desc: 'GDPR, HIPAA, NDA clauses — cloud recording creates real legal exposure. Many companies ban these tools entirely.' },
-        ].map(({ icon, title, desc }) => (
-          <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
-            <div style="font-size: 28px; margin-bottom: 12px;">{icon}</div>
-            <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">{title}</h3>
-            <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">{desc}</p>
-          </div>
-        ))}
+        <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
+          <Icon name="lucide:eye" style="width: 28px; height: 28px; color: var(--hk-text-secondary); margin-bottom: 12px;" />
+          <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">Visible to everyone</h3>
+          <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">A bot joining your call signals to all participants that you're recording. Awkward in client calls, problematic in sensitive discussions.</p>
+        </div>
+        <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
+          <Icon name="lucide:cloud-upload" style="width: 28px; height: 28px; color: var(--hk-text-secondary); margin-bottom: 12px;" />
+          <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">Audio sent to the cloud</h3>
+          <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">Your meeting audio — containing confidential business information — is uploaded to third-party servers you don't control.</p>
+        </div>
+        <div style="background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 14px; padding: 28px;">
+          <Icon name="lucide:shield-alert" style="width: 28px; height: 28px; color: var(--hk-text-secondary); margin-bottom: 12px;" />
+          <h3 style="font-size: 15px; font-weight: 600; color: var(--hk-text-primary); margin-bottom: 8px;">Compliance risk</h3>
+          <p style="font-size: 14px; color: var(--hk-text-secondary); line-height: 1.6;">NDA clauses, security policies — cloud recording creates real legal exposure. Many companies ban these tools entirely.</p>
+        </div>
       </div>
     </section>
 

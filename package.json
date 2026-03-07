@@ -13,7 +13,9 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.7.0",
-    "astro": "^5.17.1"
+    "@iconify-json/lucide": "^1.2.96",
+    "astro": "^5.17.1",
+    "astro-icon": "^1.1.5"
   },
   "devDependencies": {
     "@vitest/ui": "^4.0.18",
