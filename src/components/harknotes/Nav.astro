@@ -18,7 +18,40 @@ const { showCta = true } = Astro.props;
     <a href="#pricing">Pricing</a>
     {showCta && <a href="#download" class="hk-nav-cta">Download</a>}
   </div>
+  <button class="hk-nav-burger" aria-label="Toggle menu" aria-expanded="false">
+    <svg class="hk-burger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line class="hk-burger-top" x1="3" y1="6" x2="21" y2="6" />
+      <line class="hk-burger-mid" x1="3" y1="12" x2="21" y2="12" />
+      <line class="hk-burger-bot" x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+  <div class="hk-nav-mobile">
+    <a href="/harknotes/blog">Blog</a>
+    <a href="/harknotes/roadmap">Roadmap</a>
+    <a href="#pricing">Pricing</a>
+    {showCta && <a href="#download" class="hk-nav-cta">Download</a>}
+  </div>
 </nav>
+
+<script>
+  const burger = document.querySelector('.hk-nav-burger');
+  const mobileMenu = document.querySelector('.hk-nav-mobile');
+  if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('is-open');
+      burger.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+    });
+    // Close menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('is-open');
+        burger.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
 
 <style>
   .hk-nav {
@@ -28,6 +61,7 @@ const { showCta = true } = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
   }
   .hk-nav-home {
     text-decoration: none;
@@ -49,5 +83,69 @@ const { showCta = true } = Astro.props;
     background: var(--hk-mint);
     padding: 8px 18px;
     border-radius: 8px;
+  }
+
+  /* Hamburger button — hidden on desktop */
+  .hk-nav-burger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--hk-text-primary);
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* Mobile menu — hidden by default */
+  .hk-nav-mobile {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .hk-nav-links {
+      display: none;
+    }
+    .hk-nav-burger {
+      display: block;
+    }
+    .hk-nav-mobile {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      gap: 4px;
+      padding-top: 16px;
+    }
+    .hk-nav-mobile.is-open {
+      display: flex;
+    }
+    .hk-nav-mobile a {
+      font-size: 15px;
+      color: var(--hk-text-secondary);
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--hk-border-subtle);
+    }
+    .hk-nav-mobile .hk-nav-cta {
+      display: inline-block;
+      text-align: center;
+      margin-top: 8px;
+      border-bottom: none;
+    }
+
+    /* Animate burger to X */
+    .hk-burger-top,
+    .hk-burger-mid,
+    .hk-burger-bot {
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      transform-origin: center;
+    }
+    .hk-nav-burger.is-open .hk-burger-top {
+      transform: translateY(6px) rotate(45deg);
+    }
+    .hk-nav-burger.is-open .hk-burger-mid {
+      opacity: 0;
+    }
+    .hk-nav-burger.is-open .hk-burger-bot {
+      transform: translateY(-6px) rotate(-45deg);
+    }
   }
 </style>
