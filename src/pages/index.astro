@@ -4,6 +4,7 @@ import LooseWireLayout from '../layouts/LooseWireLayout.astro';
 import Logo from '../components/loosewire/Logo.astro';
 import Wordmark from '../components/loosewire/Wordmark.astro';
 import HarknotesLogo from '../components/harknotes/Logo.astro';
+import FarscryLogo from '../components/farscry/Logo.astro';
 import FooterCredit from '../components/loosewire/FooterCredit.astro';
 ---
 <LooseWireLayout
@@ -23,7 +24,7 @@ import FooterCredit from '../components/loosewire/FooterCredit.astro';
         Independent dev, shipping products
       </p>
       <p style="font-family: var(--lw-font-display); font-size: 18px; font-weight: 400; color: var(--lw-text-mid); max-width: 480px; margin: 0 auto; line-height: 1.6;">
-        Making the software I wish existed. Starting with <strong style="color: var(--lw-text); font-weight: 600;">Harknotes</strong> — meeting notes without sending your audio to the cloud.
+        Making the software I wish existed. Privacy-first tools that do one thing and do it well.
       </p>
     </header>
 
@@ -45,6 +46,20 @@ import FooterCredit from '../components/loosewire/FooterCredit.astro';
         </p>
         <span style="font-size: 13px; color: var(--lw-pine); font-weight: 600;">Learn more →</span>
       </a>
+
+      <a href="/farscry" class="product-card" style="margin-top: 16px;">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+          <FarscryLogo size={40} />
+          <div>
+            <h2 style="font-family: var(--lw-font-display); font-size: 18px; font-weight: 700; color: var(--lw-text); letter-spacing: -0.02em; margin-bottom: 2px;">Farscry</h2>
+            <span style="font-family: var(--lw-font-mono); font-size: 10px; color: #a78bfa; letter-spacing: 0.06em;">iOS · Android · Self-hosted · Coming soon</span>
+          </div>
+        </div>
+        <p style="font-size: 15px; color: var(--lw-text-mid); line-height: 1.6; margin-bottom: 16px;">
+          Private video calling. No chat, no bloat. End-to-end encrypted, self-hostable, open source. One Docker container.
+        </p>
+        <span style="font-size: 13px; color: #a78bfa; font-weight: 600;">Learn more →</span>
+      </a>
     </section>
 
     <section style="padding: 40px 0 80px; border-top: 1px solid var(--lw-border);">
@@ -61,6 +76,7 @@ import FooterCredit from '../components/loosewire/FooterCredit.astro';
       <FooterCredit>
         <div style="display: flex; gap: 16px;">
           <a href="/harknotes" style="font-size: 12px; color: var(--lw-text-dim); text-decoration: none;">Harknotes</a>
+          <a href="/farscry" style="font-size: 12px; color: var(--lw-text-dim); text-decoration: none;">Farscry</a>
           <a href="/blog" style="font-size: 12px; color: var(--lw-text-dim); text-decoration: none;">Blog</a>
           <a href="mailto:info@loosewire.dev" style="font-size: 12px; color: var(--lw-text-dim); text-decoration: none;">info@loosewire.dev</a>
         </div>

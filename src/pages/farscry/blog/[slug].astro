@@ -1,0 +1,79 @@
+---
+// src/pages/farscry/blog/[slug].astro
+import FarscryLayout from '../../../layouts/FarscryLayout.astro';
+import { getCollection } from 'astro:content';
+import { articleSchema } from '../../../lib/schema';
+import Nav from '../../../components/farscry/Nav.astro';
+import Footer from '../../../components/farscry/Footer.astro';
+import ArticleHeader from '../../../components/blog/ArticleHeader.astro';
+import Prose from '../../../components/blog/Prose.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('farscry-blog');
+  return posts.map(post => ({ params: { slug: post.slug }, props: { post, allPosts: posts } }));
+}
+
+const { post, allPosts } = Astro.props;
+const otherPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
+  .slice(0, 3);
+const { Content } = await post.render();
+const canonicalUrl = `https://loosewire.dev/farscry/blog/${post.slug}`;
+const schema = articleSchema({
+  title: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate,
+  dateModified: post.data.updatedDate,
+  url: canonicalUrl,
+});
+---
+<FarscryLayout
+  title={`${post.data.title} — Farscry Blog`}
+  description={post.data.description}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+  schema={schema}
+  articleMeta={{
+    publishedTime: post.data.pubDate,
+    modifiedTime: post.data.updatedDate,
+    section: 'Video Calling',
+  }}
+>
+  <Nav />
+
+  <article style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
+    <ArticleHeader
+      title={post.data.title}
+      date={post.data.pubDate}
+      description={post.data.description}
+      readTime={post.data.readTime}
+      tldr={post.data.tldr}
+    />
+
+    <Prose>
+      <Content />
+    </Prose>
+
+    <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--fc-border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <a href="/farscry" style="font-size: 14px; color: var(--fc-violet); text-decoration: none; font-weight: 500;">Learn about Farscry →</a>
+      <a href="/farscry/blog" style="font-size: 14px; color: var(--fc-text-secondary); text-decoration: none;">← All articles</a>
+    </div>
+
+    {otherPosts.length > 0 && (
+      <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--fc-border-subtle);">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--fc-text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">More articles</p>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          {otherPosts.map(p => (
+            <a href={`/farscry/blog/${p.slug}`} style="text-decoration: none;">
+              <p style="font-size: 15px; font-weight: 600; color: var(--fc-text-primary); margin-bottom: 4px;">{p.data.title}</p>
+              <p style="font-size: 13px; color: var(--fc-text-secondary); line-height: 1.5;">{p.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </article>
+
+  <Footer />
+</FarscryLayout>

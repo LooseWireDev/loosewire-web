@@ -1,0 +1,92 @@
+---
+title: "End-to-End Encrypted Video Calls, Explained"
+description: "What does end-to-end encryption actually mean for video calls? How WebRTC makes it possible, and why most video platforms don't truly offer it."
+pubDate: "2026-03-07"
+keywords: ["end-to-end encrypted video calls", "e2e encrypted video calling", "WebRTC encryption", "private video calls encryption"]
+tldr: "End-to-end encryption means only the caller and the person they're calling can see and hear the conversation. WebRTC provides this by default through DTLS-SRTP. Most popular video platforms don't actually offer true E2E encryption for calls."
+readTime: "6 min read"
+---
+
+import Callout from '../../components/blog/Callout.astro';
+import ComparisonBox from '../../components/blog/ComparisonBox.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+"End-to-end encrypted" gets thrown around a lot. But what does it actually mean for a video call? And how do you know if a platform really provides it?
+
+## What E2E encryption means
+
+End-to-end encryption means that the video and audio data is encrypted on your device and only decrypted on the other person's device. Nobody in between — not the server, not the ISP, not the platform operator — can see or hear the call.
+
+This is different from "encrypted in transit," which means the data is encrypted between your device and the server, and again between the server and the other device. In that model, the server can theoretically decrypt and access the media.
+
+<ComparisonBox>
+  <div slot="left">
+    <h4>Encrypted in transit</h4>
+    <ul>
+      <li>Data encrypted device → server</li>
+      <li>Server decrypts, re-encrypts</li>
+      <li>Server can access media</li>
+      <li>Most "encrypted" platforms use this</li>
+    </ul>
+  </div>
+  <div slot="right">
+    <h4>End-to-end encrypted</h4>
+    <ul>
+      <li>Data encrypted device → device</li>
+      <li>Server handles signaling only</li>
+      <li>Server never accesses media</li>
+      <li>Only participants can decrypt</li>
+    </ul>
+  </div>
+</ComparisonBox>
+
+## How WebRTC makes it work
+
+WebRTC — the technology that powers browser-based and many native video calls — provides end-to-end encryption by default for peer-to-peer connections through a protocol called DTLS-SRTP.
+
+Here's the simplified flow:
+
+1. **Signaling.** The server tells Device A and Device B how to find each other (IP addresses, network topology). This is the only part the server handles.
+2. **Key exchange.** The two devices perform a DTLS handshake directly with each other, establishing shared encryption keys. The server never sees these keys.
+3. **Media flow.** Video and audio are encrypted with SRTP using the negotiated keys and flow directly between the devices. The server is not in the media path.
+
+The important detail: in a true peer-to-peer WebRTC call, the media never touches the server. The server's role begins and ends with signaling — telling the devices how to connect.
+
+<SectionHeading label="The catch" />
+
+## When E2E encryption breaks down
+
+There are legitimate scenarios where true E2E encryption gets complicated:
+
+**Group calls.** In a peer-to-peer model, each participant needs a direct connection to every other participant. With 4 people, that's 6 connections. With 10 people, it's 45. At some point, you need a server (called an SFU — Selective Forwarding Unit) to relay media. If the SFU doesn't implement special E2E encryption protocols, the server can access the media.
+
+**TURN relays.** When two devices can't connect directly (restrictive NATs, corporate firewalls), a TURN server relays the media. The media is still encrypted with SRTP keys that the TURN server doesn't have, so E2E encryption is maintained — but the media does flow through a server.
+
+**Recording and transcription.** If a platform offers server-side recording or live transcription, the server must be able to access the media. This is fundamentally incompatible with E2E encryption.
+
+## Most platforms don't really offer it
+
+When Zoom says "end-to-end encrypted," they mean something specific — and it's not what most people assume. Zoom's standard encryption is "encrypted in transit." Their true E2E encryption mode exists but disables features like cloud recording, phone dial-in, and breakout rooms.
+
+Google Meet encrypts data in transit but does not offer end-to-end encryption. Google's servers process the media.
+
+FaceTime is one of the few mainstream platforms that provides genuine E2E encryption for 1:1 calls. But it's Apple-only and not self-hostable.
+
+<Callout type="tip" title="How to verify">
+If a platform offers server-side recording, live transcription, or cloud-based noise cancellation, the server has access to your media. That's not end-to-end encryption.
+</Callout>
+
+## What to look for
+
+When evaluating whether a video calling platform truly offers E2E encryption:
+
+- **Is media peer-to-peer?** Does video flow directly between devices, or through the platform's servers?
+- **Can the server record calls?** If yes, the server can access the media, which means it's not truly E2E.
+- **Is the code open source?** You can't verify encryption claims without reading the code.
+- **What happens with TURN?** When a relay is needed, is the media still encrypted with keys the relay doesn't have?
+
+## Our approach with Farscry
+
+[Farscry](https://loosewire.dev/farscry) uses standard WebRTC peer-to-peer connections with DTLS-SRTP encryption. The server handles signaling, authentication, and contacts — it never touches the media stream. The server is open source (AGPL-3.0), so you can verify every claim by reading the code.
+
+Farscry is currently in development. Follow progress on [GitHub](https://github.com/LooseWireDev/farscry).

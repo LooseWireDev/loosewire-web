@@ -1,0 +1,33 @@
+---
+// src/components/farscry/Wordmark.astro
+import Logo from './Logo.astro';
+
+interface Props {
+  logoSize?: number;
+  fontSize?: string;
+  class?: string;
+}
+
+const { logoSize = 30, fontSize = '16px', class: className } = Astro.props;
+---
+<div class:list={["fc-wordmark", className]}>
+  <Logo size={logoSize} />
+  <span class="fc-wordmark-text" style={`font-size: ${fontSize};`}>far<span class="accent">scry</span></span>
+</div>
+
+<style>
+  .fc-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .fc-wordmark-text {
+    font-family: 'Geist Mono', monospace;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--fc-text-primary);
+  }
+  .fc-wordmark-text .accent {
+    color: var(--fc-violet);
+  }
+</style>
