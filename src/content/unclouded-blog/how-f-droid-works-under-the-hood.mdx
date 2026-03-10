@@ -1,0 +1,68 @@
+---
+title: "How F-Droid Works Under the Hood"
+description: "F-Droid is the most popular alternative app store for Android, but most people don't know how it actually builds, signs, and distributes apps. Here's the full picture."
+pubDate: "2026-03-04"
+keywords: ["f-droid how it works", "f-droid build process", "f-droid vs play store", "f-droid security", "android alternative app store"]
+tldr: "F-Droid builds every app from source on its own infrastructure, signs it with F-Droid's keys, and distributes it through its own repository. This adds a layer of trust but also means updates are slower than getting APKs directly from developers."
+readTime: "6 min read"
+---
+
+import SimpleCallout from '../../components/blog/SimpleCallout.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+F-Droid has been around since 2010. It's the most established alternative to the Google Play Store for Android apps, focused exclusively on free and open-source software. But the way it works is fundamentally different from Google's app store — and those differences have real implications for security, trust, and update speed.
+
+## The build-from-source model
+
+When a developer wants their app on F-Droid, they don't upload an APK. Instead, they submit a build recipe — a metadata file that tells F-Droid's build server where to find the source code, how to build it, and what version to publish.
+
+F-Droid's infrastructure clones the source code, builds the app in a clean environment, and produces the APK. This means F-Droid can verify that the published app matches the published source code. No hidden telemetry, no last-minute additions that aren't in the repo.
+
+This is the core value proposition: **you can trust that the app you install matches the code you can read.**
+
+## The signing model
+
+Here's where it gets interesting. F-Droid signs the built APK with F-Droid's own signing key, not the developer's key. This means:
+
+- You can't install an F-Droid version of an app alongside a Play Store version (different signatures)
+- If you switch from a Play Store install to F-Droid, you need to uninstall first (data loss unless you back up)
+- F-Droid is the trust anchor, not the developer
+
+Some apps support "reproducible builds" — where F-Droid can verify that building from source produces a bit-for-bit identical APK to what the developer signed. In these cases, F-Droid distributes the developer-signed APK. But this is the exception, not the rule.
+
+<SimpleCallout type="note" title="The IzzyOnDroid alternative">
+IzzyOnDroid is a third-party F-Droid repository that takes a different approach. It distributes developer-signed APKs directly, with automated checks for trackers and known issues. Updates appear faster because there's no rebuild step. The trade-off: you're trusting the developer's build, not a reproducible-from-source build.
+</SimpleCallout>
+
+<SectionHeading label="The update lag" />
+
+## Why F-Droid updates are slow
+
+The build-from-source model creates a bottleneck. F-Droid's build server processes thousands of apps. When a developer pushes a new release, it enters a queue. The build server clones, builds, signs, and publishes — but this can take days or even weeks.
+
+For most apps, this delay is fine. For apps with security-critical updates (like a messaging app patching a vulnerability), it's a real problem.
+
+This is why tools like Obtainium exist as a complement to F-Droid. Obtainium pulls releases directly from the developer's GitHub, bypassing the F-Droid build queue entirely. You get developer-signed APKs within hours of release.
+
+## The anti-features system
+
+F-Droid flags apps with "anti-features" — characteristics that might concern privacy-focused users:
+
+- **NonFreeNet** — the app depends on a non-free network service
+- **NonFreeDep** — the app depends on a non-free library
+- **Tracking** — the app contains tracking code
+- **Ads** — the app contains advertising
+
+This isn't a pass/fail system. An app can have anti-features and still be listed. The flags are informational — they let you make an informed choice rather than making the choice for you.
+
+## The repository structure
+
+F-Droid publishes its app index as a JSON file (`index-v2.json`) that any client can consume. This file contains every app's metadata: name, description, package name, version, download URL, anti-features, categories, and more.
+
+This is significant because it means F-Droid's data is open. Anyone can build a client or tool that reads this index. It's how [Unclouded](https://loosewire.dev/unclouded) sources a large portion of its app database — by parsing the F-Droid and IzzyOnDroid indexes to build a comprehensive, tagged, searchable catalogue of privacy-respecting apps.
+
+## Should you use F-Droid?
+
+For app discovery — absolutely. F-Droid's catalogue is the single best collection of open-source Android apps.
+
+For installation and updates — consider your needs. If you want the build-from-source guarantee, use F-Droid's client. If you want faster updates and developer-signed APKs, use Obtainium to install directly from source repositories. Most privacy-conscious Android users end up using both.

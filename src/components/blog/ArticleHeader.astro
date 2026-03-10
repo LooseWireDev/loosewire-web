@@ -29,12 +29,12 @@ const { title, date, description, readTime, tldr } = Astro.props;
   .article-header {
     margin-bottom: 48px;
     padding-bottom: 32px;
-    border-bottom: 1px solid var(--hk-border-subtle);
+    border-bottom: 1px solid var(--blog-border-subtle);
   }
   .article-header-meta {
     font-family: 'Geist Mono', monospace;
     font-size: 11px;
-    color: var(--hk-text-tertiary);
+    color: var(--blog-text-tertiary);
     margin-bottom: 16px;
     display: flex;
     gap: 8px;
@@ -43,19 +43,19 @@ const { title, date, description, readTime, tldr } = Astro.props;
     font-size: clamp(28px, 4vw, 44px);
     font-weight: 700;
     letter-spacing: -0.03em;
-    color: var(--hk-text-primary);
+    color: var(--blog-text-primary);
     margin-bottom: 16px;
     line-height: 1.1;
   }
   .article-header-desc {
     font-size: 18px;
-    color: var(--hk-text-secondary);
+    color: var(--blog-text-secondary);
     line-height: 1.6;
   }
   .article-header-tldr {
     margin-top: 24px;
-    background: var(--hk-mint-subtle);
-    border: 1px solid rgba(61,214,140,0.2);
+    background: var(--blog-accent-subtle);
+    border: 1px solid var(--blog-accent-border);
     border-radius: 12px;
     padding: 20px 24px;
   }
@@ -65,13 +65,13 @@ const { title, date, description, readTime, tldr } = Astro.props;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--hk-mint);
+    color: var(--blog-accent);
     display: block;
     margin-bottom: 8px;
   }
   .article-header-tldr p {
     font-size: 14px;
-    color: var(--hk-text-secondary);
+    color: var(--blog-text-secondary);
     line-height: 1.6;
   }
 </style>

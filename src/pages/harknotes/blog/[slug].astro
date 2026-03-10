@@ -8,6 +8,8 @@ import Footer from '../../../components/harknotes/Footer.astro';
 import ArticleHeader from '../../../components/blog/ArticleHeader.astro';
 import Prose from '../../../components/blog/Prose.astro';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const posts = await getCollection('harknotes-blog');
   return posts.map(post => ({ params: { slug: post.slug }, props: { post, allPosts: posts } }));

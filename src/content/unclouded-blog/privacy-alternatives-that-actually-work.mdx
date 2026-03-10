@@ -1,0 +1,82 @@
+---
+title: "Privacy Alternatives That Actually Work as Daily Drivers"
+description: "Not every open-source app is ready to replace its proprietary counterpart. These are the ones that are — apps you can switch to today without sacrificing usability."
+pubDate: "2026-03-06"
+keywords: ["privacy alternatives", "open source alternatives", "replace proprietary apps", "privacy apps android", "degoogle apps"]
+tldr: "Some privacy alternatives are genuine daily drivers. Others are technically impressive but not ready for regular use. This is a practical list of apps that actually work as full replacements — messaging, photos, maps, browser, and more."
+readTime: "7 min read"
+---
+
+import SimpleCallout from '../../components/blog/SimpleCallout.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+The internet is full of lists of "privacy alternatives." Most of them are aspirational — they include every open-source project that vaguely occupies the same category as a proprietary app, regardless of whether it's actually usable.
+
+This is different. These are apps you can switch to today and use as your primary tool without constantly reaching for the thing you replaced.
+
+## The criteria
+
+To make this list, an app needs to:
+
+- **Work reliably.** No crashes, no data loss, no "it works most of the time."
+- **Handle the core use case.** It doesn't need every feature. It needs the features you actually use daily.
+- **Be actively maintained.** Last commit shouldn't be from 2023.
+- **Be installable without a CS degree.** Available on F-Droid, GitHub releases, or Obtainium.
+
+<SectionHeading label="The replacements" />
+
+## Browser: Cromite
+
+Cromite is a Chromium fork with built-in ad blocking, anti-fingerprinting, and privacy patches. You get Chrome's rendering engine and site compatibility without the telemetry. It's the best option if you want something that just works like Chrome but doesn't report back to Google.
+
+Firefox with uBlock Origin is also solid if you prefer a non-Chromium engine and want full extension support.
+
+## Messaging: Signal or Beeper
+
+Signal is the privacy gold standard for messaging — E2E encrypted, non-profit, no data collection. It works for texts, calls, and group chats.
+
+Beeper takes a different approach: it unifies all your messaging platforms into one app. If you're juggling WhatsApp, Telegram, Signal, and iMessage contacts, Beeper lets you use one interface for all of them while you gradually move people to more private options.
+
+## Email: Thunderbird (Android)
+
+Thunderbird absorbed K-9 Mail and now ships as the official Thunderbird Android client. It supports multiple accounts, PGP encryption via OpenKeychain, and works with any IMAP/SMTP provider. Pair it with a privacy-respecting email provider like Tuta, Proton Mail, or a self-hosted setup.
+
+## Maps: Magic Earth
+
+Magic Earth is an offline-capable navigation app with turn-by-turn directions, public transit, and speed camera alerts. It uses OpenStreetMap data but with a polished UI and practical features like dashcam mode. No account required, no tracking.
+
+Organic Maps is also worth a look — fully open source, offline-first, excellent for hiking and walking. Magic Earth is the better daily driver for car navigation.
+
+## Keyboard: FUTO Keyboard
+
+FUTO Keyboard is a privacy-respecting keyboard with excellent autocorrect and swipe typing. It does voice input locally on-device rather than sending audio to the cloud. It's a genuine daily driver that doesn't compromise on typing quality.
+
+## Photos: Ente
+
+Ente is an E2E encrypted photo storage and backup service. It's the clearest Google Photos replacement — cloud backup, sharing albums, automatic organisation, cross-platform apps. The difference: your photos are encrypted before they leave your device. Not even Ente can see them.
+
+For self-hosters, Immich offers a Google Photos-like experience you run on your own hardware. It's rapidly maturing and handles photo organisation, facial recognition, and mobile auto-backup.
+
+## Cloud storage: Nextcloud or Syncthing
+
+Nextcloud gives you a self-hosted Google Drive equivalent — files, calendar, contacts, notes. Syncthing is simpler: peer-to-peer file sync between your devices with no server at all.
+
+Nextcloud requires a server (a $5 VPS or a NAS at home). Syncthing requires at least two devices to be useful. Both are rock-solid once set up.
+
+## Notes: Joplin or Obsidian
+
+Joplin is open source, supports Markdown, syncs via Nextcloud/Dropbox/OneDrive/WebDAV, and offers end-to-end encryption. Obsidian isn't open source but stores everything as local Markdown files — your notes are plain text on your filesystem, owned by you.
+
+## Video: GrayJay
+
+GrayJay is a multi-platform video client that pulls from YouTube, Odysee, Rumble, PeerTube, and other sources in a single feed. It separates the content from the platform — you follow creators, not apps. No Google account required for watching YouTube content, and it supports background playback and downloads.
+
+<SimpleCallout type="tip" title="The practical test">
+If you can go a full week using the replacement without reaching for the original, it's a real alternative. If you keep switching back, it's not ready yet — and that's fine. Not every category has a drop-in replacement.
+</SimpleCallout>
+
+## The point
+
+You don't have to replace everything at once. Pick one app, switch to it for a week, and see how it goes. Each one you move off a proprietary platform is meaningful on its own.
+
+[Unclouded](https://loosewire.dev/unclouded) is being built to make this process structured — search by what you want to replace, get honest comparisons, and generate Obtainium configs for one-tap installation.

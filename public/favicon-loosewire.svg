@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100" fill="none">
-  <rect width="180" height="100" fill="#f5f1e8"/>
-  <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10"
-    stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" opacity="0.30"/>
-  <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10"
-    stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" opacity="0.60"/>
-  <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10"
-    stroke="#1c1a14" stroke-width="4" stroke-linecap="round" opacity="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="26" fill="#f5f1e8"/>
+  <path d="M14 30 C22 30 22 90 33 90 C46 90 46 30 58 30 C70 30 70 90 83 90 C96 90 96 30 106 30"
+    stroke="#1c1a14" stroke-width="4" stroke-linecap="round" opacity="0.25"/>
+  <path d="M22 30 C32 30 32 90 44 90 C56 90 56 30 66 30 C76 30 76 90 88 90 C100 90 100 30 110 30"
+    stroke="#1c1a14" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+  <path d="M10 30 C20 30 20 90 38 90 C52 52 52 30 62 30 C72 30 72 90 86 90 C100 90 100 30 116 30"
+    stroke="#1c1a14" stroke-width="4.5" stroke-linecap="round" opacity="1"/>
 </svg>

@@ -1,0 +1,55 @@
+---
+title: "What Is Obtainium and Why It Matters"
+description: "Obtainium lets you install and update Android apps directly from their source — GitHub, F-Droid, or anywhere else. Here's what it does, how it works, and why it changes the way you think about app installation."
+pubDate: "2026-03-10"
+keywords: ["obtainium", "obtainium android", "install apps without play store", "f-droid alternative", "sideload android apps"]
+tldr: "Obtainium is an Android app that installs and updates apps directly from their source repositories. No Play Store, no app store middleman. You point it at a GitHub release or F-Droid listing, and it handles the rest."
+readTime: "5 min read"
+---
+
+import SimpleCallout from '../../components/blog/SimpleCallout.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+If you've ever tried to leave the Google Play Store behind, you've probably hit the update problem. You can sideload an APK once, but keeping it updated means manually checking for new releases, downloading them, and installing them by hand. Every time.
+
+Obtainium solves this. It's an Android app that tracks app releases at their source — GitHub, F-Droid, GitLab, Codeberg, or direct URLs — and notifies you when updates are available. One tap to update. No app store required.
+
+## How it works
+
+Obtainium doesn't host apps. It doesn't curate them. It's a client that points at a source and watches for new releases.
+
+You add an app by giving Obtainium a URL — usually a GitHub repository. It finds the latest release, downloads the APK, and installs it. From then on, it checks for updates on a schedule you control.
+
+The key insight is that most open-source Android apps already publish their releases on GitHub. Obtainium just makes that release pipeline accessible to normal people, not just developers.
+
+## Why it matters for privacy
+
+The Play Store requires a Google account. A Google account means Google knows every app you install, when you install it, when you open it, and when you update it. That's a detailed picture of your digital life, handed over for the convenience of automatic updates.
+
+Obtainium gives you the automatic updates without the surveillance. The app talks directly to the source repository — Google is not in the loop.
+
+<SimpleCallout type="tip" title="No Google Play Services required">
+Obtainium works on devices with no Google Play Services at all. If you're running GrapheneOS, CalyxOS, or LineageOS without GApps, Obtainium is how you keep apps updated.
+</SimpleCallout>
+
+## What about F-Droid?
+
+F-Droid is the most well-known alternative app store for Android. It builds apps from source and distributes them. It's excellent, but it has a limitation: the update cycle is slow. F-Droid rebuilds every app from source on their infrastructure, which means new releases can take days or weeks to appear.
+
+Obtainium pulls releases directly from the developer. When a developer pushes a new version on GitHub, Obtainium sees it within hours, not days.
+
+The two tools complement each other. F-Droid is great for discovery — finding new apps. Obtainium is better for installation and updates — getting apps installed and keeping them current.
+
+<SectionHeading label="Config files" />
+
+## The configuration problem
+
+Obtainium stores its app configurations as JSON. Each config specifies the source URL, which release asset to download (some repos publish multiple APKs for different architectures), and any installation preferences.
+
+For a single app, creating this config is straightforward. For twenty apps, it's tedious. For someone migrating their entire phone away from proprietary apps, it's a significant barrier.
+
+This is one of the problems [Unclouded](https://loosewire.dev/unclouded) is being built to solve. Search for an app, find its privacy-respecting alternative, and export a ready-to-import Obtainium config. Find, compare, install — in one flow.
+
+## Getting started
+
+Obtainium itself is available on [F-Droid](https://f-droid.org) and on [GitHub](https://github.com/ImranR98/Obtainium). Install it, add a few apps by URL, and you've taken the first step toward a phone that updates itself without phoning home.

@@ -1,5 +1,5 @@
 ---
-// src/layouts/HarknotesLayout.astro
+// src/layouts/UncloudedLayout.astro
 import '../styles/global.css';
 
 interface Props {
@@ -15,14 +15,14 @@ interface Props {
 
 const { title, description, canonicalUrl, ogImage, ogType, schema, noindex, articleMeta } = Astro.props;
 const canonical = canonicalUrl ?? new URL(Astro.url.pathname, 'https://loosewire.dev').href;
-const image = ogImage ?? 'https://loosewire.dev/og-harknotes.png';
+const image = ogImage ?? 'https://loosewire.dev/og-unclouded.png';
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/svg+xml" href="/favicon-harknotes.svg" />
+  <link rel="icon" type="image/svg+xml" href="/favicon-unclouded.svg" />
 
   <!-- Auto theme: set before any CSS to avoid flash -->
   <script is:inline>
@@ -40,7 +40,7 @@ const image = ogImage ?? 'https://loosewire.dev/og-harknotes.png';
   <link rel="canonical" href={canonical} />
   {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-  <meta property="og:site_name" content="Harknotes by Loose Wire" />
+  <meta property="og:site_name" content="Unclouded by Loose Wire" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
@@ -59,27 +59,27 @@ const image = ogImage ?? 'https://loosewire.dev/og-harknotes.png';
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="sitemap" href="/sitemap-index.xml" />
 </head>
-<body style="background: var(--hk-bg); color: var(--hk-text-primary); font-family: 'Geist', system-ui, sans-serif;">
+<body style={`background: var(--uc-bg); color: var(--uc-text); font-family: 'Plus Jakarta Sans', system-ui, sans-serif;`}>
   <slot />
 </body>
 <style>
   body {
-    --blog-accent:         var(--hk-mint);
-    --blog-accent-subtle:  var(--hk-mint-subtle);
-    --blog-accent-border:  rgba(61,214,140,0.2);
-    --blog-text-primary:   var(--hk-text-primary);
-    --blog-text-secondary: var(--hk-text-secondary);
-    --blog-text-tertiary:  var(--hk-text-tertiary);
-    --blog-surface-1:      var(--hk-surface-1);
-    --blog-surface-2:      var(--hk-surface-2);
-    --blog-border:         var(--hk-border);
-    --blog-border-subtle:  var(--hk-border-subtle);
-    --blog-error:          #f87171;
-    --blog-warning:        #f59e0b;
+    --blog-accent:         var(--uc-sun);
+    --blog-accent-subtle:  var(--uc-sun-subtle);
+    --blog-accent-border:  var(--uc-sun-border);
+    --blog-text-primary:   var(--uc-text);
+    --blog-text-secondary: var(--uc-text-mid);
+    --blog-text-tertiary:  var(--uc-text-dim);
+    --blog-surface-1:      var(--uc-surface);
+    --blog-surface-2:      var(--uc-surface-2);
+    --blog-border:         var(--uc-border);
+    --blog-border-subtle:  rgba(255,255,255,0.04);
+    --blog-error:          var(--uc-error);
+    --blog-warning:        var(--uc-warning);
   }
 </style>
 </html>

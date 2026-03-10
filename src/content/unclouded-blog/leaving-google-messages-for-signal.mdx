@@ -1,0 +1,84 @@
+---
+title: "Leaving Google Messages for Signal"
+description: "Google Messages is the default on most Android phones, but it reads your conversations to serve ads. Signal is the direct replacement — here's what changes when you switch, and what doesn't."
+pubDate: "2026-03-08"
+keywords: ["signal vs google messages", "replace google messages", "private messaging android", "signal privacy", "leave google messages"]
+tldr: "Signal replaces Google Messages for private conversations. It uses your phone number, supports SMS fallback, and encrypts everything end-to-end. The trade-off: contacts who don't switch will still receive plain SMS from you."
+readTime: "5 min read"
+---
+
+import SimpleCallout from '../../components/blog/SimpleCallout.astro';
+import ComparisonBox from '../../components/blog/ComparisonBox.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+Google Messages is the default messaging app on most Android phones. It handles SMS, MMS, and RCS — the protocol Google has been pushing as its answer to iMessage. It works well. It's familiar. And Google reads your conversations to improve ad targeting.
+
+Signal is the most straightforward replacement. Same concept — a messaging app tied to your phone number — but with end-to-end encryption on by default and no advertising business model.
+
+## What Signal does
+
+Signal handles text messages, voice calls, video calls, group chats, and file sharing. Messages between Signal users are end-to-end encrypted. The Signal server never sees the content of your conversations.
+
+You sign up with your phone number. Your existing contacts who use Signal appear automatically. For everyone else, Signal can fall back to unencrypted SMS (though this feature is being phased out on Android to keep the interface clearer about what's encrypted and what isn't).
+
+<ComparisonBox>
+  <div slot="left">
+    <h4>Google Messages</h4>
+    <ul>
+      <li>SMS, MMS, RCS</li>
+      <li>RCS encryption is server-mediated</li>
+      <li>Google scans messages for features</li>
+      <li>Tied to Google account</li>
+      <li>Default on most Android phones</li>
+    </ul>
+  </div>
+  <div slot="right">
+    <h4>Signal</h4>
+    <ul>
+      <li>Signal protocol (E2E encrypted)</li>
+      <li>No server-side message access</li>
+      <li>No advertising, non-profit</li>
+      <li>Tied to phone number only</li>
+      <li>Available on all platforms</li>
+    </ul>
+  </div>
+</ComparisonBox>
+
+## What you gain
+
+**Real encryption.** RCS in Google Messages offers encryption, but it's mediated by Google's servers and only works between Google Messages users. Signal's encryption is end-to-end between devices, independently audited, and the protocol is open source.
+
+**No data collection.** Signal doesn't know who you message, what you say, or when you say it. Their server architecture is designed to hold as little metadata as possible.
+
+**Cross-platform.** Signal works on iOS, Android, Windows, Mac, and Linux. Google Messages is Android-first with a web companion that requires your phone to be online.
+
+## What you lose
+
+**SMS integration.** If you've been using Google Messages as your default SMS app, switching to Signal means you need a separate app for SMS — or you accept that Signal contacts get Signal messages and everyone else gets SMS through a different app.
+
+**RCS features with non-Signal users.** Read receipts, typing indicators, and high-quality media sharing over RCS won't carry over to conversations with people still on Google Messages.
+
+**Default status.** Google Messages is pre-installed. Signal requires everyone in the conversation to install it. This is the real barrier — not the technology, but the social coordination.
+
+<SimpleCallout type="note" title="Also worth knowing: Beeper">
+If switching everyone to Signal isn't realistic, Beeper is worth a look. It unifies WhatsApp, Telegram, Signal, iMessage, and more into a single app. You get one inbox for all your messaging platforms while gradually moving people to more private options.
+</SimpleCallout>
+
+<SectionHeading label="Making the switch" />
+
+## How to switch
+
+1. Install Signal from your preferred source (Play Store, F-Droid via Obtainium, or direct APK)
+2. Register with your phone number
+3. Signal will identify which of your contacts already use it
+4. Start messaging — Signal conversations are encrypted, everything else stays on your existing SMS app
+
+The migration is instant. There's nothing to export or import. Signal finds your contacts automatically.
+
+## The network effect problem
+
+The biggest challenge with Signal isn't the app — it's getting the people you talk to onto it. This is true of every messaging platform switch, and there's no technical solution to a social problem.
+
+The practical approach: install Signal, use it with whoever already has it, and don't pressure anyone. Most people end up with 2-3 messaging apps anyway. Signal being one of them is a meaningful improvement even if it doesn't replace everything.
+
+[Unclouded](https://loosewire.dev/unclouded) is building tools to make this kind of comparison easier — honest assessments of what each alternative actually replaces, and what it doesn't.

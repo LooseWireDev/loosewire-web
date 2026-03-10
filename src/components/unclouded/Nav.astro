@@ -1,0 +1,136 @@
+---
+// src/components/unclouded/Nav.astro
+import Wordmark from './Wordmark.astro';
+---
+<nav class="uc-nav">
+  <a href="/unclouded" class="uc-nav-home">
+    <Wordmark logoSize={24} fontSize="15px" />
+  </a>
+  <div class="uc-nav-links">
+    <a href="/unclouded/blog">Blog</a>
+    <a href="#features">Features</a>
+    <a href="https://github.com/LooseWireDev" class="uc-nav-cta">GitHub</a>
+  </div>
+  <button class="uc-nav-burger" aria-label="Toggle menu" aria-expanded="false">
+    <svg class="uc-burger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line class="uc-burger-top" x1="3" y1="6" x2="21" y2="6" />
+      <line class="uc-burger-mid" x1="3" y1="12" x2="21" y2="12" />
+      <line class="uc-burger-bot" x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+  <div class="uc-nav-mobile">
+    <a href="/unclouded/blog">Blog</a>
+    <a href="#features">Features</a>
+    <a href="https://github.com/LooseWireDev" class="uc-nav-cta">GitHub</a>
+  </div>
+</nav>
+
+<script>
+  const burger = document.querySelector('.uc-nav-burger');
+  const mobileMenu = document.querySelector('.uc-nav-mobile');
+  if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('is-open');
+      burger.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('is-open');
+        burger.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
+
+<style>
+  .uc-nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .uc-nav-home {
+    text-decoration: none;
+  }
+  .uc-nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .uc-nav-links a {
+    font-family: var(--uc-font-body);
+    font-size: 14px;
+    color: var(--uc-text-mid);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .uc-nav-links a:hover {
+    color: var(--uc-text);
+  }
+  .uc-nav-cta {
+    font-size: 13px !important;
+    font-weight: 600;
+    color: var(--uc-bg) !important;
+    background: var(--uc-sun);
+    padding: 8px 18px;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .uc-nav-cta:hover {
+    background: var(--uc-sun-light);
+  }
+
+  .uc-nav-burger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--uc-text);
+    cursor: pointer;
+    padding: 4px;
+  }
+  .uc-nav-mobile {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .uc-nav-links { display: none; }
+    .uc-nav-burger { display: block; }
+    .uc-nav-mobile {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      gap: 4px;
+      padding-top: 16px;
+    }
+    .uc-nav-mobile.is-open { display: flex; }
+    .uc-nav-mobile a {
+      font-family: var(--uc-font-body);
+      font-size: 15px;
+      color: var(--uc-text-mid);
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--uc-border);
+    }
+    .uc-nav-mobile .uc-nav-cta {
+      display: inline-block;
+      text-align: center;
+      margin-top: 8px;
+      border-bottom: none;
+    }
+
+    .uc-burger-top,
+    .uc-burger-mid,
+    .uc-burger-bot {
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      transform-origin: center;
+    }
+    .uc-nav-burger.is-open .uc-burger-top { transform: translateY(6px) rotate(45deg); }
+    .uc-nav-burger.is-open .uc-burger-mid { opacity: 0; }
+    .uc-nav-burger.is-open .uc-burger-bot { transform: translateY(-6px) rotate(-45deg); }
+  }
+</style>

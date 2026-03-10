@@ -37,8 +37,22 @@ const farscryBlog = defineCollection({
   }),
 });
 
+const uncloudedBlog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.string(),
+    updatedDate: z.string().optional(),
+    keywords: z.array(z.string()).default([]),
+    tldr: z.string().optional(),
+    readTime: z.string().optional(),
+  }),
+});
+
 export const collections = {
   'harknotes-blog': harknotsBlog,
   'harknotes-vs': harknotesVs,
   'farscry-blog': farscryBlog,
+  'unclouded-blog': uncloudedBlog,
 };

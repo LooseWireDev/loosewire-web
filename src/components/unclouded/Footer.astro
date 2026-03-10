@@ -1,0 +1,72 @@
+---
+// src/components/unclouded/Footer.astro
+import Logo from '../loosewire/Logo.astro';
+---
+<footer class="uc-footer">
+  <div class="uc-footer-inner">
+    <div class="uc-footer-brand">
+      <p class="uc-footer-name">Unclouded</p>
+      <p class="uc-footer-by">
+        by
+        <Logo size={12} />
+        <a href="/" class="uc-footer-parent">loosewire</a>
+      </p>
+    </div>
+    <nav class="uc-footer-nav">
+      <a href="https://github.com/LooseWireDev">GitHub</a>
+      <a href="mailto:info@loosewire.dev">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .uc-footer {
+    border-top: 1px solid var(--uc-border);
+    padding: 40px 32px;
+  }
+  .uc-footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .uc-footer-name {
+    font-family: var(--uc-font-display);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--uc-text);
+    margin-bottom: 4px;
+  }
+  .uc-footer-by {
+    font-size: 13px;
+    color: var(--uc-text-dim);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .uc-footer-parent {
+    font-family: var(--lw-font-display, 'Nunito Sans', sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--uc-text-dim);
+    text-decoration: none;
+  }
+  .uc-footer-nav {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .uc-footer-nav a {
+    font-family: var(--uc-font-body);
+    font-size: 13px;
+    color: var(--uc-text-mid);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .uc-footer-nav a:hover {
+    color: var(--uc-text);
+  }
+</style>
