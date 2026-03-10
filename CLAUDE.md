@@ -102,6 +102,17 @@ Vitest for unit tests. Tests live next to source files (`*.test.ts`).
 - Pricing: Free (10/mo), Local $6/mo (50), Pro Local $12/mo (200)
 - Downloads: https://github.com/LooseWireDev/harknotes/releases/latest
 
+## Cross-Site Backlinking
+
+This site is part of a backlinking network across gavyncaldwell.com, loosewire.dev, and future sites. Full spec:
+https://raw.githubusercontent.com/LooseWireDev/loosewire-web/main/docs/backlink-network.md
+
+Key files:
+- `src/pages/api/posts.json.ts` — JSON feed endpoint consumed by all other sites
+- `docs/backlink-network.md` — The canonical spec (this is the source of truth)
+
+When adding a new product with a blog, update the posts.json.ts endpoint to include the new collection.
+
 ## Adding a New Product
 
 This site is the umbrella for all Loose Wire products. To add a new product:
