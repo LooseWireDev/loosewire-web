@@ -1,26 +1,49 @@
-/* src/styles/tokens-loosewire.css */
+/* src/styles/styleguides/loosewire.css — v2 paper/notebook */
+
+/* ─── Core palette ───────────────────────────────────────── */
 :root {
-  --lw-pine:         #2e6e62;
-  --lw-pine-light:   #3d8a7c;
-  --lw-pine-dim:     #1e4e46;
-  --lw-pine-subtle:  rgba(46,110,98,0.07);
-  --lw-pine-glow:    rgba(46,110,98,0.04);
+  --lw-paper:           #f5f1e8;
+  --lw-paper-2:         #ece8dd;
+  --lw-paper-3:         #e2ddd0;
+  --lw-ink:             #1c1a14;
+  --lw-graphite:        #4e4940;
+  --lw-ash:             #8c8478;
+  --lw-dust:            #b8b2a4;
+  --lw-fog:             #e2ddd0;
+  --lw-rule:            rgba(28, 26, 20, 0.035);
+  --lw-rule-strong:     rgba(28, 26, 20, 0.15);
+  --lw-margin:          rgba(160, 50, 50, 0.10);
 
-  --lw-bg:           #f6f8f7;
-  --lw-bg-warm:      #f0f4f3;
-  --lw-surface:      #ffffff;
-  --lw-surface-2:    #eef2f1;
-  --lw-surface-3:    #e4eae8;
+  /* ─── Typography ─────────────────────────────────────── */
+  --lw-font-display:    'Courier Prime', monospace;
+  --lw-font-body:       'DM Mono', monospace;
+  --lw-font-mono:       'DM Mono', monospace;
+  --lw-font-prose:      'Lora', serif;
 
-  --lw-border:       rgba(0,0,0,0.07);
-  --lw-border-strong: rgba(0,0,0,0.13);
+  /* ─── Backward-compat aliases (used by /blog and components) ── */
+  --lw-bg:              var(--lw-paper);
+  --lw-bg-warm:         var(--lw-paper-2);
+  --lw-surface:         var(--lw-paper-2);
+  --lw-surface-2:       var(--lw-paper-3);
+  --lw-surface-3:       var(--lw-fog);
+  --lw-border:          var(--lw-rule-strong);
+  --lw-border-strong:   var(--lw-rule-strong);
+  --lw-text:            var(--lw-ink);
+  --lw-text-mid:        var(--lw-graphite);
+  --lw-text-dim:        var(--lw-ash);
+  --lw-text-inverse:    var(--lw-paper);
+}
 
-  --lw-text:         #1a2422;
-  --lw-text-mid:     #5a7a74;
-  --lw-text-dim:     #94aaa4;
-  --lw-text-inverse: #f6f8f7;
-
-  --lw-font-display: 'Nunito Sans', sans-serif;
-  --lw-font-body:    'DM Sans', sans-serif;
-  --lw-font-mono:    'Geist Mono', monospace;
+[data-theme="dark"] {
+    --lw-paper:         #0f0f0f;
+    --lw-paper-2:       #1a1a1a;
+    --lw-paper-3:       #222222;
+    --lw-ink:           #f0f0f0;
+    --lw-graphite:      #aaaaaa;
+    --lw-ash:           #666666;
+    --lw-dust:          #444444;
+    --lw-fog:           #222222;
+    --lw-rule:          rgba(255, 255, 255, 0.025);
+    --lw-rule-strong:   rgba(255, 255, 255, 0.14);
+    --lw-margin:        rgba(200, 80, 80, 0.08);
 }

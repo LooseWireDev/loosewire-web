@@ -1,5 +1,6 @@
 ---
 // src/components/loosewire/Wordmark.astro
+// Horizontal lockup: W-wave mark + "loosewire" in Courier Prime bold.
 import Logo from './Logo.astro';
 
 interface Props {
@@ -8,11 +9,11 @@ interface Props {
   class?: string;
 }
 
-const { logoSize = 36, fontSize = '22px', class: className } = Astro.props;
+const { logoSize = 44, fontSize = '22px', class: className } = Astro.props;
 ---
-<div class:list={["lw-wordmark", className]}>
+<div class:list={['lw-wordmark', className]}>
   <Logo size={logoSize} />
-  <span class="lw-wordmark-text" style={`font-size: ${fontSize};`}>loose<span class="accent">wire</span></span>
+  <span class="lw-wordmark-text" style={`font-size: ${fontSize};`}>loosewire</span>
 </div>
 
 <style>
@@ -20,14 +21,13 @@ const { logoSize = 36, fontSize = '22px', class: className } = Astro.props;
     display: flex;
     align-items: center;
     gap: 12px;
+    text-decoration: none;
   }
   .lw-wordmark-text {
     font-family: var(--lw-font-display);
     font-weight: 700;
-    letter-spacing: -0.025em;
-    color: var(--lw-text);
-  }
-  .lw-wordmark-text .accent {
-    color: var(--lw-pine);
+    letter-spacing: -0.02em;
+    color: var(--lw-ink);
+    line-height: 1;
   }
 </style>
