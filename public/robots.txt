@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /harknotes/checkout/
 
 Sitemap: https://loosewire.dev/sitemap-index.xml

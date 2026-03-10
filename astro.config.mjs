@@ -7,6 +7,14 @@ import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://loosewire.dev',
-  integrations: [sitemap(), mdx(), icon()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !page.includes('/checkout/') &&
+        !page.includes('/404'),
+    }),
+    mdx(),
+    icon(),
+  ],
   adapter: cloudflare(),
 });
