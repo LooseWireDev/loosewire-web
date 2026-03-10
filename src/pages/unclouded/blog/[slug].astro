@@ -28,6 +28,7 @@ const schema = articleSchema({
   datePublished: post.data.pubDate,
   dateModified: post.data.updatedDate,
   url: canonicalUrl,
+  keywords: post.data.keywords,
 });
 ---
 <UncloudedLayout
@@ -40,6 +41,7 @@ const schema = articleSchema({
     publishedTime: post.data.pubDate,
     modifiedTime: post.data.updatedDate,
     section: 'Privacy',
+    tags: post.data.keywords,
   }}
 >
   <Nav />
