@@ -1,0 +1,98 @@
+---
+title: "Video Calling in One Docker Container"
+description: "Self-hosted video calling shouldn't need Kubernetes. Here's how a single Docker container, a SQLite file, and WebRTC can handle everything you need."
+pubDate: "2026-03-01"
+keywords: ["docker video calling", "self-host video calls docker", "simple self-hosted video", "one container video calling"]
+tldr: "Most self-hosted video solutions are over-engineered for personal use. A single Docker container with an embedded SQLite database can handle authentication, contacts, and call signaling — while WebRTC handles the actual media directly between devices."
+readTime: "5 min read"
+---
+
+import Callout from '../../components/blog/Callout.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+If you search for "self-hosted video calling" right now, most of what you'll find is built for conferences and enterprises. Multi-container deployments. External databases. XMPP servers. SIP gateways. Configuration files measured in hundreds of lines.
+
+That's fine for an organisation with a DevOps team. It's wildly over-scoped for someone who just wants to call their family privately.
+
+## What the server actually does
+
+A video calling server has a very limited job. Understanding what it does — and what it doesn't do — explains why it doesn't need to be complex.
+
+**Authentication.** Verify that users are who they say they are. Manage sessions.
+
+**Contacts.** Store mutual connections between users. When you add someone via friend code, the server records that relationship.
+
+**Call signaling.** When User A calls User B, the server tells User B about the incoming call and helps the two devices establish a direct connection.
+
+**Push notifications.** Tell the phone to wake up and show an incoming call. This is the most infrastructure-dependent part — it requires Apple (APNs) or Google (FCM) credentials.
+
+That's it. The server does not:
+- Carry video or audio
+- Store recordings
+- Process media
+- Run AI
+
+The actual video and audio flow directly between devices using WebRTC. The server is a matchmaker, not a relay.
+
+<SectionHeading label="The architecture" />
+
+## Why one container is enough
+
+If the server's job is authentication, contacts, signaling, and push notifications, the technical requirements are modest:
+
+- **An HTTP server.** To handle API requests and serve WebSocket connections for real-time signaling.
+- **A database.** To store users, contacts, and sessions.
+- **Push notification clients.** To send APNs/FCM messages.
+
+This doesn't need Postgres. It doesn't need Redis. It doesn't need a message queue. A modern HTTP framework and an embedded SQLite database handle all of it.
+
+```yaml
+# docker-compose.yml
+services:
+  farscry:
+    image: ghcr.io/loosewiredev/farscry:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - farscry-data:/data
+    environment:
+      - DATABASE_PATH=/data/farscry.db
+      - BETTER_AUTH_SECRET=your-secret-here
+    restart: unless-stopped
+
+volumes:
+  farscry-data:
+```
+
+One container. One volume for the SQLite file. Two environment variables. That's the entire deployment.
+
+<Callout type="tip" title="SQLite is enough">
+SQLite handles thousands of concurrent users on a single machine. For a personal or family video calling server, it's more than enough — and it means your entire database is a single file you can back up with cp.
+</Callout>
+
+## The WebRTC part
+
+The heavy lifting — encoding, encrypting, and transmitting video and audio — happens entirely on the devices. WebRTC provides:
+
+- **Peer-to-peer connections.** Devices connect directly using STUN to discover their public IP addresses.
+- **Encryption.** DTLS-SRTP encrypts all media. Keys are negotiated directly between devices.
+- **Adaptive quality.** WebRTC automatically adjusts video resolution and bitrate based on network conditions.
+
+The server facilitates the initial connection (via ICE candidates and SDP offers/answers), then steps completely out of the media path.
+
+For the rare cases where direct connection isn't possible (restrictive corporate NATs), a TURN relay can be deployed separately. But most residential and mobile connections work fine with just STUN.
+
+## What this means for you
+
+If you're considering self-hosting video calling:
+
+- **You don't need a powerful server.** A Raspberry Pi or the cheapest VPS tier can run the signaling server. The compute-intensive work (video encoding) happens on the phones.
+- **Backup is trivial.** Copy one SQLite file. That's your entire database.
+- **Updates are simple.** Pull the new Docker image, restart the container.
+- **Resource usage is minimal.** The server mostly sits idle, waking up briefly when calls are initiated.
+
+## What we're building
+
+[Farscry](https://loosewire.dev/farscry) takes this architecture to its logical conclusion: one container, one SQLite file, zero external dependencies. It's the simplest possible self-hosted video calling server, paired with native iOS and Android apps.
+
+Currently in development — star the [GitHub repo](https://github.com/LooseWireDev/farscry) to follow along.

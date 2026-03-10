@@ -1,0 +1,2566 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Farscry — Brand & Marketing Guide</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            /* ═══════════════════════════════════════════════════════
+   THEME TOKENS — dark (default)
+   ═══════════════════════════════════════════════════════ */
+            :root,
+            [data-theme="dark"] {
+                --violet: #a78bfa;
+                --violet-dark: #8b6cf7;
+                --violet-deep: #6d4ed4;
+                --violet-dim: #4c3899;
+                --violet-subtle: rgba(167, 139, 250, 0.1);
+                --violet-glow: rgba(167, 139, 250, 0.06);
+
+                --bg: #08090b;
+                --bg-elevated: #0d0e11;
+                --surface-1: #111316;
+                --surface-2: #171a1e;
+                --surface-3: #1e2126;
+
+                --border-subtle: rgba(255, 255, 255, 0.05);
+                --border: rgba(255, 255, 255, 0.08);
+                --border-strong: rgba(255, 255, 255, 0.14);
+
+                --text-primary: #f0f2f4;
+                --text-secondary: #8c939e;
+                --text-tertiary: #4e5762;
+                --text-inverse: #08090b;
+
+                --error: #f87171;
+                --warning: #fbbf24;
+                --success: #34d399;
+
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+                --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
+                --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.7), 0 4px 12px rgba(0, 0, 0, 0.4);
+                --shadow-violet: 0 0 24px rgba(167, 139, 250, 0.15), 0 4px 12px rgba(0, 0, 0, 0.4);
+
+                --icon-bg-from: #110c1a;
+                --icon-bg-to: #09060f;
+
+                --demo-bg: #0a0b0e;
+                --demo-border: rgba(255, 255, 255, 0.06);
+
+                --checker-a: #131518;
+                --checker-b: #0e1013;
+
+                color-scheme: dark;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   THEME TOKENS — light
+   ═══════════════════════════════════════════════════════ */
+            [data-theme="light"] {
+                --violet: #7c3aed;
+                --violet-dark: #6d28d9;
+                --violet-deep: #5b21b6;
+                --violet-dim: #4c1d95;
+                --violet-subtle: rgba(124, 58, 237, 0.08);
+                --violet-glow: rgba(124, 58, 237, 0.04);
+
+                --bg: #f5f5f7;
+                --bg-elevated: #ffffff;
+                --surface-1: #ffffff;
+                --surface-2: #f0f1f4;
+                --surface-3: #e5e7ec;
+
+                --border-subtle: rgba(0, 0, 0, 0.05);
+                --border: rgba(0, 0, 0, 0.09);
+                --border-strong: rgba(0, 0, 0, 0.16);
+
+                --text-primary: #0f1117;
+                --text-secondary: #4a5264;
+                --text-tertiary: #9199a8;
+                --text-inverse: #ffffff;
+
+                --error: #ef4444;
+                --warning: #d97706;
+                --success: #16a34a;
+
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+                --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+                --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.14);
+                --shadow-violet: 0 0 20px rgba(124, 58, 237, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+
+                --icon-bg-from: #110c1a;
+                --icon-bg-to: #09060f;
+
+                --demo-bg: #eceef2;
+                --demo-border: rgba(0, 0, 0, 0.07);
+
+                --checker-a: #e5e7ec;
+                --checker-b: #dcdfe5;
+
+                color-scheme: light;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════ */
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                background: var(--bg);
+                color: var(--text-primary);
+                font-family: "Geist", system-ui, sans-serif;
+                font-size: 15px;
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+                transition:
+                    background 0.2s,
+                    color 0.2s;
+            }
+
+            ::selection {
+                background: rgba(167, 139, 250, 0.3);
+                color: #fff;
+            }
+            [data-theme="light"] ::selection {
+                background: rgba(124, 58, 237, 0.2);
+            }
+
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: var(--surface-3);
+                border-radius: 3px;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════ */
+            .layout {
+                display: flex;
+                min-height: 100vh;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 240px;
+                height: 100vh;
+                background: var(--bg-elevated);
+                border-right: 1px solid var(--border-subtle);
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                z-index: 100;
+            }
+            .sidebar-top {
+                padding: 28px 22px 20px;
+                border-bottom: 1px solid var(--border-subtle);
+                flex-shrink: 0;
+            }
+            .sidebar-logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 6px;
+            }
+            .sidebar-wordmark {
+                font-family: "Geist Mono", monospace;
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: -0.01em;
+                color: var(--text-primary);
+            }
+            .sidebar-wordmark .accent {
+                color: var(--violet);
+            }
+            .sidebar-version {
+                font-family: "Geist Mono", monospace;
+                font-size: 11px;
+                color: var(--text-tertiary);
+                letter-spacing: 0.04em;
+            }
+
+            .sidebar-nav {
+                flex: 1;
+                overflow-y: auto;
+                padding: 16px 0 24px;
+            }
+            .nav-group {
+                margin-bottom: 4px;
+            }
+            .nav-group-label {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--text-tertiary);
+                padding: 16px 22px 6px;
+                display: block;
+            }
+            .nav-link {
+                display: block;
+                padding: 7px 22px;
+                font-size: 13px;
+                font-weight: 400;
+                color: var(--text-secondary);
+                text-decoration: none;
+                border-left: 2px solid transparent;
+                cursor: pointer;
+                transition:
+                    color 0.12s,
+                    background 0.12s,
+                    border-color 0.12s;
+            }
+            .nav-link:hover {
+                color: var(--text-primary);
+                background: var(--surface-1);
+            }
+            .nav-link.active {
+                color: var(--violet);
+                border-left-color: var(--violet);
+                background: var(--violet-glow);
+                font-weight: 500;
+            }
+
+            .theme-switcher {
+                flex-shrink: 0;
+                padding: 16px 18px;
+                border-top: 1px solid var(--border-subtle);
+                display: flex;
+                gap: 6px;
+            }
+            .theme-btn {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                height: 30px;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                background: transparent;
+                color: var(--text-tertiary);
+                font-family: "Geist", sans-serif;
+                font-size: 11px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.12s;
+            }
+            .theme-btn:hover {
+                border-color: var(--border-strong);
+                color: var(--text-secondary);
+                background: var(--surface-1);
+            }
+            .theme-btn.active {
+                background: var(--violet-subtle);
+                border-color: rgba(167, 139, 250, 0.25);
+                color: var(--violet);
+            }
+            [data-theme="light"] .theme-btn.active {
+                border-color: rgba(124, 58, 237, 0.3);
+            }
+
+            .main {
+                margin-left: 240px;
+                flex: 1;
+                min-width: 0;
+            }
+            .content {
+                max-width: 800px;
+                padding: 64px 56px 96px;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════ */
+            .section {
+                margin-bottom: 88px;
+                scroll-margin-top: 40px;
+            }
+            .section-eyebrow {
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--violet);
+                margin-bottom: 10px;
+                display: block;
+            }
+            .section-title {
+                font-size: 28px;
+                font-weight: 800;
+                letter-spacing: -0.035em;
+                line-height: 1.1;
+                color: var(--text-primary);
+                margin-bottom: 12px;
+            }
+            .section-desc {
+                font-size: 15px;
+                line-height: 1.75;
+                color: var(--text-secondary);
+                max-width: 560px;
+                margin-bottom: 44px;
+            }
+            .subsection {
+                margin-bottom: 48px;
+            }
+            .subsection-title {
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--text-tertiary);
+                margin-bottom: 18px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   DEMO CANVAS
+   ═══════════════════════════════════════════════════════ */
+            .demo {
+                background: var(--demo-bg);
+                border: 1px solid var(--demo-border);
+                border-radius: 16px;
+                padding: 40px;
+                margin-bottom: 8px;
+            }
+            .demo-sm {
+                padding: 24px 28px;
+            }
+            .demo-label {
+                font-family: "Geist Mono", monospace;
+                font-size: 11px;
+                color: var(--text-tertiary);
+                margin-top: 10px;
+                letter-spacing: 0.04em;
+            }
+            .demo-checker {
+                background-image:
+                    linear-gradient(45deg, var(--checker-a) 25%, transparent 25%),
+                    linear-gradient(-45deg, var(--checker-a) 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, var(--checker-a) 75%),
+                    linear-gradient(-45deg, transparent 75%, var(--checker-a) 75%);
+                background-size: 20px 20px;
+                background-position:
+                    0 0,
+                    0 10px,
+                    10px -10px,
+                    -10px 0;
+                background-color: var(--checker-b);
+            }
+
+            /* Helpers */
+            .row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+                align-items: flex-start;
+            }
+            .row-mid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+                align-items: center;
+            }
+            .col {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .grid-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+            .grid-3 {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 12px;
+            }
+            .grid-4 {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                gap: 10px;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   COLOR CARDS
+   ═══════════════════════════════════════════════════════ */
+            .color-card {
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid var(--border-subtle);
+            }
+            .color-swatch {
+                height: 72px;
+            }
+            .color-info {
+                padding: 12px 14px;
+                background: var(--surface-1);
+            }
+            .color-name {
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+            .color-token {
+                font-family: "Geist Mono", monospace;
+                font-size: 11px;
+                color: var(--violet);
+                margin-top: 2px;
+                display: block;
+            }
+            .color-hex {
+                font-family: "Geist Mono", monospace;
+                font-size: 11px;
+                color: var(--text-tertiary);
+            }
+            .color-desc {
+                font-size: 11px;
+                color: var(--text-tertiary);
+                margin-top: 6px;
+                line-height: 1.4;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   TOKEN TABLE
+   ═══════════════════════════════════════════════════════ */
+            .token-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .token-table th {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text-tertiary);
+                text-align: left;
+                padding: 8px 14px;
+                border-bottom: 1px solid var(--border);
+                background: var(--surface-1);
+            }
+            .token-table th:first-child {
+                border-radius: 10px 0 0 0;
+            }
+            .token-table th:last-child {
+                border-radius: 0 10px 0 0;
+            }
+            .token-table td {
+                padding: 11px 14px;
+                font-size: 13px;
+                color: var(--text-secondary);
+                border-bottom: 1px solid var(--border-subtle);
+                vertical-align: middle;
+            }
+            .token-table tr:last-child td {
+                border-bottom: none;
+            }
+            .token-table tr:hover td {
+                background: var(--surface-1);
+            }
+            .token-table .t-name {
+                font-family: "Geist Mono", monospace;
+                font-size: 12px;
+                color: var(--violet);
+            }
+            .token-table .t-value {
+                font-family: "Geist Mono", monospace;
+                font-size: 12px;
+                color: var(--text-tertiary);
+            }
+            .token-table .t-swatch {
+                width: 24px;
+                height: 24px;
+                border-radius: 5px;
+                border: 1px solid var(--border);
+                display: inline-block;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   TYPE SPECIMENS
+   ═══════════════════════════════════════════════════════ */
+            .type-row {
+                display: grid;
+                grid-template-columns: 110px 1fr;
+                gap: 0 28px;
+                align-items: baseline;
+                padding: 18px 0;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+            .type-row:last-child {
+                border-bottom: none;
+            }
+            .type-meta-col {
+                text-align: right;
+            }
+            .type-token-name {
+                font-family: "Geist Mono", monospace;
+                font-size: 11px;
+                color: var(--violet);
+                display: block;
+            }
+            .type-spec {
+                font-family: "Geist Mono", monospace;
+                font-size: 10px;
+                color: var(--text-tertiary);
+                display: block;
+                margin-top: 3px;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════ */
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                font-family: "Geist", sans-serif;
+                font-size: 13px;
+                font-weight: 500;
+                letter-spacing: -0.01em;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                padding: 0 16px;
+                height: 34px;
+                white-space: nowrap;
+                transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+                outline: none;
+            }
+            .btn-sm {
+                height: 28px;
+                padding: 0 12px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+            .btn-lg {
+                height: 42px;
+                padding: 0 22px;
+                font-size: 14px;
+                border-radius: 10px;
+            }
+
+            .btn-primary {
+                background: var(--violet);
+                color: var(--text-inverse);
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                    0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+            .btn-primary:hover {
+                filter: brightness(1.08);
+                transform: translateY(-1px);
+                box-shadow: var(--shadow-violet);
+            }
+            .btn-primary:active {
+                filter: brightness(0.95);
+                transform: translateY(0);
+            }
+
+            .btn-secondary {
+                background: var(--surface-2);
+                color: var(--text-primary);
+                border: 1px solid var(--border);
+            }
+            .btn-secondary:hover {
+                background: var(--surface-3);
+                border-color: var(--border-strong);
+            }
+
+            .btn-ghost {
+                background: transparent;
+                color: var(--text-secondary);
+            }
+            .btn-ghost:hover {
+                background: var(--surface-1);
+                color: var(--text-primary);
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   DO / DON'T
+   ═══════════════════════════════════════════════════════ */
+            .verdict-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+                margin-bottom: 18px;
+            }
+            .verdict {
+                border-radius: 14px;
+                overflow: hidden;
+                border: 1px solid;
+            }
+            .verdict.do {
+                border-color: rgba(167, 139, 250, 0.25);
+            }
+            .verdict.dont {
+                border-color: rgba(248, 113, 113, 0.2);
+            }
+            .verdict-head {
+                padding: 10px 18px;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+            }
+            .verdict.do .verdict-head {
+                background: var(--violet-subtle);
+                color: var(--violet);
+            }
+            .verdict.dont .verdict-head {
+                background: rgba(248, 113, 113, 0.06);
+                color: var(--error);
+            }
+            .verdict-body {
+                padding: 22px 18px;
+                background: var(--surface-1);
+                min-height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   NOTE / CALLOUT
+   ═══════════════════════════════════════════════════════ */
+            .note {
+                padding: 18px 22px;
+                border-radius: 12px;
+                background: var(--violet-subtle);
+                border: 1px solid rgba(167, 139, 250, 0.14);
+                font-size: 14px;
+                color: var(--text-secondary);
+                line-height: 1.6;
+            }
+            .note strong {
+                color: var(--violet);
+                font-weight: 600;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   USAGE CARD
+   ═══════════════════════════════════════════════════════ */
+            .usage-card {
+                background: var(--surface-1);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                overflow: hidden;
+                margin-bottom: 14px;
+            }
+            .usage-card-header {
+                padding: 10px 16px;
+                border-bottom: 1px solid var(--border);
+                font-family: "Geist Mono", monospace;
+                font-size: 10px;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: var(--text-tertiary);
+            }
+            .usage-card-body {
+                padding: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════ */
+            .hero {
+                padding: 48px 0 72px;
+                border-bottom: 1px solid var(--border-subtle);
+                margin-bottom: 72px;
+            }
+            .hero-icon {
+                margin-bottom: 24px;
+                opacity: 0;
+                animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+            }
+            .hero-title {
+                font-family: "Geist Mono", monospace;
+                font-size: 40px;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                line-height: 1.05;
+                color: var(--text-primary);
+                margin-bottom: 12px;
+                opacity: 0;
+                animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            }
+            .hero-title .accent {
+                color: var(--violet);
+            }
+            .hero-sub {
+                font-size: 16px;
+                color: var(--text-secondary);
+                line-height: 1.7;
+                max-width: 500px;
+                margin-bottom: 24px;
+                opacity: 0;
+                animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+            }
+            .hero-meta {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                opacity: 0;
+                animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+            }
+            .hero-meta-item {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-family: "Geist Mono", monospace;
+                font-size: 11px;
+                color: var(--text-tertiary);
+            }
+            .hero-meta-dot {
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: var(--violet);
+            }
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(14px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* ═══════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════ */
+            .page-footer {
+                padding-top: 40px;
+                border-top: 1px solid var(--border-subtle);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .footer-mark {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .footer-text {
+                font-family: "Geist Mono", monospace;
+                font-size: 11px;
+                color: var(--text-tertiary);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layout">
+            <!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+            <aside class="sidebar">
+                <div class="sidebar-top">
+                    <div class="sidebar-logo">
+                        <svg width="28" height="28" viewBox="0 0 512 512" fill="none">
+                            <defs>
+                                <linearGradient id="sb-bg" x1="0" y1="0" x2="512" y2="512">
+                                    <stop offset="0%" stop-color="#110c1a" />
+                                    <stop offset="100%" stop-color="#09060f" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="512" height="512" rx="112" fill="url(#sb-bg)" />
+                            <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                            <circle
+                                cx="256"
+                                cy="256"
+                                r="90"
+                                stroke="#a78bfa"
+                                stroke-width="26"
+                                fill="none"
+                                opacity="0.45"
+                            />
+                            <circle
+                                cx="256"
+                                cy="256"
+                                r="148"
+                                stroke="#a78bfa"
+                                stroke-width="22"
+                                fill="none"
+                                opacity="0.2"
+                            />
+                            <circle
+                                cx="256"
+                                cy="256"
+                                r="200"
+                                stroke="#a78bfa"
+                                stroke-width="16"
+                                fill="none"
+                                opacity="0.08"
+                            />
+                        </svg>
+                        <span class="sidebar-wordmark">far<span class="accent">scry</span></span>
+                    </div>
+                    <div class="sidebar-version">Brand Guide · v1.0</div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <div class="nav-group">
+                        <span class="nav-group-label">Identity</span>
+                        <a class="nav-link active" href="#mark">The Mark</a>
+                        <a class="nav-link" href="#color">Color</a>
+                        <a class="nav-link" href="#typography">Typography</a>
+                    </div>
+                    <div class="nav-group">
+                        <span class="nav-group-label">Guidelines</span>
+                        <a class="nav-link" href="#voice">Voice & Tone</a>
+                        <a class="nav-link" href="#usage">Usage</a>
+                        <a class="nav-link" href="#dos">Do's & Don'ts</a>
+                    </div>
+                    <div class="nav-group">
+                        <span class="nav-group-label">Context</span>
+                        <a class="nav-link" href="#native">Native Apps</a>
+                        <a class="nav-link" href="#family">Brand Family</a>
+                    </div>
+                </nav>
+
+                <div class="theme-switcher">
+                    <button class="theme-btn active" data-mode="dark">
+                        <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                            <path d="M13.9 10.2A6.5 6.5 0 015.8 2.1a6 6 0 108.1 8.1z" fill="currentColor" /></svg
+                        >Dark
+                    </button>
+                    <button class="theme-btn" data-mode="light">
+                        <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="3.5" fill="currentColor" />
+                            <path
+                                d="M8 1v2m0 10v2m-7-7h2m10 0h2M2.9 2.9l1.4 1.4m7.4 7.4l1.4 1.4M13.1 2.9l-1.4 1.4M4.3 11.7l-1.4 1.4"
+                                stroke="currentColor"
+                                stroke-width="1.3"
+                                stroke-linecap="round"
+                            /></svg
+                        >Light
+                    </button>
+                    <button class="theme-btn" data-mode="system">
+                        <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                            <rect
+                                x="2"
+                                y="3"
+                                width="12"
+                                height="8"
+                                rx="1.5"
+                                stroke="currentColor"
+                                stroke-width="1.3"
+                                fill="none"
+                            />
+                            <path d="M6 14h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" /></svg
+                        >Auto
+                    </button>
+                </div>
+            </aside>
+
+            <!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+            <main class="main">
+                <div class="content">
+                    <!-- Hero -->
+                    <div class="hero">
+                        <div class="hero-icon">
+                            <svg width="64" height="64" viewBox="0 0 512 512" fill="none">
+                                <defs>
+                                    <linearGradient id="hero-bg" x1="0" y1="0" x2="512" y2="512">
+                                        <stop offset="0%" stop-color="#110c1a" />
+                                        <stop offset="100%" stop-color="#09060f" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="512" height="512" rx="112" fill="url(#hero-bg)" />
+                                <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                <circle
+                                    cx="256"
+                                    cy="256"
+                                    r="90"
+                                    stroke="#a78bfa"
+                                    stroke-width="26"
+                                    fill="none"
+                                    opacity="0.45"
+                                />
+                                <circle
+                                    cx="256"
+                                    cy="256"
+                                    r="148"
+                                    stroke="#a78bfa"
+                                    stroke-width="22"
+                                    fill="none"
+                                    opacity="0.2"
+                                />
+                                <circle
+                                    cx="256"
+                                    cy="256"
+                                    r="200"
+                                    stroke="#a78bfa"
+                                    stroke-width="16"
+                                    fill="none"
+                                    opacity="0.08"
+                                />
+                            </svg>
+                        </div>
+                        <h1 class="hero-title">far<span class="accent">scry</span></h1>
+                        <p class="hero-sub">
+                            Private video calling. No chat. No bloat. Just calls. This guide covers the marketing site
+                            and brand identity — the app itself uses fully native platform theming.
+                        </p>
+                        <div class="hero-meta">
+                            <div class="hero-meta-item">
+                                <div class="hero-meta-dot"></div>
+                                Violet · #a78bfa
+                            </div>
+                            <div class="hero-meta-item">
+                                <div class="hero-meta-dot"></div>
+                                Geist Mono wordmark
+                            </div>
+                            <div class="hero-meta-item">
+                                <div class="hero-meta-dot"></div>
+                                Ping icon
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══════════════════════════════════════════════════════
+       01 · THE MARK
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="mark">
+                        <span class="section-eyebrow">Identity</span>
+                        <h2 class="section-title">The Mark</h2>
+                        <p class="section-desc">
+                            The Ping — concentric rings radiating from a center point. A signal sent into the void,
+                            reaching someone on the other end. Always rendered on a dark gradient container per Loose
+                            Wire family rules.
+                        </p>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Primary Lockup</div>
+                            <div class="grid-2">
+                                <div class="demo demo-sm" style="background: #111316">
+                                    <div style="display: flex; align-items: center; gap: 12px; justify-content: center">
+                                        <svg width="36" height="36" viewBox="0 0 512 512" fill="none">
+                                            <defs>
+                                                <linearGradient id="lk-d" x1="0" y1="0" x2="512" y2="512">
+                                                    <stop offset="0%" stop-color="#110c1a" />
+                                                    <stop offset="100%" stop-color="#09060f" />
+                                                </linearGradient>
+                                            </defs>
+                                            <rect width="512" height="512" rx="112" fill="url(#lk-d)" />
+                                            <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                            <circle
+                                                cx="256"
+                                                cy="256"
+                                                r="90"
+                                                stroke="#a78bfa"
+                                                stroke-width="26"
+                                                fill="none"
+                                                opacity="0.45"
+                                            />
+                                            <circle
+                                                cx="256"
+                                                cy="256"
+                                                r="148"
+                                                stroke="#a78bfa"
+                                                stroke-width="22"
+                                                fill="none"
+                                                opacity="0.2"
+                                            />
+                                            <circle
+                                                cx="256"
+                                                cy="256"
+                                                r="200"
+                                                stroke="#a78bfa"
+                                                stroke-width="16"
+                                                fill="none"
+                                                opacity="0.08"
+                                            />
+                                        </svg>
+                                        <span
+                                            style="
+                                                font-family: &quot;Geist Mono&quot;, monospace;
+                                                font-size: 22px;
+                                                font-weight: 600;
+                                                letter-spacing: -0.01em;
+                                                color: #f0f2f4;
+                                            "
+                                            >far<span style="color: #a78bfa">scry</span></span
+                                        >
+                                    </div>
+                                    <div class="demo-label" style="text-align: center">On dark</div>
+                                </div>
+                                <div class="demo demo-sm" style="background: #eceef2">
+                                    <div style="display: flex; align-items: center; gap: 12px; justify-content: center">
+                                        <svg width="36" height="36" viewBox="0 0 512 512" fill="none">
+                                            <defs>
+                                                <linearGradient id="lk-l" x1="0" y1="0" x2="512" y2="512">
+                                                    <stop offset="0%" stop-color="#110c1a" />
+                                                    <stop offset="100%" stop-color="#09060f" />
+                                                </linearGradient>
+                                            </defs>
+                                            <rect width="512" height="512" rx="112" fill="url(#lk-l)" />
+                                            <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                            <circle
+                                                cx="256"
+                                                cy="256"
+                                                r="90"
+                                                stroke="#a78bfa"
+                                                stroke-width="26"
+                                                fill="none"
+                                                opacity="0.45"
+                                            />
+                                            <circle
+                                                cx="256"
+                                                cy="256"
+                                                r="148"
+                                                stroke="#a78bfa"
+                                                stroke-width="22"
+                                                fill="none"
+                                                opacity="0.2"
+                                            />
+                                            <circle
+                                                cx="256"
+                                                cy="256"
+                                                r="200"
+                                                stroke="#a78bfa"
+                                                stroke-width="16"
+                                                fill="none"
+                                                opacity="0.08"
+                                            />
+                                        </svg>
+                                        <span
+                                            style="
+                                                font-family: &quot;Geist Mono&quot;, monospace;
+                                                font-size: 22px;
+                                                font-weight: 600;
+                                                letter-spacing: -0.01em;
+                                                color: #0f1117;
+                                            "
+                                            >far<span style="color: #7c3aed">scry</span></span
+                                        >
+                                    </div>
+                                    <div class="demo-label" style="text-align: center; color: #9199a8">On light</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Icon Sizes</div>
+                            <div
+                                class="demo"
+                                style="display: flex; align-items: flex-end; justify-content: center; gap: 20px"
+                            >
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+                                    <svg width="16" height="16" viewBox="0 0 512 512" fill="none">
+                                        <defs>
+                                            <linearGradient id="s16" x1="0" y1="0" x2="512" y2="512">
+                                                <stop offset="0%" stop-color="#110c1a" />
+                                                <stop offset="100%" stop-color="#09060f" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="512" height="512" rx="112" fill="url(#s16)" />
+                                        <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="90"
+                                            stroke="#a78bfa"
+                                            stroke-width="26"
+                                            fill="none"
+                                            opacity="0.45"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="148"
+                                            stroke="#a78bfa"
+                                            stroke-width="22"
+                                            fill="none"
+                                            opacity="0.2"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="200"
+                                            stroke="#a78bfa"
+                                            stroke-width="16"
+                                            fill="none"
+                                            opacity="0.08"
+                                        />
+                                    </svg>
+                                    <span class="demo-label">16 · favicon</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+                                    <svg width="32" height="32" viewBox="0 0 512 512" fill="none">
+                                        <defs>
+                                            <linearGradient id="s32" x1="0" y1="0" x2="512" y2="512">
+                                                <stop offset="0%" stop-color="#110c1a" />
+                                                <stop offset="100%" stop-color="#09060f" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="512" height="512" rx="112" fill="url(#s32)" />
+                                        <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="90"
+                                            stroke="#a78bfa"
+                                            stroke-width="26"
+                                            fill="none"
+                                            opacity="0.45"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="148"
+                                            stroke="#a78bfa"
+                                            stroke-width="22"
+                                            fill="none"
+                                            opacity="0.2"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="200"
+                                            stroke="#a78bfa"
+                                            stroke-width="16"
+                                            fill="none"
+                                            opacity="0.08"
+                                        />
+                                    </svg>
+                                    <span class="demo-label">32 · nav</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+                                    <svg width="56" height="56" viewBox="0 0 512 512" fill="none">
+                                        <defs>
+                                            <linearGradient id="s56" x1="0" y1="0" x2="512" y2="512">
+                                                <stop offset="0%" stop-color="#110c1a" />
+                                                <stop offset="100%" stop-color="#09060f" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="512" height="512" rx="112" fill="url(#s56)" />
+                                        <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="90"
+                                            stroke="#a78bfa"
+                                            stroke-width="26"
+                                            fill="none"
+                                            opacity="0.45"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="148"
+                                            stroke="#a78bfa"
+                                            stroke-width="22"
+                                            fill="none"
+                                            opacity="0.2"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="200"
+                                            stroke="#a78bfa"
+                                            stroke-width="16"
+                                            fill="none"
+                                            opacity="0.08"
+                                        />
+                                    </svg>
+                                    <span class="demo-label">56 · app store</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+                                    <svg width="96" height="96" viewBox="0 0 512 512" fill="none">
+                                        <defs>
+                                            <linearGradient id="s96" x1="0" y1="0" x2="512" y2="512">
+                                                <stop offset="0%" stop-color="#110c1a" />
+                                                <stop offset="100%" stop-color="#09060f" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="512" height="512" rx="112" fill="url(#s96)" />
+                                        <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="90"
+                                            stroke="#a78bfa"
+                                            stroke-width="26"
+                                            fill="none"
+                                            opacity="0.45"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="148"
+                                            stroke="#a78bfa"
+                                            stroke-width="22"
+                                            fill="none"
+                                            opacity="0.2"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="200"
+                                            stroke="#a78bfa"
+                                            stroke-width="16"
+                                            fill="none"
+                                            opacity="0.08"
+                                        />
+                                    </svg>
+                                    <span class="demo-label">96 · hero</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="note">
+                            <strong>Icon container rule:</strong> The Ping always sits on a dark gradient background
+                            (#110c1a → #09060f), even on light surfaces. This is the Loose Wire family convention —
+                            every product icon uses a dark container. Never place the Ping rings directly on a light or
+                            colored background.
+                        </div>
+                    </section>
+
+                    <!-- ══════════════════════════════════════════════════════
+       02 · COLOR
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="color">
+                        <span class="section-eyebrow">Identity</span>
+                        <h2 class="section-title">Color</h2>
+                        <p class="section-desc">
+                            Violet is the seed color. On the marketing site, use it sparingly — the wordmark highlight,
+                            the primary CTA, and the pricing highlight. Neutral surfaces do the heavy lifting. In the
+                            native apps, violet is the seed for Material You on Android and the tint color on iOS.
+                        </p>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Violet Accent Ramp</div>
+                            <div
+                                style="
+                                    display: flex;
+                                    height: 72px;
+                                    border-radius: 14px;
+                                    overflow: hidden;
+                                    gap: 3px;
+                                    margin-bottom: 10px;
+                                "
+                            >
+                                <div style="flex: 1; background: #4c3899; position: relative">
+                                    <span
+                                        style="
+                                            position: absolute;
+                                            bottom: 6px;
+                                            left: 8px;
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: rgba(255, 255, 255, 0.6);
+                                        "
+                                        >Dim</span
+                                    >
+                                </div>
+                                <div style="flex: 1; background: #6d4ed4; position: relative">
+                                    <span
+                                        style="
+                                            position: absolute;
+                                            bottom: 6px;
+                                            left: 8px;
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: rgba(255, 255, 255, 0.7);
+                                        "
+                                        >Deep</span
+                                    >
+                                </div>
+                                <div style="flex: 1.2; background: #8b6cf7; position: relative">
+                                    <span
+                                        style="
+                                            position: absolute;
+                                            bottom: 6px;
+                                            left: 8px;
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: rgba(255, 255, 255, 0.8);
+                                        "
+                                        >Dark</span
+                                    >
+                                </div>
+                                <div style="flex: 1.6; background: #a78bfa; position: relative">
+                                    <span
+                                        style="
+                                            position: absolute;
+                                            bottom: 6px;
+                                            left: 8px;
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: rgba(0, 0, 0, 0.45);
+                                        "
+                                        >Primary</span
+                                    >
+                                </div>
+                                <div style="flex: 0.8; background: rgba(167, 139, 250, 0.5); position: relative">
+                                    <span
+                                        style="
+                                            position: absolute;
+                                            bottom: 6px;
+                                            left: 8px;
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: rgba(255, 255, 255, 0.5);
+                                        "
+                                        >50%</span
+                                    >
+                                </div>
+                                <div style="flex: 0.5; background: rgba(167, 139, 250, 0.1)"></div>
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Accent Tokens</div>
+                            <table class="token-table">
+                                <thead>
+                                    <tr>
+                                        <th>Token</th>
+                                        <th>Value</th>
+                                        <th></th>
+                                        <th>Usage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="t-name">--violet</td>
+                                        <td class="t-value">#a78bfa</td>
+                                        <td><span class="t-swatch" style="background: #a78bfa"></span></td>
+                                        <td>Primary accent — CTAs, wordmark "scry", active states</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-name">--violet-dark</td>
+                                        <td class="t-value">#8b6cf7</td>
+                                        <td><span class="t-swatch" style="background: #8b6cf7"></span></td>
+                                        <td>Hover states, pressed buttons</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-name">--violet-deep</td>
+                                        <td class="t-value">#6d4ed4</td>
+                                        <td><span class="t-swatch" style="background: #6d4ed4"></span></td>
+                                        <td>Focus rings, dark-on-dark accents</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-name">--violet-dim</td>
+                                        <td class="t-value">#4c3899</td>
+                                        <td><span class="t-swatch" style="background: #4c3899"></span></td>
+                                        <td>Icon background tints, deep backgrounds</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-name">--violet-subtle</td>
+                                        <td class="t-value">rgba(167,139,250,0.10)</td>
+                                        <td>
+                                            <span class="t-swatch" style="background: rgba(167, 139, 250, 0.1)"></span>
+                                        </td>
+                                        <td>Highlighted card backgrounds, subtle fills</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="t-name">--violet-glow</td>
+                                        <td class="t-value">rgba(167,139,250,0.06)</td>
+                                        <td>
+                                            <span class="t-swatch" style="background: rgba(167, 139, 250, 0.06)"></span>
+                                        </td>
+                                        <td>Active nav link backgrounds, very light tints</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Surface Tokens · Dark</div>
+                            <div
+                                style="
+                                    display: flex;
+                                    height: 52px;
+                                    border-radius: 12px;
+                                    overflow: hidden;
+                                    gap: 2px;
+                                    margin-bottom: 12px;
+                                "
+                            >
+                                <div
+                                    style="
+                                        flex: 1;
+                                        background: #08090b;
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 6px 8px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: #4e5762;
+                                        "
+                                        >BG · #08090b</span
+                                    >
+                                </div>
+                                <div
+                                    style="
+                                        flex: 1;
+                                        background: #0d0e11;
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 6px 8px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: #4e5762;
+                                        "
+                                        >Elevated · #0d0e11</span
+                                    >
+                                </div>
+                                <div
+                                    style="
+                                        flex: 1;
+                                        background: #111316;
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 6px 8px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: #4e5762;
+                                        "
+                                        >Surface 1 · #111316</span
+                                    >
+                                </div>
+                                <div
+                                    style="
+                                        flex: 1;
+                                        background: #171a1e;
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 6px 8px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: #4e5762;
+                                        "
+                                        >Surface 2 · #171a1e</span
+                                    >
+                                </div>
+                                <div
+                                    style="
+                                        flex: 1;
+                                        background: #1e2126;
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 6px 8px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 9px;
+                                            color: #4e5762;
+                                        "
+                                        >Surface 3 · #1e2126</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="note" style="font-size: 12px">
+                                These neutrals have no green or violet tint — intentionally cold grey. The accent color
+                                should pop against them rather than blend in. This also keeps the marketing site feeling
+                                neutral enough that app screenshots (which might show Material You's generated surfaces)
+                                don't clash.
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Semantic Colors</div>
+                            <div class="grid-3">
+                                <div
+                                    style="
+                                        height: 48px;
+                                        border-radius: 10px;
+                                        background: var(--success);
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 8px 10px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 10px;
+                                            color: rgba(255, 255, 255, 0.7);
+                                        "
+                                        >Success · #34d399</span
+                                    >
+                                </div>
+                                <div
+                                    style="
+                                        height: 48px;
+                                        border-radius: 10px;
+                                        background: var(--warning);
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 8px 10px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 10px;
+                                            color: rgba(0, 0, 0, 0.5);
+                                        "
+                                        >Warning · #fbbf24</span
+                                    >
+                                </div>
+                                <div
+                                    style="
+                                        height: 48px;
+                                        border-radius: 10px;
+                                        background: var(--error);
+                                        display: flex;
+                                        align-items: flex-end;
+                                        padding: 8px 10px;
+                                    "
+                                >
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 10px;
+                                            color: rgba(255, 255, 255, 0.7);
+                                        "
+                                        >Error · #f87171</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Material You Seed</div>
+                            <div class="note">
+                                <strong>Android seed color:</strong> #a78bfa. Material You processes this through HCT
+                                color space to generate tonal palettes for surfaces, on-colors, and containers. Users
+                                with dynamic theming may override this entirely with their wallpaper colors — this is
+                                intentional. The icon container remains static regardless of dynamic color.<br /><br /><strong
+                                    >iOS tint color:</strong
+                                >
+                                #a78bfa (dark mode), #7c3aed (light mode). Applied to navigation items, toggles, links,
+                                and system controls via the native tint API.
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ══════════════════════════════════════════════════════
+       03 · TYPOGRAPHY
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="typography">
+                        <span class="section-eyebrow">Identity</span>
+                        <h2 class="section-title">Typography</h2>
+                        <p class="section-desc">
+                            Geist Mono for the wordmark and metadata. Geist for body text on the marketing site. In-app
+                            typography is platform-native: SF Pro on iOS, Roboto on Android.
+                        </p>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Marketing Site Type Scale</div>
+                            <div
+                                style="
+                                    background: var(--surface-1);
+                                    border: 1px solid var(--border);
+                                    border-radius: 16px;
+                                    padding: 24px 28px;
+                                "
+                            >
+                                <div class="type-row">
+                                    <div class="type-meta-col">
+                                        <span class="type-token-name">Wordmark</span
+                                        ><span class="type-spec">Mono 600 · -0.01em</span>
+                                    </div>
+                                    <div
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 32px;
+                                            font-weight: 600;
+                                            letter-spacing: -0.01em;
+                                            color: var(--text-primary);
+                                        "
+                                    >
+                                        far<span style="color: var(--violet)">scry</span>
+                                    </div>
+                                </div>
+                                <div class="type-row">
+                                    <div class="type-meta-col">
+                                        <span class="type-token-name">Hero</span
+                                        ><span class="type-spec">Geist 700 · 36px · -0.03em</span>
+                                    </div>
+                                    <div
+                                        style="
+                                            font-family: &quot;Geist&quot;, sans-serif;
+                                            font-size: 36px;
+                                            font-weight: 700;
+                                            letter-spacing: -0.03em;
+                                            line-height: 1.15;
+                                            color: var(--text-primary);
+                                        "
+                                    >
+                                        Private video calls.
+                                    </div>
+                                </div>
+                                <div class="type-row">
+                                    <div class="type-meta-col">
+                                        <span class="type-token-name">Heading</span
+                                        ><span class="type-spec">Geist 600 · 20px · -0.02em</span>
+                                    </div>
+                                    <div
+                                        style="
+                                            font-family: &quot;Geist&quot;, sans-serif;
+                                            font-size: 20px;
+                                            font-weight: 600;
+                                            letter-spacing: -0.02em;
+                                            line-height: 1.3;
+                                            color: var(--text-primary);
+                                        "
+                                    >
+                                        End-to-end encrypted. Self-hostable.
+                                    </div>
+                                </div>
+                                <div class="type-row">
+                                    <div class="type-meta-col">
+                                        <span class="type-token-name">Body</span
+                                        ><span class="type-spec">Geist 400 · 15px · 1.7</span>
+                                    </div>
+                                    <div
+                                        style="
+                                            font-family: &quot;Geist&quot;, sans-serif;
+                                            font-size: 15px;
+                                            font-weight: 400;
+                                            line-height: 1.7;
+                                            color: var(--text-secondary);
+                                        "
+                                    >
+                                        No chat. No tracking. Just calls between people who trust each other.
+                                        Self-hostable via Docker, or use our hosted service.
+                                    </div>
+                                </div>
+                                <div class="type-row">
+                                    <div class="type-meta-col">
+                                        <span class="type-token-name">Small</span
+                                        ><span class="type-spec">Geist 500 · 13px</span>
+                                    </div>
+                                    <div
+                                        style="
+                                            font-family: &quot;Geist&quot;, sans-serif;
+                                            font-size: 13px;
+                                            font-weight: 500;
+                                            line-height: 1.5;
+                                            color: var(--text-secondary);
+                                        "
+                                    >
+                                        Feature labels, card descriptions, supporting text
+                                    </div>
+                                </div>
+                                <div class="type-row">
+                                    <div class="type-meta-col">
+                                        <span class="type-token-name">Mono</span
+                                        ><span class="type-spec">Mono 400 · 12px · 0.04em</span>
+                                    </div>
+                                    <div
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 12px;
+                                            font-weight: 400;
+                                            letter-spacing: 0.04em;
+                                            color: var(--text-tertiary);
+                                        "
+                                    >
+                                        farscry.app · docker compose up · v1.0.0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ══════════════════════════════════════════════════════
+       04 · VOICE & TONE
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="voice">
+                        <span class="section-eyebrow">Guidelines</span>
+                        <h2 class="section-title">Voice & Tone</h2>
+                        <p class="section-desc">
+                            Farscry's copy follows the Loose Wire voice: direct, honest, zero fluff. But the product has
+                            its own angle — privacy without paranoia. It's not trying to scare you into caring about
+                            encryption. It just does the right thing and tells you plainly.
+                        </p>
+
+                        <div class="grid-2" style="margin-bottom: 20px">
+                            <div
+                                style="
+                                    padding: 22px;
+                                    background: var(--violet-subtle);
+                                    border: 1px solid rgba(167, 139, 250, 0.16);
+                                    border-radius: 14px;
+                                "
+                            >
+                                <div
+                                    style="
+                                        font-size: 11px;
+                                        font-weight: 700;
+                                        letter-spacing: 0.12em;
+                                        text-transform: uppercase;
+                                        color: var(--violet);
+                                        margin-bottom: 14px;
+                                    "
+                                >
+                                    ✓ Write like this
+                                </div>
+                                <div
+                                    style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        gap: 8px;
+                                        font-size: 13px;
+                                        color: var(--text-secondary);
+                                        line-height: 1.5;
+                                    "
+                                >
+                                    <span>"Private video calls. Nothing else."</span>
+                                    <span>"One Docker container. Your server, your data."</span>
+                                    <span>"No phone number required. Share a friend code."</span>
+                                    <span>"$3/month. We run the server. You just call."</span>
+                                    <span>"Open source. AGPL-3.0."</span>
+                                </div>
+                            </div>
+                            <div
+                                style="
+                                    padding: 22px;
+                                    background: rgba(248, 113, 113, 0.05);
+                                    border: 1px solid rgba(248, 113, 113, 0.14);
+                                    border-radius: 14px;
+                                "
+                            >
+                                <div
+                                    style="
+                                        font-size: 11px;
+                                        font-weight: 700;
+                                        letter-spacing: 0.12em;
+                                        text-transform: uppercase;
+                                        color: var(--error);
+                                        margin-bottom: 14px;
+                                    "
+                                >
+                                    ✗ Not like this
+                                </div>
+                                <div
+                                    style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        gap: 8px;
+                                        font-size: 13px;
+                                        color: var(--text-secondary);
+                                        line-height: 1.5;
+                                    "
+                                >
+                                    <span>"Military-grade encryption protects YOUR data"</span>
+                                    <span>"Say goodbye to Big Tech surveillance!"</span>
+                                    <span>"We're building the future of private communication"</span>
+                                    <span>"Join our community of privacy advocates"</span>
+                                    <span>"Powered by cutting-edge WebRTC technology"</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <div
+                                style="
+                                    padding: 18px 20px;
+                                    background: var(--surface-1);
+                                    border: 1px solid var(--border);
+                                    border-radius: 14px;
+                                "
+                            >
+                                <strong style="color: var(--text-primary); font-size: 14px">Direct.</strong>
+                                <p
+                                    style="
+                                        font-size: 13px;
+                                        color: var(--text-secondary);
+                                        margin-top: 4px;
+                                        line-height: 1.5;
+                                    "
+                                >
+                                    Say what it does. Skip the mission statement.
+                                </p>
+                            </div>
+                            <div
+                                style="
+                                    padding: 18px 20px;
+                                    background: var(--surface-1);
+                                    border: 1px solid var(--border);
+                                    border-radius: 14px;
+                                "
+                            >
+                                <strong style="color: var(--text-primary); font-size: 14px">Calm.</strong>
+                                <p
+                                    style="
+                                        font-size: 13px;
+                                        color: var(--text-secondary);
+                                        margin-top: 4px;
+                                        line-height: 1.5;
+                                    "
+                                >
+                                    Privacy without paranoia. No fear-mongering. No shouting.
+                                </p>
+                            </div>
+                            <div
+                                style="
+                                    padding: 18px 20px;
+                                    background: var(--surface-1);
+                                    border: 1px solid var(--border);
+                                    border-radius: 14px;
+                                "
+                            >
+                                <strong style="color: var(--text-primary); font-size: 14px">Technical.</strong>
+                                <p
+                                    style="
+                                        font-size: 13px;
+                                        color: var(--text-secondary);
+                                        margin-top: 4px;
+                                        line-height: 1.5;
+                                    "
+                                >
+                                    Docker, AGPL, WebRTC — name the real thing. The audience respects specifics.
+                                </p>
+                            </div>
+                            <div
+                                style="
+                                    padding: 18px 20px;
+                                    background: var(--surface-1);
+                                    border: 1px solid var(--border);
+                                    border-radius: 14px;
+                                "
+                            >
+                                <strong style="color: var(--text-primary); font-size: 14px">Short.</strong>
+                                <p
+                                    style="
+                                        font-size: 13px;
+                                        color: var(--text-secondary);
+                                        margin-top: 4px;
+                                        line-height: 1.5;
+                                    "
+                                >
+                                    Marketing copy should be half as long as you think. Then cut it again.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ══════════════════════════════════════════════════════
+       05 · USAGE
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="usage">
+                        <span class="section-eyebrow">Guidelines</span>
+                        <h2 class="section-title">Usage</h2>
+                        <p class="section-desc">
+                            The marketing site is restrained. Violet appears in exactly three places: the wordmark, the
+                            primary CTA, and the highlighted pricing tier. Everything else is neutral. Screenshots of
+                            the native apps are the hero.
+                        </p>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Accent Placement</div>
+                            <table class="token-table">
+                                <thead>
+                                    <tr>
+                                        <th>Element</th>
+                                        <th>Accent?</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Wordmark "scry"</td>
+                                        <td style="color: var(--violet)">Yes</td>
+                                        <td>Always in --violet</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Primary CTA button</td>
+                                        <td style="color: var(--violet)">Yes</td>
+                                        <td>Solid violet background, dark text</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">
+                                            Highlighted pricing card
+                                        </td>
+                                        <td style="color: var(--violet)">Yes</td>
+                                        <td>Subtle violet border + background</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Section eyebrows</td>
+                                        <td style="color: var(--violet)">Yes</td>
+                                        <td>Uppercase labels above sections</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Feature icons</td>
+                                        <td style="color: var(--text-tertiary)">No</td>
+                                        <td>Use neutral grey. Don't violet-wash everything.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Body text</td>
+                                        <td style="color: var(--text-tertiary)">No</td>
+                                        <td>--text-secondary or --text-tertiary only</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Headings</td>
+                                        <td style="color: var(--text-tertiary)">No</td>
+                                        <td>--text-primary (white/near-black). No violet headings.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Links in prose</td>
+                                        <td style="color: var(--text-tertiary)">No</td>
+                                        <td>Underlined --text-secondary. Violet on hover only.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Component Samples</div>
+                            <div
+                                class="demo"
+                                style="display: flex; flex-direction: column; gap: 24px; align-items: center"
+                            >
+                                <div style="display: flex; gap: 10px; align-items: center">
+                                    <button class="btn btn-primary btn-lg">Download</button>
+                                    <button class="btn btn-secondary btn-lg">View source</button>
+                                    <button class="btn btn-ghost btn-lg">Learn more</button>
+                                </div>
+                                <div style="display: flex; gap: 10px; align-items: center">
+                                    <button class="btn btn-primary">Download</button>
+                                    <button class="btn btn-secondary">View source</button>
+                                    <button class="btn btn-ghost">Learn more</button>
+                                </div>
+                                <div style="display: flex; gap: 10px; align-items: center">
+                                    <button class="btn btn-primary btn-sm">Download</button>
+                                    <button class="btn btn-secondary btn-sm">View source</button>
+                                    <button class="btn btn-ghost btn-sm">Learn more</button>
+                                </div>
+                            </div>
+                            <div class="demo-label" style="text-align: center">Button scale — lg / default / sm</div>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Footer Attribution</div>
+                            <div class="usage-card">
+                                <div class="usage-card-header">Footer · dark</div>
+                                <div
+                                    class="usage-card-body"
+                                    style="background: #0a0b0e; padding: 22px; border-radius: 0 0 15px 15px"
+                                >
+                                    <div style="width: 100%">
+                                        <div
+                                            style="
+                                                height: 1px;
+                                                background: rgba(255, 255, 255, 0.05);
+                                                margin-bottom: 14px;
+                                            "
+                                        ></div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center">
+                                            <div style="display: flex; align-items: center; gap: 6px">
+                                                <svg width="14" height="14" viewBox="0 0 120 120" fill="none">
+                                                    <rect width="120" height="120" rx="28" fill="#0e1816" />
+                                                    <path
+                                                        d="M20 60 L32 60 L40 30 L52 84 L64 36 L76 78 L84 48 L92 60 L100 60"
+                                                        stroke="#3a524c"
+                                                        stroke-width="10"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        fill="none"
+                                                    />
+                                                </svg>
+                                                <span
+                                                    style="
+                                                        font-family: &quot;Geist Mono&quot;, monospace;
+                                                        font-size: 11px;
+                                                        color: #4e5762;
+                                                    "
+                                                    >© 2026 Loose Wire LLC</span
+                                                >
+                                            </div>
+                                            <div style="display: flex; gap: 14px">
+                                                <span
+                                                    style="
+                                                        font-family: &quot;Geist Mono&quot;, monospace;
+                                                        font-size: 11px;
+                                                        color: #3a424a;
+                                                    "
+                                                    >GitHub</span
+                                                >
+                                                <span
+                                                    style="
+                                                        font-family: &quot;Geist Mono&quot;, monospace;
+                                                        font-size: 11px;
+                                                        color: #3a424a;
+                                                    "
+                                                    >Privacy</span
+                                                >
+                                                <span
+                                                    style="
+                                                        font-family: &quot;Geist Mono&quot;, monospace;
+                                                        font-size: 11px;
+                                                        color: #3a424a;
+                                                    "
+                                                    >Terms</span
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ══════════════════════════════════════════════════════
+       06 · DO'S & DON'TS
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="dos">
+                        <span class="section-eyebrow">Guidelines</span>
+                        <h2 class="section-title">Do's & Don'ts</h2>
+
+                        <div class="verdict-grid">
+                            <div class="verdict do">
+                                <div class="verdict-head">✓ Dark container on icon always</div>
+                                <div class="verdict-body demo-checker" style="border-radius: 0; padding: 20px">
+                                    <svg width="60" height="60" viewBox="0 0 512 512" fill="none">
+                                        <defs>
+                                            <linearGradient id="dd1" x1="0" y1="0" x2="512" y2="512">
+                                                <stop offset="0%" stop-color="#110c1a" />
+                                                <stop offset="100%" stop-color="#09060f" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="512" height="512" rx="112" fill="url(#dd1)" />
+                                        <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="90"
+                                            stroke="#a78bfa"
+                                            stroke-width="26"
+                                            fill="none"
+                                            opacity="0.45"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="148"
+                                            stroke="#a78bfa"
+                                            stroke-width="22"
+                                            fill="none"
+                                            opacity="0.2"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="200"
+                                            stroke="#a78bfa"
+                                            stroke-width="16"
+                                            fill="none"
+                                            opacity="0.08"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="verdict dont">
+                                <div class="verdict-head">✗ Light or white container</div>
+                                <div class="verdict-body demo-checker" style="border-radius: 0; padding: 20px">
+                                    <svg width="60" height="60" viewBox="0 0 512 512" fill="none">
+                                        <rect width="512" height="512" rx="112" fill="white" />
+                                        <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="90"
+                                            stroke="#a78bfa"
+                                            stroke-width="26"
+                                            fill="none"
+                                            opacity="0.45"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="148"
+                                            stroke="#a78bfa"
+                                            stroke-width="22"
+                                            fill="none"
+                                            opacity="0.2"
+                                        />
+                                        <circle
+                                            cx="256"
+                                            cy="256"
+                                            r="200"
+                                            stroke="#a78bfa"
+                                            stroke-width="16"
+                                            fill="none"
+                                            opacity="0.08"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="verdict-grid">
+                            <div class="verdict do">
+                                <div class="verdict-head">✓ Violet for brand moments only</div>
+                                <div class="verdict-body" style="flex-direction: column; gap: 10px">
+                                    <button class="btn btn-primary">Download</button>
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 11px;
+                                            color: var(--text-tertiary);
+                                        "
+                                        >CTA button, wordmark, pricing</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="verdict dont">
+                                <div class="verdict-head">✗ Violet for everything</div>
+                                <div class="verdict-body" style="flex-direction: column; gap: 6px">
+                                    <span style="font-size: 14px; font-weight: 600; color: var(--violet)"
+                                        >Feature title in violet</span
+                                    >
+                                    <span style="font-size: 12px; color: var(--violet)">Description in violet</span>
+                                    <span style="font-size: 11px; color: var(--violet)">Footer in violet</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="verdict-grid">
+                            <div class="verdict do">
+                                <div class="verdict-head">✓ Let screenshots be the hero</div>
+                                <div class="verdict-body" style="flex-direction: column; gap: 8px; text-align: center">
+                                    <div
+                                        style="
+                                            width: 80px;
+                                            height: 120px;
+                                            border-radius: 12px;
+                                            background: var(--surface-2);
+                                            border: 1px solid var(--border);
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            margin: 0 auto;
+                                        "
+                                    >
+                                        <span
+                                            style="
+                                                font-family: &quot;Geist Mono&quot;, monospace;
+                                                font-size: 8px;
+                                                color: var(--text-tertiary);
+                                            "
+                                            >app</span
+                                        >
+                                    </div>
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 10px;
+                                            color: var(--text-tertiary);
+                                        "
+                                        >Neutral site, vibrant screenshots</span
+                                    >
+                                </div>
+                            </div>
+                            <div class="verdict dont">
+                                <div class="verdict-head">✗ Competing decoration</div>
+                                <div class="verdict-body" style="flex-direction: column; gap: 8px; text-align: center">
+                                    <div
+                                        style="
+                                            width: 80px;
+                                            height: 120px;
+                                            border-radius: 12px;
+                                            background: linear-gradient(135deg, #6d4ed4, #a78bfa);
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            margin: 0 auto;
+                                        "
+                                    >
+                                        <span
+                                            style="
+                                                font-family: &quot;Geist Mono&quot;, monospace;
+                                                font-size: 8px;
+                                                color: rgba(255, 255, 255, 0.5);
+                                            "
+                                            >???</span
+                                        >
+                                    </div>
+                                    <span
+                                        style="
+                                            font-family: &quot;Geist Mono&quot;, monospace;
+                                            font-size: 10px;
+                                            color: var(--text-tertiary);
+                                        "
+                                        >Gradient blobs, decorative noise</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ══════════════════════════════════════════════════════
+       07 · NATIVE APPS
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="native">
+                        <span class="section-eyebrow">Context</span>
+                        <h2 class="section-title">Native Apps</h2>
+                        <p class="section-desc">
+                            Farscry goes fully native on both platforms. This styleguide does not cover in-app UI —
+                            that's owned by iOS and Android. What this guide covers:
+                        </p>
+
+                        <table class="token-table" style="margin-bottom: 28px">
+                            <thead>
+                                <tr>
+                                    <th>Element</th>
+                                    <th>Owned by</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--text-primary)">App icon</td>
+                                    <td>This guide</td>
+                                    <td>Ping on dark container. Identical on both platforms.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--text-primary)">Seed / tint color</td>
+                                    <td>This guide</td>
+                                    <td>#a78bfa. Fed to Material You + iOS tint API.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--text-primary)">Surfaces, backgrounds</td>
+                                    <td>Platform</td>
+                                    <td>Material You dynamic color / iOS system backgrounds.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--text-primary)">Typography</td>
+                                    <td>Platform</td>
+                                    <td>SF Pro (iOS), Roboto (Android). No custom fonts in-app.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--text-primary)">Navigation patterns</td>
+                                    <td>Platform</td>
+                                    <td>iOS: tab bar, swipe back. Android: Material nav, back gesture.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--text-primary)">Components</td>
+                                    <td>Platform</td>
+                                    <td>Native buttons, toggles, inputs, sheets.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--text-primary)">Dynamic color override</td>
+                                    <td>User</td>
+                                    <td>Android users may override seed with wallpaper colors. Allowed.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="note">
+                            <strong>Why fully native?</strong> Trust. A privacy-focused calling app should feel like it
+                            belongs on your phone — not like a web view wearing a disguise. Native components also mean
+                            automatic support for accessibility features, text scaling, reduced motion, and
+                            platform-specific interaction patterns.
+                        </div>
+                    </section>
+
+                    <!-- ══════════════════════════════════════════════════════
+       08 · BRAND FAMILY
+       ══════════════════════════════════════════════════════ -->
+                    <section class="section" id="family">
+                        <span class="section-eyebrow">Context</span>
+                        <h2 class="section-title">Brand Family</h2>
+                        <p class="section-desc">
+                            Farscry is a Loose Wire product. The relationship is visible only in footer credits, app
+                            store listings, and legal pages. Farscry's identity is fully independent.
+                        </p>
+
+                        <div style="display: flex; flex-direction: column; gap: 3px; margin-bottom: 28px">
+                            <!-- Parent -->
+                            <div
+                                style="
+                                    padding: 20px 24px;
+                                    border-radius: 14px;
+                                    border: 1px solid rgba(61, 122, 110, 0.18);
+                                    background: rgba(61, 122, 110, 0.06);
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 14px;
+                                "
+                            >
+                                <svg width="24" height="24" viewBox="0 0 120 120" fill="none">
+                                    <rect width="120" height="120" rx="28" fill="#0e1816" />
+                                    <path
+                                        d="M20 60 L32 60 L40 30 L52 84 L64 36 L76 78 L84 48 L92 60 L100 60"
+                                        stroke="#3d7a6e"
+                                        stroke-width="10"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                    />
+                                </svg>
+                                <div>
+                                    <div style="font-size: 15px; font-weight: 700; color: var(--text-primary)">
+                                        Loose Wire LLC
+                                    </div>
+                                    <div style="font-size: 12px; color: var(--text-tertiary)">
+                                        Parent · Legal, billing, publisher
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Children -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; margin-left: 24px">
+                                <div
+                                    style="
+                                        padding: 16px 18px;
+                                        border-radius: 12px;
+                                        border: 1px solid var(--border);
+                                        background: var(--surface-1);
+                                    "
+                                >
+                                    <div style="font-size: 14px; font-weight: 700; color: #3dd68c; margin-bottom: 4px">
+                                        HarkNotes
+                                    </div>
+                                    <div style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4">
+                                        Meeting transcription<br /><span
+                                            style="font-family: &quot;Geist Mono&quot;, monospace; font-size: 9px"
+                                            >Mint · Geist · Desktop</span
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    style="
+                                        padding: 16px 18px;
+                                        border-radius: 12px;
+                                        border: 1px solid rgba(167, 139, 250, 0.2);
+                                        background: var(--violet-subtle);
+                                    "
+                                >
+                                    <div
+                                        style="
+                                            font-size: 14px;
+                                            font-weight: 700;
+                                            color: var(--violet);
+                                            margin-bottom: 4px;
+                                        "
+                                    >
+                                        Farscry
+                                    </div>
+                                    <div style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4">
+                                        Private video calling<br /><span
+                                            style="font-family: &quot;Geist Mono&quot;, monospace; font-size: 9px"
+                                            >Violet · Native · Mobile</span
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    style="
+                                        padding: 16px 18px;
+                                        border-radius: 12px;
+                                        border: 1px dashed var(--border);
+                                        background: var(--surface-1);
+                                    "
+                                >
+                                    <div
+                                        style="
+                                            font-size: 14px;
+                                            font-weight: 700;
+                                            color: var(--text-tertiary);
+                                            margin-bottom: 4px;
+                                        "
+                                    >
+                                        Future Product
+                                    </div>
+                                    <div style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4">
+                                        Whatever's next<br /><span
+                                            style="font-family: &quot;Geist Mono&quot;, monospace; font-size: 9px"
+                                            >TBD · Own identity</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <div class="subsection-title">Family Shared Conventions</div>
+                            <table class="token-table">
+                                <thead>
+                                    <tr>
+                                        <th>Convention</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">
+                                            Dark icon container
+                                        </td>
+                                        <td>
+                                            Every product icon uses a dark gradient background, never light or white
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Geist Mono</td>
+                                        <td>Shared for metadata, code, and version labels across all products</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Footer pattern</td>
+                                        <td>Small Loose Wire icon + "© 2026 Loose Wire LLC" in muted grey</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Wordmark pattern</td>
+                                        <td>
+                                            Lowercase, second half in accent color: loose<em>wire</em>,
+                                            hark<em>notes</em>, far<em>scry</em>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Dark-first design</td>
+                                        <td>
+                                            All products default to dark mode. Light mode is available but secondary.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--text-primary)">Voice</td>
+                                        <td>Direct. Technical details welcome. Buzzwords are not.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Footer -->
+                    <div class="page-footer">
+                        <div class="footer-mark">
+                            <svg width="20" height="20" viewBox="0 0 512 512" fill="none">
+                                <defs>
+                                    <linearGradient id="ft-bg" x1="0" y1="0" x2="512" y2="512">
+                                        <stop offset="0%" stop-color="#110c1a" />
+                                        <stop offset="100%" stop-color="#09060f" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="512" height="512" rx="112" fill="url(#ft-bg)" />
+                                <circle cx="256" cy="256" r="40" fill="#a78bfa" />
+                                <circle
+                                    cx="256"
+                                    cy="256"
+                                    r="90"
+                                    stroke="#a78bfa"
+                                    stroke-width="26"
+                                    fill="none"
+                                    opacity="0.45"
+                                />
+                                <circle
+                                    cx="256"
+                                    cy="256"
+                                    r="148"
+                                    stroke="#a78bfa"
+                                    stroke-width="22"
+                                    fill="none"
+                                    opacity="0.2"
+                                />
+                                <circle
+                                    cx="256"
+                                    cy="256"
+                                    r="200"
+                                    stroke="#a78bfa"
+                                    stroke-width="16"
+                                    fill="none"
+                                    opacity="0.08"
+                                />
+                            </svg>
+                            <span
+                                style="
+                                    font-family: &quot;Geist Mono&quot;, monospace;
+                                    font-size: 14px;
+                                    font-weight: 600;
+                                    color: var(--text-secondary);
+                                    letter-spacing: -0.01em;
+                                "
+                                >far<span style="color: var(--violet)">scry</span></span
+                            >
+                        </div>
+                        <span class="footer-text">Brand Guide v1.0 · 2026</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            // Theme switching
+            const html = document.documentElement;
+            const themeBtns = document.querySelectorAll(".theme-btn");
+            let currentMode = "dark";
+
+            function applyTheme(mode) {
+                currentMode = mode;
+                if (mode === "system") {
+                    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                    html.setAttribute("data-theme", prefersDark ? "dark" : "light");
+                } else {
+                    html.setAttribute("data-theme", mode);
+                }
+                themeBtns.forEach((btn) => btn.classList.toggle("active", btn.dataset.mode === mode));
+            }
+
+            themeBtns.forEach((btn) => btn.addEventListener("click", () => applyTheme(btn.dataset.mode)));
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+                if (currentMode === "system") html.setAttribute("data-theme", e.matches ? "dark" : "light");
+            });
+            applyTheme(currentMode);
+
+            // Sidebar active state on scroll
+            const sections = document.querySelectorAll(".section[id]");
+            const navLinks = document.querySelectorAll(".nav-link");
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            navLinks.forEach((l) => l.classList.remove("active"));
+                            const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                            if (active) active.classList.add("active");
+                        }
+                    });
+                },
+                { rootMargin: "-15% 0px -75% 0px" },
+            );
+            sections.forEach((s) => observer.observe(s));
+        </script>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+---
+title: "A Self-Hosted FaceTime Alternative for the Whole Family"
+description: "FaceTime is great if everyone has Apple devices. If they don't, you need an alternative that's cross-platform, private, and simple enough for anyone to use."
+pubDate: "2026-03-03"
+keywords: ["FaceTime alternative", "self-hosted FaceTime", "cross-platform video calling", "FaceTime for Android", "private video calling app"]
+tldr: "FaceTime only works on Apple devices and can't be self-hosted. A cross-platform, self-hosted alternative gives you the same simplicity — tap a name and call — without the Apple lock-in or privacy trade-offs of other platforms."
+readTime: "5 min read"
+---
+
+import Callout from '../../components/blog/Callout.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+FaceTime does a lot right. It's simple — tap a name, make a call. It's end-to-end encrypted. It uses the native call screen. It doesn't try to be a chat app, a social network, or a project management tool.
+
+The problem: it only works on Apple devices.
+
+## The FaceTime model
+
+What makes FaceTime good isn't the technology. It's the design philosophy:
+
+- **Just calls.** No chat, no stories, no feed, no read receipts.
+- **Native call integration.** Incoming calls show up on your lock screen like a phone call.
+- **No sign-up friction.** It's already on your phone. Your Apple ID is your identity.
+- **E2E encrypted.** Apple can't see or hear your calls.
+
+This is the right model for personal video calling. The issue is that Apple keeps it locked to their ecosystem.
+
+## The cross-platform problem
+
+When your family or friend group has a mix of iPhones and Android phones, FaceTime stops being an option. You end up on one of these:
+
+**WhatsApp.** Owned by Meta. Requires a phone number. End-to-end encrypted, but you're trusting Meta's implementation. It's also a messaging app first — calling is secondary.
+
+**Google Duo/Meet.** Tied to Google accounts. Not end-to-end encrypted in Meet (Google's servers process media). Duo offered E2E encryption but Google merged it into Meet.
+
+**Zoom.** Designed for business meetings, not personal calls. Heavy client. Standard "encryption" is not end-to-end by default.
+
+**Signal.** Genuinely private. But it's a messaging app with calling added on, it requires a phone number, and you can't self-host it.
+
+None of these replicate what FaceTime does well: simple, private, calls-only.
+
+<SectionHeading label="What's missing" />
+
+## The self-hosting advantage
+
+FaceTime can't be self-hosted. Your calls are routed through Apple's infrastructure. You trust Apple not to change their privacy policies, not to be compelled to add backdoors, and not to discontinue the service.
+
+Self-hosting removes all of those dependencies:
+
+- **You run the server.** On your own hardware, wherever you want.
+- **You own the data.** User accounts and contacts in a database on your machine.
+- **You control the updates.** Upgrade when you want, or don't.
+- **No single point of failure.** Your ability to call family doesn't depend on a corporation's business decisions.
+
+<Callout type="tip" title="It's easier than it sounds">
+Self-hosting a video calling server can be as simple as running a single Docker command. The server only handles signaling — actual video flows directly between devices.
+</Callout>
+
+## What a real alternative looks like
+
+A FaceTime alternative should match what FaceTime gets right, without the limitations:
+
+- **Cross-platform.** iOS and Android from day one.
+- **Just calls.** No chat, no messaging, no feed. Tap a name, make a call.
+- **Native call screen.** Incoming calls should look and behave like phone calls.
+- **End-to-end encrypted.** The server should never see or hear your calls.
+- **Self-hostable.** Run it on your own hardware if you want to.
+- **No phone number required.** Connect with friend codes, not phone numbers.
+
+## What we're building
+
+[Farscry](https://loosewire.dev/farscry) is designed to be exactly this. A cross-platform, self-hosted, E2E encrypted video calling app that does one thing and does it well.
+
+- iOS and Android from a single React Native codebase
+- One Docker container to self-host
+- Native call integration (CallKit on iOS, ConnectionService on Android)
+- Friend codes instead of phone numbers
+- Open source (AGPL-3.0)
+
+Farscry is in active development. Star the [GitHub repo](https://github.com/LooseWireDev/farscry) to follow progress, or check back here for updates.

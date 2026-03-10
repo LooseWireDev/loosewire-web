@@ -1,0 +1,531 @@
+---
+// src/pages/farscry/index.astro
+import FarscryLayout from '../../layouts/FarscryLayout.astro';
+import { faqPageSchema } from '../../lib/schema';
+import Nav from '../../components/farscry/Nav.astro';
+import Footer from '../../components/farscry/Footer.astro';
+import Logo from '../../components/farscry/Logo.astro';
+import { Icon } from 'astro-icon/components';
+
+const faqItems = [
+  {
+    q: 'When will Farscry be available?',
+    a: 'Farscry is currently in active development. Sign up for updates to be notified when the beta launches.',
+  },
+  {
+    q: 'Is Farscry really end-to-end encrypted?',
+    a: 'Yes. Video and audio are encrypted via WebRTC (DTLS-SRTP). The server handles signaling only — it never sees or hears your calls.',
+  },
+  {
+    q: 'Do I need a phone number to sign up?',
+    a: 'No. You sign up with email and share a 6-character friend code to connect with people. No phone number, no contact list upload.',
+  },
+  {
+    q: 'Can I self-host Farscry?',
+    a: 'Yes. One Docker container, one SQLite file, no external dependencies. Run it on your home server, NAS, or VPS.',
+  },
+  {
+    q: 'Does Farscry work without Google Play Services?',
+    a: 'Yes. F-Droid and Obtainium builds have zero Google dependencies. Push notifications fall back to a persistent WebSocket connection.',
+  },
+  {
+    q: 'What platforms will Farscry support?',
+    a: 'iOS and Android from a single React Native (Expo) codebase. The self-hosted server runs anywhere Docker runs.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Farscry',
+      description: 'Self-hostable, end-to-end encrypted video calling. No chat, no bloat, just calls.',
+      applicationCategory: 'CommunicationApplication',
+      operatingSystem: ['iOS', 'Android'],
+      offers: [
+        { '@type': 'Offer', price: '0', priceCurrency: 'USD', name: 'Self-hosted' },
+        { '@type': 'Offer', price: '3', priceCurrency: 'USD', name: 'Individual' },
+        { '@type': 'Offer', price: '6', priceCurrency: 'USD', name: 'Family' },
+      ],
+      url: 'https://loosewire.dev/farscry',
+      author: {
+        '@type': 'Organization',
+        name: 'Loose Wire LLC',
+        url: 'https://loosewire.dev',
+      },
+    },
+    faqPageSchema(faqItems),
+  ],
+};
+
+const features = [
+  { icon: 'lucide:lock', title: 'End-to-end encrypted', desc: 'WebRTC DTLS-SRTP encryption. The server never sees or hears your calls.' },
+  { icon: 'lucide:server', title: 'Self-hostable', desc: 'One Docker container, one SQLite file. No external dependencies.' },
+  { icon: 'lucide:mail', title: 'No phone number', desc: 'Sign up with email. Share a 6-character friend code to connect.' },
+  { icon: 'lucide:phone', title: 'Native call screen', desc: 'Incoming calls use your phone\'s native call UI. CallKit on iOS, ConnectionService on Android.' },
+  { icon: 'lucide:smartphone', title: 'Cross-platform', desc: 'iOS and Android from a single codebase. React Native with Expo.' },
+  { icon: 'lucide:shield-off', title: 'Works without Google', desc: 'F-Droid and Obtainium builds have zero Google dependencies.' },
+  { icon: 'lucide:users', title: 'Family plans', desc: 'One subscription covers up to 5 family members.' },
+  { icon: 'lucide:code', title: 'Open source', desc: 'AGPL-3.0 licensed. Read every line, modify anything, host it yourself.' },
+];
+
+const comparisons = [
+  { name: 'Jitsi', problem: 'Heavy, conference-focused, complex to self-host' },
+  { name: 'Signal', problem: 'Can\'t be self-hosted' },
+  { name: 'Linphone', problem: 'SIP-based, ugly, complex' },
+  { name: 'Element/Matrix', problem: 'Chat-first with calling bolted on' },
+  { name: 'FaceTime', problem: 'Apple-only, not self-hostable' },
+];
+---
+<FarscryLayout
+  title="Farscry — Private Video Calling. Self-Hosted. End-to-End Encrypted."
+  description="Self-hostable, end-to-end encrypted video calling for iOS and Android. No chat, no bloat. One Docker container. Coming soon."
+  schema={schema}
+>
+  <div class="fc-coming-soon-bar">
+    <span class="fc-coming-soon-dot"></span>
+    Farscry is in active development — nothing is available yet
+  </div>
+
+  <header style="background: var(--fc-bg); border-bottom: 1px solid var(--fc-border-subtle);">
+    <Nav />
+
+    <!-- HERO -->
+    <div class="fc-hero">
+      <div class="fc-hero-badge">
+        <span class="fc-hero-badge-dot"></span>
+        <span>Coming soon</span>
+      </div>
+      <div class="fc-hero-logo-wrap">
+        <Logo size={80} />
+      </div>
+      <h1 class="fc-hero-headline">
+        Private video calling.<br/><span class="fc-hero-highlight">No chat. No bloat. Just calls.</span>
+      </h1>
+      <p class="fc-hero-subtitle">
+        Farscry is a self-hostable, end-to-end encrypted video calling app for iOS and Android. Tap a name and call. The server never sees your video or audio.
+      </p>
+      <div class="fc-hero-actions">
+        <a href="https://github.com/LooseWireDev/farscry" class="fc-hero-primary">
+          <Icon name="lucide:github" style="width: 18px; height: 18px;" />
+          Star on GitHub
+        </a>
+        <a href="#features" class="fc-hero-secondary">How it works</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- WHY -->
+    <section style="max-width: 900px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+      <p class="fc-eyebrow">The problem</p>
+      <h2 class="fc-section-heading">
+        Every other option comes with trade-offs
+      </h2>
+      <p style="font-size: 17px; color: var(--fc-text-secondary); max-width: 600px; margin: 0 auto 56px; line-height: 1.7;">
+        You want to video call someone privately. Your options are locked to one platform, impossible to self-host, or loaded with features you'll never use.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        {comparisons.map(({ name, problem }) => (
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--fc-surface-1); border: 1px solid var(--fc-border-subtle); border-radius: 10px;">
+            <span style="font-size: 15px; font-weight: 600; color: var(--fc-text-primary);">{name}</span>
+            <span style="font-size: 14px; color: var(--fc-text-secondary);">{problem}</span>
+          </div>
+        ))}
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--fc-violet-subtle); border: 1px solid rgba(167,139,250,0.2); border-radius: 10px;">
+          <span style="font-size: 15px; font-weight: 700; color: var(--fc-violet);">Farscry</span>
+          <span style="font-size: 14px; font-weight: 500; color: var(--fc-violet);">Just calls. One container. Done.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section style="background: var(--fc-surface-1); border-top: 1px solid var(--fc-border-subtle); border-bottom: 1px solid var(--fc-border-subtle);">
+      <div style="max-width: 900px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+        <p class="fc-eyebrow">How it works</p>
+        <h2 class="fc-section-heading">Four steps. Dead simple.</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: left; margin-top: 56px;">
+          <div class="fc-step-card">
+            <span class="fc-step-number">01</span>
+            <h3 class="fc-step-title">Share your code</h3>
+            <p class="fc-step-desc">You get a 6-character friend code like A7K9X2. Share it however you want.</p>
+          </div>
+          <div class="fc-step-card">
+            <span class="fc-step-number">02</span>
+            <h3 class="fc-step-title">They enter it</h3>
+            <p class="fc-step-desc">Mutual contact created instantly. No contact list upload, no phone number.</p>
+          </div>
+          <div class="fc-step-card">
+            <span class="fc-step-number">03</span>
+            <h3 class="fc-step-title">Tap to call</h3>
+            <p class="fc-step-desc">The server relays the connection handshake. That's all it does.</p>
+          </div>
+          <div class="fc-step-card">
+            <span class="fc-step-number">04</span>
+            <h3 class="fc-step-title">Talk privately</h3>
+            <p class="fc-step-desc">Video flows directly between devices, E2E encrypted via WebRTC. The server steps aside.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" style="max-width: 1000px; margin: 0 auto; padding: 96px 32px;">
+      <p class="fc-eyebrow" style="text-align: center;">Features</p>
+      <h2 class="fc-section-heading" style="text-align: center;">
+        Built for people who value privacy
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 56px;">
+        {features.map(({ icon, title, desc }) => (
+          <div class="fc-feature-card">
+            <Icon name={icon} style="width: 24px; height: 24px; color: var(--fc-violet); margin-bottom: 12px;" />
+            <h3 style="font-size: 15px; font-weight: 600; color: var(--fc-text-primary); margin-bottom: 8px;">{title}</h3>
+            <p style="font-size: 14px; color: var(--fc-text-secondary); line-height: 1.6;">{desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- SELF-HOST -->
+    <section style="background: var(--fc-surface-1); border-top: 1px solid var(--fc-border-subtle); border-bottom: 1px solid var(--fc-border-subtle);">
+      <div style="max-width: 800px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+        <p class="fc-eyebrow">Self-hosting</p>
+        <h2 class="fc-section-heading">One command. That's it.</h2>
+        <p style="font-size: 17px; color: var(--fc-text-secondary); margin-bottom: 48px; line-height: 1.7;">
+          No Kubernetes. No microservices. One Docker container, one SQLite file, zero external dependencies.
+        </p>
+        <div class="fc-code-block">
+          <code>docker compose up</code>
+        </div>
+        <p style="font-size: 14px; color: var(--fc-text-tertiary); margin-top: 24px;">
+          Works on any machine that runs Docker — home server, NAS, VPS, Unraid.
+        </p>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" style="max-width: 900px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+      <p class="fc-eyebrow">Pricing</p>
+      <h2 class="fc-section-heading">Self-host free. Or let us run it.</h2>
+      <p style="font-size: 17px; color: var(--fc-text-secondary); margin-bottom: 56px;">
+        Self-hosting is always free and always will be. Managed hosting starts at $3/month.
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; text-align: left;">
+        <div class="fc-pricing-card">
+          <h3 class="fc-pricing-name">Self-hosted</h3>
+          <div class="fc-pricing-price">Free</div>
+          <p class="fc-pricing-desc">forever</p>
+          <ul class="fc-pricing-features">
+            <li>Unlimited calls</li>
+            <li>Full source code</li>
+            <li>Your server, your data</li>
+            <li>Community support</li>
+          </ul>
+        </div>
+        <div class="fc-pricing-card fc-pricing-highlight">
+          <h3 class="fc-pricing-name">Individual</h3>
+          <div class="fc-pricing-price">$3<span style="font-size: 16px; font-weight: 400; color: var(--fc-text-secondary);">/mo</span></div>
+          <p class="fc-pricing-desc">or $30/year</p>
+          <ul class="fc-pricing-features">
+            <li>Managed server</li>
+            <li>Push notifications</li>
+            <li>No setup required</li>
+            <li>Email support</li>
+          </ul>
+        </div>
+        <div class="fc-pricing-card">
+          <h3 class="fc-pricing-name">Family</h3>
+          <div class="fc-pricing-price">$6<span style="font-size: 16px; font-weight: 400; color: var(--fc-text-secondary);">/mo</span></div>
+          <p class="fc-pricing-desc">up to 5 members · $60/year</p>
+          <ul class="fc-pricing-features">
+            <li>Everything in Individual</li>
+            <li>5 family members</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section style="background: var(--fc-surface-1); border-top: 1px solid var(--fc-border-subtle);">
+      <div style="max-width: 720px; margin: 0 auto; padding: 96px 32px;">
+        <p class="fc-eyebrow" style="text-align: center;">FAQ</p>
+        <h2 class="fc-section-heading" style="text-align: center; margin-bottom: 48px;">Common questions</h2>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          {faqItems.map(({ q, a }) => (
+            <details class="fc-faq-item">
+              <summary class="fc-faq-question">{q}</summary>
+              <p class="fc-faq-answer">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="max-width: 800px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+      <p class="fc-eyebrow">Stay in the loop</p>
+      <h2 class="fc-section-heading">Farscry is coming soon</h2>
+      <p style="font-size: 17px; color: var(--fc-text-secondary); margin-bottom: 40px; line-height: 1.7; max-width: 520px; margin-left: auto; margin-right: auto;">
+        Star the repo to follow development. The codebase is open from day one.
+      </p>
+      <a href="https://github.com/LooseWireDev/farscry" class="fc-hero-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+        <Icon name="lucide:github" style="width: 18px; height: 18px;" />
+        Star on GitHub
+      </a>
+    </section>
+
+  </main>
+
+  <Footer />
+</FarscryLayout>
+
+<style>
+  .fc-coming-soon-bar {
+    background: var(--fc-violet-subtle);
+    border-bottom: 1px solid rgba(167,139,250,0.15);
+    padding: 10px 32px;
+    text-align: center;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fc-violet);
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .fc-coming-soon-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fc-violet);
+    display: inline-block;
+    animation: fc-pulse 2s ease-in-out infinite;
+  }
+  .fc-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+    text-align: center;
+  }
+  .fc-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--fc-violet-subtle);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 40px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--fc-violet);
+    letter-spacing: 0.06em;
+  }
+  .fc-hero-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fc-violet);
+    display: inline-block;
+    animation: fc-pulse 2s ease-in-out infinite;
+  }
+  @keyframes fc-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .fc-hero-logo-wrap {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+  }
+  .fc-hero-headline {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: var(--fc-text-primary);
+    margin-bottom: 24px;
+  }
+  .fc-hero-highlight {
+    color: var(--fc-violet);
+  }
+  .fc-hero-subtitle {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--fc-text-secondary);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+  .fc-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .fc-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fc-text-inverse);
+    background: var(--fc-violet);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  .fc-hero-secondary {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fc-text-secondary);
+    background: var(--fc-surface-2);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--fc-border);
+  }
+
+  .fc-eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--fc-violet);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .fc-section-heading {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--fc-text-primary);
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .fc-step-card {
+    background: var(--fc-surface-2);
+    border: 1px solid var(--fc-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .fc-step-number {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fc-violet);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .fc-step-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--fc-text-primary);
+    margin-bottom: 8px;
+  }
+  .fc-step-desc {
+    font-size: 14px;
+    color: var(--fc-text-secondary);
+    line-height: 1.6;
+  }
+
+  .fc-feature-card {
+    background: var(--fc-surface-1);
+    border: 1px solid var(--fc-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+
+  .fc-code-block {
+    background: var(--fc-bg);
+    border: 1px solid var(--fc-border);
+    border-radius: 12px;
+    padding: 20px 32px;
+    display: inline-block;
+  }
+  .fc-code-block code {
+    font-family: 'Geist Mono', monospace;
+    font-size: 16px;
+    color: var(--fc-violet);
+  }
+
+  .fc-pricing-card {
+    background: var(--fc-surface-1);
+    border: 1px solid var(--fc-border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .fc-pricing-highlight {
+    border-color: var(--fc-violet);
+    box-shadow: var(--fc-shadow-violet);
+  }
+  .fc-pricing-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fc-text-secondary);
+    margin-bottom: 8px;
+  }
+  .fc-pricing-price {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--fc-text-primary);
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .fc-pricing-desc {
+    font-size: 13px;
+    color: var(--fc-text-tertiary);
+    margin-bottom: 24px;
+  }
+  .fc-pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .fc-pricing-features li {
+    font-size: 14px;
+    color: var(--fc-text-secondary);
+    padding-left: 20px;
+    position: relative;
+  }
+  .fc-pricing-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fc-violet);
+    opacity: 0.6;
+  }
+
+  .fc-faq-item {
+    background: var(--fc-surface-2);
+    border: 1px solid var(--fc-border-subtle);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .fc-faq-question {
+    padding: 18px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fc-text-primary);
+    cursor: pointer;
+    list-style: none;
+  }
+  .fc-faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .fc-faq-answer {
+    padding: 0 20px 18px;
+    font-size: 14px;
+    color: var(--fc-text-secondary);
+    line-height: 1.6;
+  }
+</style>

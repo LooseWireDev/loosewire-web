@@ -1,0 +1,78 @@
+---
+title: "Why Self-Hosted Video Calling Matters"
+description: "Cloud video calling means trusting a third party with your conversations. Self-hosting puts you back in control — here's why that matters and what it takes."
+pubDate: "2026-03-09"
+keywords: ["self-hosted video calling", "private video calls", "self-host video chat", "docker video calling"]
+tldr: "Cloud video platforms control your data, your uptime, and your privacy. Self-hosted video calling gives you ownership of the infrastructure without the complexity it used to require."
+readTime: "5 min read"
+---
+
+import Callout from '../../components/blog/Callout.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+When you make a video call through Zoom, Google Meet, or FaceTime, you're routing your conversation through someone else's infrastructure. For most people, that's fine. But for a growing number of people, it isn't.
+
+If you care about who can access your communication infrastructure — or simply want to own it — self-hosted video calling is worth understanding.
+
+## The cloud trade-off
+
+Cloud video calling is convenient. You don't run servers. You don't manage updates. Someone else handles all of it.
+
+But that convenience comes with trade-offs:
+
+**Your data lives on their servers.** Call metadata, account information, and depending on the service, call recordings all sit on infrastructure you don't control.
+
+**You depend on their uptime.** When their service goes down, your ability to communicate goes with it. There's no fallback.
+
+**Their policies govern your usage.** Terms of service change. Pricing changes. Features get removed. You're subject to decisions made by people optimising for their business, not yours.
+
+**Your conversations route through their network.** Even with end-to-end encryption, the signaling — who called whom, when, for how long — passes through their systems.
+
+<SectionHeading label="The alternative" />
+
+## What self-hosting actually means
+
+Self-hosting means running the video calling server on hardware you control. That could be a Raspberry Pi in your closet, a NAS in your office, or a $5/month VPS.
+
+The server handles the non-media parts of a call: user authentication, contact management, and call signaling (telling Device A that Device B wants to connect). The actual video and audio flow directly between devices via WebRTC — the server never touches it.
+
+This means:
+
+- **You own the infrastructure.** If you want to shut it down, move it, or inspect it, you can.
+- **Your data stays on your hardware.** User accounts and contacts live in a database on your machine.
+- **No third-party dependency.** Your ability to communicate doesn't depend on someone else's business decisions.
+
+<Callout type="tip" title="It's simpler than you think">
+Modern self-hosted video calling can be as simple as running a single Docker container. No Kubernetes, no microservices, no DevOps degree required.
+</Callout>
+
+## Who should self-host
+
+**Families.** If you want a private way to video call family members without creating accounts on big tech platforms, self-hosting gives you that.
+
+**Small teams.** A team that wants internal video calling without routing conversations through Zoom or Teams can run their own server in minutes.
+
+**Privacy-conscious individuals.** If you use Signal for messaging, you probably care about communication privacy. Self-hosted video calling extends that philosophy to calls.
+
+**Home lab enthusiasts.** If you already run Nextcloud, Plex, or Home Assistant, a video calling server fits right into your stack.
+
+## The complexity problem
+
+Historically, self-hosted video calling has been hard. Jitsi requires significant configuration. Matrix/Element is a chat platform with calling bolted on. SIP-based solutions like Linphone require understanding telephony protocols.
+
+The barrier hasn't been the concept — it's been the implementation. Most self-hosted solutions were built for enterprises and conferences, not for someone who just wants to call their family privately.
+
+That's changing. The next generation of self-hosted communication tools prioritises simplicity: single containers, embedded databases, minimal configuration.
+
+## What to look for
+
+If you're evaluating self-hosted video calling, here's what matters:
+
+- **Deployment complexity.** Can you get it running with a single command? Or do you need to configure multiple services?
+- **End-to-end encryption.** Does the server handle just signaling, or does media flow through it?
+- **Mobile support.** A self-hosted server is only useful if you can actually call from your phone.
+- **Maintenance burden.** How much ongoing work does it require? Updates should be pulling a new Docker image, not following a migration guide.
+
+## What we're building
+
+[Farscry](https://loosewire.dev/farscry) is our answer to this. One Docker container, one SQLite file, E2E encrypted video calling with native iOS and Android apps. It's currently in development — star the [GitHub repo](https://github.com/LooseWireDev/farscry) to follow along.

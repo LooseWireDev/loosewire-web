@@ -1,0 +1,65 @@
+---
+title: "Video Calling Without a Phone Number"
+description: "Why do video calling apps still require your phone number? It's not a technical requirement — it's a data collection strategy. Here's how friend codes offer a better alternative."
+pubDate: "2026-03-05"
+keywords: ["video calling without phone number", "private video call no phone number", "friend code video calling", "anonymous video calls"]
+tldr: "Phone number requirements exist for data collection, not security. Friend codes let you connect with people privately — no phone number, no contact list upload, no social graph for the platform to monetise."
+readTime: "4 min read"
+---
+
+import Callout from '../../components/blog/Callout.astro';
+import SectionHeading from '../../components/blog/SectionHeading.astro';
+
+To video call someone on most platforms, you need their phone number. Or they need yours. Or both of you need to hand over your contact lists so the platform can figure out who you know.
+
+This isn't a technical requirement. It's a choice — and it's worth understanding why platforms make it.
+
+## Why platforms want your phone number
+
+**Identity verification.** Phone numbers are a convenient way to verify that a user is a real person. But they're not the only way. Email works just as well for most use cases.
+
+**Contact discovery.** When you upload your contact list, the platform can match phone numbers to existing users and show you who's already on the service. This is great for growth — it lets the platform build your social graph for you. It's less great for privacy.
+
+**Network effects.** The more people who share their contacts, the more complete the platform's social graph becomes. This data is extremely valuable for engagement, recommendations, and in many cases, advertising.
+
+**Lock-in.** Once your identity on a platform is tied to your phone number, switching platforms means convincing everyone you know to switch too. Your phone number becomes a leash.
+
+<SectionHeading label="The alternative" />
+
+## How friend codes work
+
+A friend code is a short alphanumeric string — something like `A7K9X2`. You share it with someone you want to connect with. They enter it in the app. A mutual contact is created. That's it.
+
+No phone number exchanged. No contact list uploaded. No social graph built.
+
+The key properties:
+
+- **Out-of-band sharing.** You share your friend code however you want — text message, email, in person, written on a napkin. The platform doesn't facilitate discovery, which means it doesn't learn your social connections.
+- **Mutual consent.** Both parties have to actively choose to connect. There's no "suggested friends" or "people you may know."
+- **Pseudonymous.** Your identity on the platform is an email and a display name. Your phone number, your real name, and your contact list stay with you.
+
+<Callout type="tip" title="Privacy by design">
+When a platform doesn't have your phone number or contact list, it can't leak them, sell them, or use them to build a profile. The best privacy protection is never collecting the data in the first place.
+</Callout>
+
+## The trade-off
+
+The obvious trade-off is convenience. With phone-number-based discovery, you sign up and immediately see your contacts who are already on the platform. With friend codes, you have to manually share codes and add people.
+
+For a social network with millions of users, this is a dealbreaker. For a private video calling app used with family and close friends — the 5 to 15 people you actually want to call — it's not a problem. You share codes once and you're done.
+
+## Who this is for
+
+**People who value privacy.** If you don't want to hand over your phone number and contact list to use a video calling app, friend codes are the answer.
+
+**Families.** You know who you want to call. You don't need an algorithm to tell you. Share codes at the dinner table and you're set.
+
+**Privacy-conscious parents.** If you want your kids to be able to video call family without creating accounts tied to phone numbers, friend codes provide that.
+
+**Self-hosters.** If you're running your own server, you already don't trust third parties with your data. Friend codes fit that philosophy perfectly — your server stores contacts, but there's no phone number or contact list to store.
+
+## What we're building
+
+[Farscry](https://loosewire.dev/farscry) uses friend codes instead of phone numbers. You sign up with email, get a 6-character code, and share it with the people you want to call. No contact list upload. No phone number. No discovery.
+
+Farscry is currently in development. Star the [GitHub repo](https://github.com/LooseWireDev/farscry) to follow along.
