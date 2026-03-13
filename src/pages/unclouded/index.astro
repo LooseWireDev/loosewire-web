@@ -9,8 +9,8 @@ import { Icon } from 'astro-icon/components';
 
 const faqItems = [
   {
-    q: 'When will Unclouded launch?',
-    a: 'Unclouded is in active development. The web app (v1) will launch first with the alternative finder, app discovery browser, and Obtainium config generator.',
+    q: 'Is Unclouded free?',
+    a: 'Yes. The web app is completely free to use — no account required. Just search, compare, and generate Obtainium configs.',
   },
   {
     q: 'What makes this different from alternativeto.net?',
@@ -26,7 +26,7 @@ const faqItems = [
   },
   {
     q: 'Is Unclouded open source?',
-    a: 'The app database and tooling will be open. Details on licensing will be shared closer to launch.',
+    a: 'Yes. Unclouded is licensed under AGPL-3.0. The full source code is available on GitHub.',
   },
   {
     q: 'What is Obtainium?',
@@ -42,7 +42,7 @@ const schema = {
       name: 'Unclouded',
       description: 'Privacy-focused app discovery and comparison platform. Find open-source alternatives to the apps you use every day.',
       applicationCategory: 'UtilitiesApplication',
-      url: 'https://loosewire.dev/unclouded',
+      url: 'https://unclouded.app',
       author: {
         '@type': 'Organization',
         name: 'Loose Wire LLC',
@@ -57,35 +57,29 @@ const features = [
   { icon: 'lucide:search', title: 'Alternative finder', desc: 'Search by the app you want to replace. Get honest comparisons with relationship types: direct, fork, or partial.' },
   { icon: 'lucide:compass', title: 'App discovery', desc: 'Browse privacy-respecting apps by category, platform, and features. Especially useful for Obtainium-compatible apps.' },
   { icon: 'lucide:download', title: 'Obtainium configs', desc: 'Generate ready-to-import Obtainium configurations. Find an app, tap export, import into Obtainium. Done.' },
-  { icon: 'lucide:scan', title: 'Installed app scanner', desc: 'The mobile app scans what you have installed and maps each app to its privacy-respecting alternative.' },
+  { icon: 'lucide:scan', title: 'Installed app scanner', desc: 'The v2 mobile app will scan what you have installed and map each app to its privacy-respecting alternative.', upcoming: true },
   { icon: 'lucide:git-compare', title: 'Honest comparisons', desc: 'Every alternative is labeled with its relationship type and trade-offs. No cheerleading, just facts.' },
   { icon: 'lucide:database', title: 'Community-powered data', desc: 'Sourced from F-Droid, IzzyOnDroid, and community Obtainium configs. Thousands of apps, deduplicated and tagged.' },
 ];
 
 const phases = [
-  { num: '01', title: 'Web app', desc: 'Alternative finder, app discovery browser, Obtainium config generator, and blog.', status: 'In development' },
+  { num: '01', title: 'Web app', desc: 'Alternative finder, app discovery browser, Obtainium config generator, and blog.', status: 'Live' },
   { num: '02', title: 'Mobile app', desc: 'Scan installed apps, find alternatives, generate Obtainium configs with one tap.', status: 'Planned' },
   { num: '03', title: 'Community', desc: 'User submissions, saved configs, voting and ranking on alternatives.', status: 'Future' },
 ];
 ---
 <UncloudedLayout
   title="Unclouded — Find Privacy Alternatives to the Apps You Use"
-  description="Privacy-focused app discovery and comparison. Find open-source alternatives, generate Obtainium configs, and switch on your terms. Coming soon."
+  description="Privacy-focused app discovery and comparison. Find open-source alternatives, generate Obtainium configs, and switch on your terms."
   schema={schema}
 >
-  <div class="uc-coming-soon-bar">
-    <span class="uc-coming-soon-dot"></span>
-    Unclouded is in active development — nothing is available yet
-  </div>
-
   <header style="background: var(--uc-bg); border-bottom: 1px solid var(--uc-border);">
     <Nav />
 
     <!-- HERO -->
     <div class="uc-hero">
       <div class="uc-hero-badge">
-        <span class="uc-hero-badge-dot"></span>
-        <span>Coming soon</span>
+        <span>Now live</span>
       </div>
       <div class="uc-hero-logo-wrap">
         <Logo size={80} />
@@ -94,14 +88,17 @@ const phases = [
         <em>See clearly.</em><br/><span class="uc-hero-highlight">Switch freely.</span>
       </h1>
       <p class="uc-hero-subtitle">
-        Unclouded is a privacy-focused app discovery and comparison platform. Find open-source alternatives to the apps you use every day, compare them honestly, and generate Obtainium configs to actually make the switch.
+        Find open-source alternatives to the apps you use every day, compare them honestly, and generate Obtainium configs to actually make the switch.
       </p>
       <div class="uc-hero-actions">
-        <a href="https://github.com/LooseWireDev" class="uc-hero-primary">
-          <Icon name="lucide:github" style="width: 18px; height: 18px;" />
-          Follow on GitHub
+        <a href="https://unclouded.app" class="uc-hero-primary">
+          <Icon name="lucide:arrow-right" style="width: 18px; height: 18px;" />
+          Try Unclouded
         </a>
-        <a href="#features" class="uc-hero-secondary">See what's coming</a>
+        <a href="https://github.com/LooseWireDev/unclouded" class="uc-hero-secondary">
+          <Icon name="lucide:github" style="width: 16px; height: 16px;" />
+          View on GitHub
+        </a>
       </div>
     </div>
   </header>
@@ -166,15 +163,18 @@ const phases = [
     <!-- FEATURES -->
     <section id="features" class="uc-section">
       <div class="uc-section-inner" style="max-width: 1000px;">
-        <p class="uc-eyebrow" style="text-align: center;">Planned features</p>
+        <p class="uc-eyebrow" style="text-align: center;">Features</p>
         <h2 class="uc-section-heading" style="text-align: center;">
           Part content site. Part tool. All privacy.
         </h2>
         <div class="uc-features-grid">
-          {features.map(({ icon, title, desc }) => (
+          {features.map(({ icon, title, desc, upcoming }) => (
             <div class="uc-feature-card">
               <Icon name={icon} style="width: 24px; height: 24px; color: var(--uc-sun); margin-bottom: 12px;" />
-              <h3 class="uc-feature-title">{title}</h3>
+              <div class="uc-feature-header">
+                <h3 class="uc-feature-title">{title}</h3>
+                {upcoming && <span class="uc-feature-badge">Coming in v2</span>}
+              </div>
               <p class="uc-feature-desc">{desc}</p>
             </div>
           ))}
@@ -195,7 +195,7 @@ const phases = [
             <div class="uc-roadmap-card">
               <div class="uc-roadmap-header">
                 <span class="uc-roadmap-num">{num}</span>
-                <span class="uc-roadmap-status" data-active={status === 'In development'}>{status}</span>
+                <span class="uc-roadmap-status" data-active={status === 'Live'}>{status}</span>
               </div>
               <h3 class="uc-roadmap-title">{title}</h3>
               <p class="uc-roadmap-desc">{desc}</p>
@@ -224,15 +224,21 @@ const phases = [
     <!-- CTA -->
     <section class="uc-section uc-section-alt" style="border-bottom: none;">
       <div class="uc-section-inner" style="max-width: 800px; text-align: center;">
-        <p class="uc-eyebrow">Stay in the loop</p>
-        <h2 class="uc-section-heading">Unclouded is coming soon</h2>
+        <p class="uc-eyebrow">Ready to switch?</p>
+        <h2 class="uc-section-heading">Start exploring</h2>
         <p class="uc-section-desc" style="margin-bottom: 40px;">
-          Follow development on GitHub. The project is being built in the open.
+          Search thousands of privacy-respecting apps. Free, no account required.
         </p>
-        <a href="https://github.com/LooseWireDev" class="uc-hero-primary" style="display: inline-flex; align-items: center; gap: 10px;">
-          <Icon name="lucide:github" style="width: 18px; height: 18px;" />
-          Follow on GitHub
-        </a>
+        <div class="uc-hero-actions" style="justify-content: center;">
+          <a href="https://unclouded.app" class="uc-hero-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+            <Icon name="lucide:arrow-right" style="width: 18px; height: 18px;" />
+            Try Unclouded
+          </a>
+          <a href="https://github.com/LooseWireDev/unclouded" class="uc-hero-secondary" style="display: inline-flex; align-items: center; gap: 10px;">
+            <Icon name="lucide:github" style="width: 16px; height: 16px;" />
+            View on GitHub
+          </a>
+        </div>
       </div>
     </section>
 
@@ -242,35 +248,6 @@ const phases = [
 </UncloudedLayout>
 
 <style>
-  /* ── Coming soon bar ── */
-  .uc-coming-soon-bar {
-    background: var(--uc-sun-subtle);
-    border-bottom: 1px solid var(--uc-sun-border);
-    padding: 10px 32px;
-    text-align: center;
-    font-family: var(--uc-font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--uc-sun-text);
-    letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .uc-coming-soon-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--uc-sun);
-    display: inline-block;
-    animation: uc-pulse 2s ease-in-out infinite;
-  }
-  @keyframes uc-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
   /* ── Hero ── */
   .uc-hero {
     max-width: 800px;
@@ -291,14 +268,6 @@ const phases = [
     font-size: 11px;
     color: var(--uc-sun-text);
     letter-spacing: 0.06em;
-  }
-  .uc-hero-badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--uc-sun);
-    display: inline-block;
-    animation: uc-pulse 2s ease-in-out infinite;
   }
   .uc-hero-logo-wrap {
     margin-bottom: 32px;
@@ -355,6 +324,9 @@ const phases = [
     background: var(--uc-sun-light);
   }
   .uc-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--uc-font-body);
     font-size: 15px;
     font-weight: 500;
@@ -486,12 +458,28 @@ const phases = [
     border-radius: 14px;
     padding: 28px;
   }
+  .uc-feature-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
   .uc-feature-title {
     font-family: var(--uc-font-body);
     font-size: 15px;
     font-weight: 600;
     color: var(--uc-text);
-    margin-bottom: 8px;
+    margin-bottom: 0;
+  }
+  .uc-feature-badge {
+    font-family: var(--uc-font-mono);
+    font-size: 10px;
+    color: var(--uc-text-dim);
+    padding: 2px 8px;
+    border-radius: 100px;
+    border: 1px solid var(--uc-border);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
   }
   .uc-feature-desc {
     font-family: var(--uc-font-body);
