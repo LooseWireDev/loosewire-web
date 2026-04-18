@@ -41,6 +41,7 @@ interface ArticleOpts {
   datePublished: string;
   url: string;
   dateModified?: string;
+  keywords?: string[];
 }
 
 export function articleSchema(opts: ArticleOpts) {
@@ -52,6 +53,7 @@ export function articleSchema(opts: ArticleOpts) {
     datePublished: opts.datePublished,
     dateModified: opts.dateModified ?? opts.datePublished,
     url: opts.url,
+    ...(opts.keywords?.length && { keywords: opts.keywords }),
     author: {
       '@type': 'Organization',
       name: 'Loose Wire LLC',
