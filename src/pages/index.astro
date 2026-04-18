@@ -4,10 +4,11 @@ import LooseWireLayout from '../layouts/LooseWireLayout.astro';
 import Logo from '../components/loosewire/Logo.astro';
 import HarknotesLogo from '../components/harknotes/Logo.astro';
 import FarscryLogo from '../components/farscry/Logo.astro';
+import UncloudedLogo from '../components/unclouded/Logo.astro';
 ---
 <LooseWireLayout
   title="Loose Wire — Independent dev, shipping products"
-  description="Making the software I wish existed. One person, multiple products. Currently: Harknotes and Farscry."
+  description="Making the software I wish existed. One person, multiple products. Currently: Harknotes, Farscry, and Unclouded."
 >
 
   <!-- ─── Topbar ──────────────────────────────────────────── -->
@@ -101,9 +102,31 @@ import FarscryLogo from '../components/farscry/Logo.astro';
           Learn more &rarr;
         </span>
       </a>
+      <!-- Unclouded -->
+      <a href="/unclouded" class="product-card anim" style="animation-delay: 0.50s">
+        <div class="product-card-top">
+          <div class="product-card-identity">
+            <span class="product-dot" style="background: #EDD06A;"></span>
+            <span class="product-name">Unclouded</span>
+          </div>
+          <UncloudedLogo size={28} />
+        </div>
+
+        <p class="product-meta">Web &middot; Mobile (planned) &middot; Coming soon</p>
+
+        <p class="product-desc">
+          Privacy-focused app discovery and comparison. Find open-source
+          alternatives to the apps you use, compare them honestly, and generate
+          Obtainium configs to make the switch.
+        </p>
+
+        <span class="product-cta" style="color: #EDD06A;">
+          Learn more &rarr;
+        </span>
+      </a>
     </section>
 
-    <hr class="rule anim" style="animation-delay: 0.5s" />
+    <hr class="rule anim" style="animation-delay: 0.56s" />
 
     <!-- ─── About ─────────────────────────────────────────────── -->
     <section class="about anim" style="animation-delay: 0.54s">
@@ -123,6 +146,7 @@ import FarscryLogo from '../components/farscry/Logo.astro';
         <a href="/blog">Blog</a>
         <a href="/harknotes">Harknotes</a>
         <a href="/farscry">Farscry</a>
+        <a href="/unclouded">Unclouded</a>
         <span class="footer-copy">&copy; {new Date().getFullYear()} Loose Wire LLC</span>
       </div>
     </footer>

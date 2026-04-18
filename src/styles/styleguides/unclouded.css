@@ -1,0 +1,82 @@
+/* src/styles/styleguides/unclouded.css
+   Unclouded — Butter on neutral dark. Warm, honest, clear.
+   Tokens from Brand Guide v4. */
+
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap');
+
+:root,
+[data-theme="dark"] {
+  /* ── Brand: butter yellow ── */
+  --uc-sun:          #EDD06A;
+  --uc-sun-text:     #D4B44A;
+  --uc-sun-light:    #F5E090;
+  --uc-sun-dim:      #B89030;
+  --uc-sun-subtle:   rgba(237,208,106,0.08);
+  --uc-sun-glow:     rgba(237,208,106,0.04);
+  --uc-sun-border:   rgba(237,208,106,0.14);
+
+  /* ── Neutrals: pure, no cast ── */
+  --uc-bg:           #111111;
+  --uc-surface:      #1A1A1A;
+  --uc-surface-2:    #222222;
+  --uc-surface-3:    #2A2A2A;
+  --uc-border:       rgba(255,255,255,0.07);
+  --uc-border-strong: rgba(255,255,255,0.13);
+
+  /* ── Text ── */
+  --uc-text:         #F0EDE8;
+  --uc-text-mid:     #A09688;
+  --uc-text-dim:     #6B6360;
+
+  /* ── Semantic ── */
+  --uc-success:      #5C9E5C;
+  --uc-warning:      #D4B44A;
+  --uc-error:        #C05050;
+
+  /* ── Shadows ── */
+  --uc-shadow-sm:    0 1px 3px rgba(0,0,0,0.5);
+  --uc-shadow-md:    0 4px 16px rgba(0,0,0,0.6);
+  --uc-shadow-lg:    0 16px 48px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.4);
+  --uc-shadow-sun:   0 0 24px rgba(237,208,106,0.12), 0 4px 12px rgba(0,0,0,0.4);
+
+  /* ── Typography ── */
+  --uc-font-display: 'Fraunces', serif;
+  --uc-font-body:    'Plus Jakarta Sans', sans-serif;
+  --uc-font-mono:    'Geist Mono', monospace;
+
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --uc-sun:          #A08030;
+  --uc-sun-text:     #A08030;
+  --uc-sun-light:    #C0A040;
+  --uc-sun-dim:      #806020;
+  --uc-sun-subtle:   rgba(160,128,48,0.08);
+  --uc-sun-glow:     rgba(160,128,48,0.04);
+  --uc-sun-border:   rgba(160,128,48,0.15);
+
+  --uc-bg:           #F8F4EC;
+  --uc-surface:      #FFFFFF;
+  --uc-surface-2:    #F0EAE0;
+  --uc-surface-3:    #E5DDD0;
+  --uc-border:       rgba(0,0,0,0.07);
+  --uc-border-strong: rgba(0,0,0,0.13);
+
+  --uc-text:         #18160E;
+  --uc-text-mid:     #5C5240;
+  --uc-text-dim:     #8A7E68;
+
+  --uc-success:      #4A824A;
+  --uc-warning:      #A08030;
+  --uc-error:        #B04848;
+
+  --uc-shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
+  --uc-shadow-md:    0 4px 16px rgba(0,0,0,0.1);
+  --uc-shadow-lg:    0 16px 48px rgba(0,0,0,0.14);
+  --uc-shadow-sun:   0 0 20px rgba(160,128,48,0.12), 0 4px 12px rgba(0,0,0,0.08);
+
+
+  color-scheme: light;
+}

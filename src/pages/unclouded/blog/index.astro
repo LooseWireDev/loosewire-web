@@ -1,0 +1,43 @@
+---
+// src/pages/unclouded/blog/index.astro
+import UncloudedLayout from '../../../layouts/UncloudedLayout.astro';
+import { getCollection } from 'astro:content';
+import Nav from '../../../components/unclouded/Nav.astro';
+import Footer from '../../../components/unclouded/Footer.astro';
+
+export const prerender = true;
+
+const posts = (await getCollection('unclouded-blog')).sort(
+  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+);
+---
+<UncloudedLayout
+  title="Unclouded Blog — App Privacy, Open Source, and Leaving Big Tech"
+  description="Articles on finding privacy-respecting alternatives, leaving proprietary apps behind, and the tools that make switching practical."
+>
+  <Nav />
+
+  <main style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
+    <h1 style={`font-family: var(--uc-font-display); font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.025em; color: var(--uc-text); margin-bottom: 8px;`}>Blog</h1>
+    <p style="font-family: var(--uc-font-body); font-size: 16px; color: var(--uc-text-mid); margin-bottom: 48px; line-height: 1.6;">
+      Articles on app privacy, open-source alternatives, and making the switch practical.
+    </p>
+
+    {posts.length === 0 && (
+      <p style="color: var(--uc-text-dim);">Articles coming soon.</p>
+    )}
+
+    <div style="display: flex; flex-direction: column; gap: 0;">
+      {posts.map(post => (
+        <a href={`/unclouded/blog/${post.slug}`}
+           style="display: block; padding: 28px 0; border-bottom: 1px solid var(--uc-border); text-decoration: none;">
+          <p style="font-family: var(--uc-font-mono); font-size: 11px; color: var(--uc-text-dim); margin-bottom: 8px;">{post.data.pubDate}</p>
+          <h2 style={`font-family: var(--uc-font-display); font-size: 18px; font-weight: 600; color: var(--uc-text); margin-bottom: 8px; letter-spacing: -0.02em;`}>{post.data.title}</h2>
+          <p style="font-family: var(--uc-font-body); font-size: 14px; color: var(--uc-text-mid); line-height: 1.6;">{post.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</UncloudedLayout>

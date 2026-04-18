@@ -10,6 +10,10 @@ const harknotePosts = (await getCollection('harknotes-blog')).sort(
 const farscryPosts = (await getCollection('farscry-blog')).sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 );
+
+const uncloudedPosts = (await getCollection('unclouded-blog')).sort(
+  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+);
 ---
 <LooseWireLayout
   title="Loose Wire Blog — Software, Privacy, and Building in Public"
@@ -61,7 +65,25 @@ const farscryPosts = (await getCollection('farscry-blog')).sort(
       </section>
     )}
 
-    {harknotePosts.length === 0 && farscryPosts.length === 0 && (
+    {uncloudedPosts.length > 0 && (
+      <section style="padding-bottom: 64px; border-bottom: 1px solid var(--lw-border); margin-top: 48px;">
+        <p style="font-family: var(--lw-font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lw-text-dim); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--lw-border);">
+          Unclouded
+        </p>
+        <div>
+          {uncloudedPosts.map(post => (
+            <a href={`/unclouded/blog/${post.slug}`}
+               style="display: block; padding: 24px 0; border-bottom: 1px solid var(--lw-border); text-decoration: none;">
+              <p style="font-family: var(--lw-font-mono); font-size: 11px; color: var(--lw-text-dim); margin-bottom: 6px;">{post.data.pubDate}</p>
+              <h2 style="font-family: var(--lw-font-display); font-size: 17px; font-weight: 700; color: var(--lw-text); margin-bottom: 6px; letter-spacing: -0.02em;">{post.data.title}</h2>
+              <p style="font-size: 14px; color: var(--lw-text-mid); line-height: 1.6;">{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {harknotePosts.length === 0 && farscryPosts.length === 0 && uncloudedPosts.length === 0 && (
       <p style="color: var(--lw-text-dim); padding: 48px 0;">Articles coming soon.</p>
     )}
 
@@ -72,7 +94,8 @@ const farscryPosts = (await getCollection('farscry-blog')).sort(
       © 2026 Loose Wire LLC ·
       <a href="/" style="color: var(--lw-text-mid); text-decoration: none;">Home</a> ·
       <a href="/harknotes" style="color: var(--lw-text-mid); text-decoration: none;">Harknotes</a> ·
-      <a href="/farscry" style="color: var(--lw-text-mid); text-decoration: none;">Farscry</a>
+      <a href="/farscry" style="color: var(--lw-text-mid); text-decoration: none;">Farscry</a> ·
+      <a href="/unclouded" style="color: var(--lw-text-mid); text-decoration: none;">Unclouded</a>
     </p>
   </footer>
 </LooseWireLayout>

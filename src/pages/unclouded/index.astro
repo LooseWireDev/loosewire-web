@@ -1,0 +1,589 @@
+---
+// src/pages/unclouded/index.astro
+import UncloudedLayout from '../../layouts/UncloudedLayout.astro';
+import { faqPageSchema } from '../../lib/schema';
+import Nav from '../../components/unclouded/Nav.astro';
+import Footer from '../../components/unclouded/Footer.astro';
+import Logo from '../../components/unclouded/Logo.astro';
+import { Icon } from 'astro-icon/components';
+
+const faqItems = [
+  {
+    q: 'When will Unclouded launch?',
+    a: 'Unclouded is in active development. The web app (v1) will launch first with the alternative finder, app discovery browser, and Obtainium config generator.',
+  },
+  {
+    q: 'What makes this different from alternativeto.net?',
+    a: 'Unclouded focuses exclusively on privacy-respecting and open-source apps. It also generates Obtainium configs so you can actually install what you find, not just read about it.',
+  },
+  {
+    q: 'Will there be a mobile app?',
+    a: 'Yes. The v2 mobile app will scan your installed apps and map them to privacy alternatives, with one-tap Obtainium config generation for migration.',
+  },
+  {
+    q: 'How do you decide what counts as a privacy alternative?',
+    a: 'Apps must be open source or have a verifiable privacy policy. We pull from F-Droid, IzzyOnDroid, and community-maintained Obtainium configs. Relationship types (direct replacement, fork, partial) are labeled honestly.',
+  },
+  {
+    q: 'Is Unclouded open source?',
+    a: 'The app database and tooling will be open. Details on licensing will be shared closer to launch.',
+  },
+  {
+    q: 'What is Obtainium?',
+    a: 'Obtainium is an Android app that lets you install and update apps directly from their source (GitHub, F-Droid, etc.) without going through the Play Store. Unclouded generates config files that Obtainium can import.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      name: 'Unclouded',
+      description: 'Privacy-focused app discovery and comparison platform. Find open-source alternatives to the apps you use every day.',
+      applicationCategory: 'UtilitiesApplication',
+      url: 'https://loosewire.dev/unclouded',
+      author: {
+        '@type': 'Organization',
+        name: 'Loose Wire LLC',
+        url: 'https://loosewire.dev',
+      },
+    },
+    faqPageSchema(faqItems),
+  ],
+};
+
+const features = [
+  { icon: 'lucide:search', title: 'Alternative finder', desc: 'Search by the app you want to replace. Get honest comparisons with relationship types: direct, fork, or partial.' },
+  { icon: 'lucide:compass', title: 'App discovery', desc: 'Browse privacy-respecting apps by category, platform, and features. Especially useful for Obtainium-compatible apps.' },
+  { icon: 'lucide:download', title: 'Obtainium configs', desc: 'Generate ready-to-import Obtainium configurations. Find an app, tap export, import into Obtainium. Done.' },
+  { icon: 'lucide:scan', title: 'Installed app scanner', desc: 'The mobile app scans what you have installed and maps each app to its privacy-respecting alternative.' },
+  { icon: 'lucide:git-compare', title: 'Honest comparisons', desc: 'Every alternative is labeled with its relationship type and trade-offs. No cheerleading, just facts.' },
+  { icon: 'lucide:database', title: 'Community-powered data', desc: 'Sourced from F-Droid, IzzyOnDroid, and community Obtainium configs. Thousands of apps, deduplicated and tagged.' },
+];
+
+const phases = [
+  { num: '01', title: 'Web app', desc: 'Alternative finder, app discovery browser, Obtainium config generator, and blog.', status: 'In development' },
+  { num: '02', title: 'Mobile app', desc: 'Scan installed apps, find alternatives, generate Obtainium configs with one tap.', status: 'Planned' },
+  { num: '03', title: 'Community', desc: 'User submissions, saved configs, voting and ranking on alternatives.', status: 'Future' },
+];
+---
+<UncloudedLayout
+  title="Unclouded — Find Privacy Alternatives to the Apps You Use"
+  description="Privacy-focused app discovery and comparison. Find open-source alternatives, generate Obtainium configs, and switch on your terms. Coming soon."
+  schema={schema}
+>
+  <div class="uc-coming-soon-bar">
+    <span class="uc-coming-soon-dot"></span>
+    Unclouded is in active development — nothing is available yet
+  </div>
+
+  <header style="background: var(--uc-bg); border-bottom: 1px solid var(--uc-border);">
+    <Nav />
+
+    <!-- HERO -->
+    <div class="uc-hero">
+      <div class="uc-hero-badge">
+        <span class="uc-hero-badge-dot"></span>
+        <span>Coming soon</span>
+      </div>
+      <div class="uc-hero-logo-wrap">
+        <Logo size={80} />
+      </div>
+      <h1 class="uc-hero-headline">
+        <em>See clearly.</em><br/><span class="uc-hero-highlight">Switch freely.</span>
+      </h1>
+      <p class="uc-hero-subtitle">
+        Unclouded is a privacy-focused app discovery and comparison platform. Find open-source alternatives to the apps you use every day, compare them honestly, and generate Obtainium configs to actually make the switch.
+      </p>
+      <div class="uc-hero-actions">
+        <a href="https://github.com/LooseWireDev" class="uc-hero-primary">
+          <Icon name="lucide:github" style="width: 18px; height: 18px;" />
+          Follow on GitHub
+        </a>
+        <a href="#features" class="uc-hero-secondary">See what's coming</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- WHY -->
+    <section class="uc-section" style="text-align: center;">
+      <div class="uc-section-inner" style="max-width: 900px;">
+        <p class="uc-eyebrow">The problem</p>
+        <h2 class="uc-section-heading">
+          You know you should switch. You just don't know where to start.
+        </h2>
+        <p class="uc-section-desc">
+          Privacy alternatives exist for almost everything you use. The problem isn't supply — it's discovery. Which ones are real replacements? Which are partial? How do you actually install them?
+        </p>
+        <div class="uc-problem-grid">
+          <div class="uc-problem-card">
+            <Icon name="lucide:search-x" style="width: 22px; height: 22px; color: var(--uc-text-dim); margin-bottom: 10px;" />
+            <h3 class="uc-problem-title">Scattered information</h3>
+            <p class="uc-problem-desc">Alternatives are spread across Reddit threads, blog posts, and GitHub repos. No single place to compare.</p>
+          </div>
+          <div class="uc-problem-card">
+            <Icon name="lucide:thumbs-down" style="width: 22px; height: 22px; color: var(--uc-text-dim); margin-bottom: 10px;" />
+            <h3 class="uc-problem-title">Dishonest comparisons</h3>
+            <p class="uc-problem-desc">Most lists say everything is a "great alternative" without mentioning what's missing or half-baked.</p>
+          </div>
+          <div class="uc-problem-card">
+            <Icon name="lucide:puzzle" style="width: 22px; height: 22px; color: var(--uc-text-dim); margin-bottom: 10px;" />
+            <h3 class="uc-problem-title">No path to action</h3>
+            <p class="uc-problem-desc">You find an app. Now what? Unclouded generates Obtainium configs so you can actually install it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="uc-section uc-section-alt">
+      <div class="uc-section-inner" style="max-width: 900px; text-align: center;">
+        <p class="uc-eyebrow">How it works</p>
+        <h2 class="uc-section-heading">Search. Compare. Switch.</h2>
+        <div class="uc-steps-grid">
+          <div class="uc-step-card">
+            <span class="uc-step-number">01</span>
+            <h3 class="uc-step-title">Search by what you use</h3>
+            <p class="uc-step-desc">Type "WhatsApp" or "Google Maps." Unclouded shows you every privacy-respecting alternative with honest labels.</p>
+          </div>
+          <div class="uc-step-card">
+            <span class="uc-step-number">02</span>
+            <h3 class="uc-step-title">Compare honestly</h3>
+            <p class="uc-step-desc">Direct replacement, fork, or partial? Every alternative tells you exactly what it does and doesn't cover.</p>
+          </div>
+          <div class="uc-step-card">
+            <span class="uc-step-number">03</span>
+            <h3 class="uc-step-title">Export and install</h3>
+            <p class="uc-step-desc">Generate an Obtainium config, import it, and install directly from the source. No Play Store required.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="uc-section">
+      <div class="uc-section-inner" style="max-width: 1000px;">
+        <p class="uc-eyebrow" style="text-align: center;">Planned features</p>
+        <h2 class="uc-section-heading" style="text-align: center;">
+          Part content site. Part tool. All privacy.
+        </h2>
+        <div class="uc-features-grid">
+          {features.map(({ icon, title, desc }) => (
+            <div class="uc-feature-card">
+              <Icon name={icon} style="width: 24px; height: 24px; color: var(--uc-sun); margin-bottom: 12px;" />
+              <h3 class="uc-feature-title">{title}</h3>
+              <p class="uc-feature-desc">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="uc-section uc-section-alt">
+      <div class="uc-section-inner" style="max-width: 800px; text-align: center;">
+        <p class="uc-eyebrow">Roadmap</p>
+        <h2 class="uc-section-heading">Built in phases</h2>
+        <p class="uc-section-desc">
+          Web tools first. Mobile scanner second. Community features when the data is solid.
+        </p>
+        <div class="uc-roadmap">
+          {phases.map(({ num, title, desc, status }) => (
+            <div class="uc-roadmap-card">
+              <div class="uc-roadmap-header">
+                <span class="uc-roadmap-num">{num}</span>
+                <span class="uc-roadmap-status" data-active={status === 'In development'}>{status}</span>
+              </div>
+              <h3 class="uc-roadmap-title">{title}</h3>
+              <p class="uc-roadmap-desc">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="uc-section">
+      <div class="uc-section-inner" style="max-width: 720px;">
+        <p class="uc-eyebrow" style="text-align: center;">FAQ</p>
+        <h2 class="uc-section-heading" style="text-align: center; margin-bottom: 48px;">Common questions</h2>
+        <div class="uc-faq-list">
+          {faqItems.map(({ q, a }) => (
+            <details class="uc-faq-item">
+              <summary class="uc-faq-question">{q}</summary>
+              <p class="uc-faq-answer">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="uc-section uc-section-alt" style="border-bottom: none;">
+      <div class="uc-section-inner" style="max-width: 800px; text-align: center;">
+        <p class="uc-eyebrow">Stay in the loop</p>
+        <h2 class="uc-section-heading">Unclouded is coming soon</h2>
+        <p class="uc-section-desc" style="margin-bottom: 40px;">
+          Follow development on GitHub. The project is being built in the open.
+        </p>
+        <a href="https://github.com/LooseWireDev" class="uc-hero-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+          <Icon name="lucide:github" style="width: 18px; height: 18px;" />
+          Follow on GitHub
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</UncloudedLayout>
+
+<style>
+  /* ── Coming soon bar ── */
+  .uc-coming-soon-bar {
+    background: var(--uc-sun-subtle);
+    border-bottom: 1px solid var(--uc-sun-border);
+    padding: 10px 32px;
+    text-align: center;
+    font-family: var(--uc-font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--uc-sun-text);
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .uc-coming-soon-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--uc-sun);
+    display: inline-block;
+    animation: uc-pulse 2s ease-in-out infinite;
+  }
+  @keyframes uc-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── Hero ── */
+  .uc-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+    text-align: center;
+  }
+  .uc-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--uc-sun-subtle);
+    border: 1px solid var(--uc-sun-border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 40px;
+    font-family: var(--uc-font-mono);
+    font-size: 11px;
+    color: var(--uc-sun-text);
+    letter-spacing: 0.06em;
+  }
+  .uc-hero-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--uc-sun);
+    display: inline-block;
+    animation: uc-pulse 2s ease-in-out infinite;
+  }
+  .uc-hero-logo-wrap {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+  }
+  .uc-hero-headline {
+    font-family: var(--uc-font-display);
+    font-size: clamp(32px, 6vw, 54px);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--uc-text);
+    margin-bottom: 24px;
+  }
+  .uc-hero-headline em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .uc-hero-highlight {
+    color: var(--uc-sun);
+    font-style: normal;
+    font-weight: 700;
+  }
+  .uc-hero-subtitle {
+    font-family: var(--uc-font-body);
+    font-size: clamp(16px, 2vw, 18px);
+    color: var(--uc-text-mid);
+    max-width: 580px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+  .uc-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .uc-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--uc-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: #111111;
+    background: var(--uc-sun);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .uc-hero-primary:hover {
+    background: var(--uc-sun-light);
+  }
+  .uc-hero-secondary {
+    font-family: var(--uc-font-body);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--uc-text-mid);
+    background: var(--uc-surface);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--uc-border-strong);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .uc-hero-secondary:hover {
+    color: var(--uc-text);
+    border-color: var(--uc-text-dim);
+  }
+
+  /* ── Sections ── */
+  .uc-section {
+    padding: 96px 32px;
+  }
+  .uc-section-alt {
+    background: var(--uc-surface);
+    border-top: 1px solid var(--uc-border);
+    border-bottom: 1px solid var(--uc-border);
+  }
+  .uc-section-inner {
+    margin: 0 auto;
+  }
+  .uc-eyebrow {
+    font-family: var(--uc-font-mono);
+    font-size: 11px;
+    color: var(--uc-sun-text);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .uc-section-heading {
+    font-family: var(--uc-font-display);
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--uc-text);
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .uc-section-desc {
+    font-family: var(--uc-font-body);
+    font-size: 17px;
+    color: var(--uc-text-mid);
+    max-width: 600px;
+    margin: 0 auto 56px;
+    line-height: 1.7;
+  }
+
+  /* ── Problem cards ── */
+  .uc-problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    text-align: left;
+    margin-top: 56px;
+  }
+  .uc-problem-card {
+    background: var(--uc-surface);
+    border: 1px solid var(--uc-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .uc-problem-title {
+    font-family: var(--uc-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--uc-text);
+    margin-bottom: 8px;
+  }
+  .uc-problem-desc {
+    font-family: var(--uc-font-body);
+    font-size: 14px;
+    color: var(--uc-text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── Steps ── */
+  .uc-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    text-align: left;
+    margin-top: 56px;
+  }
+  .uc-step-card {
+    background: var(--uc-surface-2);
+    border: 1px solid var(--uc-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .uc-step-number {
+    font-family: var(--uc-font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--uc-sun-text);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .uc-step-title {
+    font-family: var(--uc-font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--uc-text);
+    margin-bottom: 8px;
+  }
+  .uc-step-desc {
+    font-family: var(--uc-font-body);
+    font-size: 14px;
+    color: var(--uc-text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── Features grid ── */
+  .uc-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 56px;
+  }
+  .uc-feature-card {
+    background: var(--uc-surface);
+    border: 1px solid var(--uc-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .uc-feature-title {
+    font-family: var(--uc-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--uc-text);
+    margin-bottom: 8px;
+  }
+  .uc-feature-desc {
+    font-family: var(--uc-font-body);
+    font-size: 14px;
+    color: var(--uc-text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── Roadmap ── */
+  .uc-roadmap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    text-align: left;
+    margin-top: 48px;
+  }
+  .uc-roadmap-card {
+    background: var(--uc-surface-2);
+    border: 1px solid var(--uc-border);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .uc-roadmap-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .uc-roadmap-num {
+    font-family: var(--uc-font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--uc-sun-text);
+  }
+  .uc-roadmap-status {
+    font-family: var(--uc-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--uc-text-dim);
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--uc-border);
+    background: transparent;
+  }
+  .uc-roadmap-status[data-active="true"] {
+    color: var(--uc-sun-text);
+    border-color: var(--uc-sun-border);
+    background: var(--uc-sun-subtle);
+  }
+  .uc-roadmap-title {
+    font-family: var(--uc-font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--uc-text);
+    margin-bottom: 8px;
+  }
+  .uc-roadmap-desc {
+    font-family: var(--uc-font-body);
+    font-size: 14px;
+    color: var(--uc-text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── FAQ ── */
+  .uc-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .uc-faq-item {
+    background: var(--uc-surface);
+    border: 1px solid var(--uc-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .uc-faq-question {
+    padding: 18px 20px;
+    font-family: var(--uc-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--uc-text);
+    cursor: pointer;
+    list-style: none;
+  }
+  .uc-faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .uc-faq-answer {
+    padding: 0 20px 18px;
+    font-family: var(--uc-font-body);
+    font-size: 14px;
+    color: var(--uc-text-mid);
+    line-height: 1.6;
+  }
+</style>

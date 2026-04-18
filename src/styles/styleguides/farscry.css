@@ -28,6 +28,7 @@
   --fc-shadow-lg:       0 16px 48px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.4);
   --fc-shadow-violet:   0 0 24px rgba(167,139,250,0.15), 0 4px 12px rgba(0,0,0,0.4);
 
+
   color-scheme: dark;
 }
 
@@ -58,6 +59,7 @@
   --fc-shadow-md:       0 4px 16px rgba(0,0,0,0.1);
   --fc-shadow-lg:       0 16px 48px rgba(0,0,0,0.14);
   --fc-shadow-violet:   0 0 20px rgba(124,58,237,0.12), 0 4px 12px rgba(0,0,0,0.08);
+
 
   color-scheme: light;
 }

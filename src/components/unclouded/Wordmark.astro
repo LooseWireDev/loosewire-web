@@ -1,0 +1,37 @@
+---
+// src/components/unclouded/Wordmark.astro
+// Logotype lockup: italic "un" + upright bold "clouded"
+import Logo from './Logo.astro';
+
+interface Props {
+  logoSize?: number;
+  fontSize?: string;
+  class?: string;
+}
+
+const { logoSize = 30, fontSize = '18px', class: className } = Astro.props;
+---
+<div class:list={["uc-wordmark", className]}>
+  <Logo size={logoSize} />
+  <span class="uc-wordmark-text" style={`font-size: ${fontSize};`}>un<span class="accent">clouded</span></span>
+</div>
+
+<style>
+  .uc-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .uc-wordmark-text {
+    font-family: var(--uc-font-display);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.025em;
+    color: var(--uc-text);
+  }
+  .uc-wordmark-text .accent {
+    color: var(--uc-sun);
+    font-style: normal;
+    font-weight: 700;
+  }
+</style>

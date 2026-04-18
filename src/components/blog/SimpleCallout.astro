@@ -1,0 +1,60 @@
+---
+// src/components/blog/SimpleCallout.astro
+// Lightweight callout without astro-icon dependency
+interface Props {
+  type?: 'info' | 'tip' | 'warning' | 'note';
+  title?: string;
+}
+
+const { type = 'info', title } = Astro.props;
+const symbols = { info: '\u2139', tip: '\u2728', warning: '\u26A0', note: '\u270E' };
+---
+<aside class:list={[`callout callout--${type}`]}>
+  <div class="callout-header">
+    <span class="callout-symbol">{symbols[type]}</span>
+    {title && <span class="callout-title">{title}</span>}
+  </div>
+  <div class="callout-body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .callout--info, .callout--note {
+    background: var(--blog-surface-2, rgba(255,255,255,0.04));
+    border: 1px solid var(--blog-border, rgba(255,255,255,0.08));
+  }
+  .callout--tip {
+    background: var(--blog-accent-subtle, rgba(255,255,255,0.04));
+    border: 1px solid var(--blog-accent-border, rgba(255,255,255,0.08));
+  }
+  .callout--warning {
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.15);
+  }
+  .callout-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .callout-symbol {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .callout-title {
+    font-weight: 600;
+    color: var(--blog-text-primary, inherit);
+    font-size: 13px;
+  }
+  .callout-body {
+    color: var(--blog-text-secondary, inherit);
+  }
+</style>
