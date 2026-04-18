@@ -41,13 +41,54 @@ const image = ogImage ?? 'https://loosewire.dev/og-loosewire.png';
 
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
+  <!-- No-flash theme init: reads localStorage before first paint -->
+  <script is:inline>
+    (function() {
+      const stored = localStorage.getItem('lw-theme');
+      if (stored === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,600;6..12,700;6..12,800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
 
   <link rel="sitemap" href="/sitemap-index.xml" />
 </head>
-<body style="background: var(--lw-bg); color: var(--lw-text); font-family: var(--lw-font-body);">
+<body>
   <slot />
 </body>
 </html>
+
+<style is:global>
+  body {
+    background: var(--lw-paper);
+    color: var(--lw-ink);
+    font-family: var(--lw-font-body);
+    font-size: 13px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 27px,
+      var(--lw-rule) 27px,
+      var(--lw-rule) 28px
+    );
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* Red margin line */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: calc(50% - 402px);
+    width: 1px;
+    height: 100%;
+    background: var(--lw-margin);
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>
