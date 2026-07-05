@@ -1,0 +1,546 @@
+---
+// src/pages/mealforge/index.astro
+import MealforgeLayout from '../../layouts/MealforgeLayout.astro';
+import { faqPageSchema } from '../../lib/schema';
+import Nav from '../../components/mealforge/Nav.astro';
+import Footer from '../../components/mealforge/Footer.astro';
+import Logo from '../../components/mealforge/Logo.astro';
+import { Icon } from 'astro-icon/components';
+
+const faqItems = [
+  {
+    q: 'Do I need an AI subscription to use Mealforge?',
+    a: 'You need access to any MCP-capable AI chat — LibreChat with your own API keys, Claude, or similar. Mealforge itself is free and runs on your own server. The AI does the planning; Mealforge is where the plan lives.',
+  },
+  {
+    q: 'Why is there no recipe catalog?',
+    a: 'Catalogs limit you to what someone else wrote down. Every Mealforge recipe is generated in conversation — tailored to your household, your constraints, and whatever sounds good this week. Favorites and history mean the good ones stick around.',
+  },
+  {
+    q: 'How does the grocery list work?',
+    a: 'It is derived automatically from the week\'s recipes. Ingredients are aggregated across meals — "2 cups" plus "1 cup" becomes "3 cups" — grouped by store section, and checkable while you shop. Re-pushing a revised week keeps unchanged items checked.',
+  },
+  {
+    q: 'Is my data private?',
+    a: 'Everything lives in a single SQLite file on your server. Back up one folder and you have backed up everything. The only thing an AI provider ever sees is your planning conversation in the chat client you already use.',
+  },
+  {
+    q: 'Does Mealforge have user accounts or authentication?',
+    a: 'No — it is designed for a household on a private network. Put it on your Tailscale or VPN, or behind a reverse proxy that handles auth. Do not expose it to the public internet as-is.',
+  },
+  {
+    q: 'What is MCP?',
+    a: 'The Model Context Protocol — an open standard that lets AI chat apps call external tools. Mealforge exposes tools like push_meal_plan and list_favorites over MCP, so any compatible client can plan your week and publish it to the app.',
+  },
+  {
+    q: 'Is Mealforge open source?',
+    a: 'Yes. MIT licensed, full source on GitHub. It also ships a ready-made agent skill that teaches your AI the whole planning workflow.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Mealforge',
+      description: 'Self-hosted meal planning app driven by AI over MCP. Plan the week conversationally; get recipe cards, cook mode, and a derived grocery list.',
+      applicationCategory: 'LifestyleApplication',
+      operatingSystem: 'Docker (self-hosted)',
+      offers: [
+        { '@type': 'Offer', price: '0', priceCurrency: 'USD', name: 'Self-hosted' },
+      ],
+      url: 'https://loosewire.dev/mealforge',
+      downloadUrl: 'https://github.com/LooseWireDev/mealforge',
+      author: {
+        '@type': 'Organization',
+        name: 'Loose Wire LLC',
+        url: 'https://loosewire.dev',
+      },
+    },
+    faqPageSchema(faqItems),
+  ],
+};
+
+const features = [
+  { icon: 'lucide:message-square', title: 'No catalog, just conversation', desc: 'Every recipe is generated in chat, tailored to your household. "Lots of crock pot this week, salmon once, use the pork shoulder in the freezer."' },
+  { icon: 'lucide:plug', title: 'MCP-native', desc: 'Works with any MCP-capable AI chat — LibreChat, Claude, and friends. The model pushes the finished plan straight into the app.' },
+  { icon: 'lucide:shopping-cart', title: 'Grocery list, derived', desc: 'Ingredients aggregated across recipes, grouped by store section, checkable in the store. Never write a shopping list again.' },
+  { icon: 'lucide:chef-hat', title: 'Cook mode', desc: 'Step-by-step cooking view for every recipe. Big text, one step at a time, built for a propped-up phone and messy hands.' },
+  { icon: 'lucide:heart', title: 'Favorites and history', desc: 'Favorite what you loved. The model recalls favorites and avoids repeating recent meals when planning next week.' },
+  { icon: 'lucide:container', title: 'One container', desc: 'One Docker container, one SQLite file. Runs on your home server, NAS, or VPS. Back up one folder and you are done.' },
+  { icon: 'lucide:graduation-cap', title: 'Agent skill included', desc: 'Ships with a ready-made skill that teaches your AI the whole workflow — gather history, draft the week, publish on command.' },
+  { icon: 'lucide:code', title: 'Open source', desc: 'MIT licensed. Read every line, modify anything, host it yourself. Free forever.' },
+];
+---
+<MealforgeLayout
+  title="Mealforge — AI-Planned Weekly Meals, Self-Hosted"
+  description="Plan your week conversationally with any MCP-capable AI chat. Mealforge turns the plan into recipe cards, a cook mode, and a grocery list you check off in the store. Self-hosted, open source."
+  schema={schema}
+>
+  <header style="background: var(--mf-bg); border-bottom: 1px solid var(--mf-border);">
+    <Nav />
+
+    <!-- HERO -->
+    <div class="mf-hero">
+      <div class="mf-hero-badge">
+        <span>Self-hosted &middot; Open source</span>
+      </div>
+      <div class="mf-hero-logo-wrap">
+        <Logo size={80} />
+      </div>
+      <h1 class="mf-hero-headline">
+        Plan the week in chat.<br/><span class="mf-hero-highlight">Cook it from a real app.</span>
+      </h1>
+      <p class="mf-hero-subtitle">
+        Mealforge is the structured, shoppable, cookable home for meals you plan with AI. Talk through the week in any MCP-capable chat — the finished plan becomes recipe cards, a cook mode, and a grocery list derived automatically.
+      </p>
+      <div class="mf-hero-actions">
+        <a href="#selfhost" class="mf-hero-primary">
+          <Icon name="lucide:terminal" style="width: 18px; height: 18px;" />
+          Self-host it
+        </a>
+        <a href="https://github.com/LooseWireDev/mealforge" class="mf-hero-secondary">
+          <Icon name="lucide:github" style="width: 16px; height: 16px;" />
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- WHY -->
+    <section class="mf-section" style="text-align: center;">
+      <div class="mf-section-inner" style="max-width: 900px;">
+        <p class="mf-eyebrow">The problem</p>
+        <h2 class="mf-section-heading">
+          Meal-planning apps limit you to their catalog
+        </h2>
+        <p class="mf-section-desc">
+          Someone else's recipes, someone else's taste, someone else's cloud. Meanwhile the AI you already talk to can plan a genuinely good week — but the plan dies in the chat scroll.
+        </p>
+        <div class="mf-problem-grid">
+          <div class="mf-problem-card">
+            <Icon name="lucide:book-x" style="width: 22px; height: 22px; color: var(--mf-text-dim); margin-bottom: 10px;" />
+            <h3 class="mf-problem-title">Locked to a catalog</h3>
+            <p class="mf-problem-desc">Recipe apps make you pick from their database. Your household's constraints and cravings don't fit a catalog.</p>
+          </div>
+          <div class="mf-problem-card">
+            <Icon name="lucide:messages-square" style="width: 22px; height: 22px; color: var(--mf-text-dim); margin-bottom: 10px;" />
+            <h3 class="mf-problem-title">Plans trapped in chat</h3>
+            <p class="mf-problem-desc">AI plans a great week, then it's a wall of text you scroll through at the store. No structure, no checkboxes, no cook view.</p>
+          </div>
+          <div class="mf-problem-card">
+            <Icon name="lucide:cloud-off" style="width: 22px; height: 22px; color: var(--mf-text-dim); margin-bottom: 10px;" />
+            <h3 class="mf-problem-title">Your meals, their cloud</h3>
+            <p class="mf-problem-desc">Most meal apps want an account, a subscription, and your data. Mealforge runs on your server, in one SQLite file.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="mf-section mf-section-alt">
+      <div class="mf-section-inner" style="max-width: 900px; text-align: center;">
+        <p class="mf-eyebrow">How it works</p>
+        <h2 class="mf-section-heading">Plan. Push. Shop. Cook.</h2>
+        <div class="mf-steps-grid">
+          <div class="mf-step-card">
+            <span class="mf-step-number">01</span>
+            <h3 class="mf-step-title">Plan in chat</h3>
+            <p class="mf-step-desc">"Lots of crock pot this week, salmon once, use what's in the freezer." Iterate with your AI until the week sounds right.</p>
+          </div>
+          <div class="mf-step-card">
+            <span class="mf-step-number">02</span>
+            <h3 class="mf-step-title">The model pushes the plan</h3>
+            <p class="mf-step-desc">One MCP call publishes structured recipes — ingredients with quantities, units, store sections, and markdown steps.</p>
+          </div>
+          <div class="mf-step-card">
+            <span class="mf-step-number">03</span>
+            <h3 class="mf-step-title">Shop from the derived list</h3>
+            <p class="mf-step-desc">Ingredients aggregate across recipes and group by store section. Check them off as you go.</p>
+          </div>
+          <div class="mf-step-card">
+            <span class="mf-step-number">04</span>
+            <h3 class="mf-step-title">Cook with cook mode</h3>
+            <p class="mf-step-desc">Step-by-step view for every recipe. Favorite the winners — the model remembers them next week.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="mf-section">
+      <div class="mf-section-inner" style="max-width: 1000px;">
+        <p class="mf-eyebrow" style="text-align: center;">Features</p>
+        <h2 class="mf-section-heading" style="text-align: center;">
+          The kitchen half of your AI
+        </h2>
+        <div class="mf-features-grid">
+          {features.map(({ icon, title, desc }) => (
+            <div class="mf-feature-card">
+              <Icon name={icon} style="width: 24px; height: 24px; color: var(--mf-leaf); margin-bottom: 12px;" />
+              <h3 class="mf-feature-title">{title}</h3>
+              <p class="mf-feature-desc">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SELF-HOST -->
+    <section id="selfhost" class="mf-section mf-section-alt">
+      <div class="mf-section-inner" style="max-width: 800px; text-align: center;">
+        <p class="mf-eyebrow">Self-hosting</p>
+        <h2 class="mf-section-heading">Two commands. Dinner's sorted.</h2>
+        <p class="mf-section-desc">
+          One Docker container serves the web app and the MCP endpoint. Data lives in a single SQLite file under <code class="mf-inline-code">./data/</code>.
+        </p>
+        <div class="mf-code-block">
+          <code>curl -O https://raw.githubusercontent.com/loosewiredev/mealforge/main/docker-compose.yml<br/>docker compose up -d</code>
+        </div>
+        <p style="font-size: 14px; color: var(--mf-text-dim); margin-top: 24px;">
+          Web UI and MCP endpoint on port 8090. Works anywhere Docker runs — home server, NAS, VPS, Unraid.
+        </p>
+        <p class="mf-security-note">
+          <Icon name="lucide:shield" style="width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px;" />
+          <span>Mealforge is built for a household on a private network. Keep it on your Tailscale or VPN, or behind a reverse proxy that handles auth.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mf-section">
+      <div class="mf-section-inner" style="max-width: 720px;">
+        <p class="mf-eyebrow" style="text-align: center;">FAQ</p>
+        <h2 class="mf-section-heading" style="text-align: center; margin-bottom: 48px;">Common questions</h2>
+        <div class="mf-faq-list">
+          {faqItems.map(({ q, a }) => (
+            <details class="mf-faq-item">
+              <summary class="mf-faq-question">{q}</summary>
+              <p class="mf-faq-answer">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="mf-section mf-section-alt" style="border-bottom: none;">
+      <div class="mf-section-inner" style="max-width: 800px; text-align: center;">
+        <p class="mf-eyebrow">Get cooking</p>
+        <h2 class="mf-section-heading">Free, open source, yours</h2>
+        <p class="mf-section-desc" style="margin-bottom: 40px;">
+          Spin it up tonight, connect your AI chat, and plan next week's meals in one conversation.
+        </p>
+        <div class="mf-hero-actions" style="justify-content: center;">
+          <a href="#selfhost" class="mf-hero-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+            <Icon name="lucide:terminal" style="width: 18px; height: 18px;" />
+            Self-host it
+          </a>
+          <a href="https://github.com/LooseWireDev/mealforge" class="mf-hero-secondary" style="display: inline-flex; align-items: center; gap: 10px;">
+            <Icon name="lucide:github" style="width: 16px; height: 16px;" />
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</MealforgeLayout>
+
+<style>
+  /* ── Hero ── */
+  .mf-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+    text-align: center;
+  }
+  .mf-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--mf-leaf-subtle);
+    border: 1px solid var(--mf-leaf-border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 40px;
+    font-family: var(--mf-font-mono);
+    font-size: 11px;
+    color: var(--mf-leaf);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .mf-hero-logo-wrap {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+  }
+  .mf-hero-headline {
+    font-family: var(--mf-font-display);
+    font-size: clamp(32px, 6vw, 54px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    color: var(--mf-text);
+    margin-bottom: 24px;
+  }
+  .mf-hero-highlight {
+    color: var(--mf-leaf);
+    font-style: italic;
+  }
+  .mf-hero-subtitle {
+    font-family: var(--mf-font-body);
+    font-size: clamp(16px, 2vw, 18px);
+    color: var(--mf-text-mid);
+    max-width: 620px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+  .mf-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .mf-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mf-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--mf-leaf);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .mf-hero-primary:hover {
+    background: var(--mf-leaf-deep);
+  }
+  .mf-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mf-font-body);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--mf-text-mid);
+    background: var(--mf-surface);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--mf-border-strong);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .mf-hero-secondary:hover {
+    color: var(--mf-text);
+    border-color: var(--mf-text-dim);
+  }
+
+  /* ── Sections ── */
+  .mf-section {
+    padding: 96px 32px;
+  }
+  .mf-section-alt {
+    background: var(--mf-surface);
+    border-top: 1px solid var(--mf-border);
+    border-bottom: 1px solid var(--mf-border);
+  }
+  .mf-section-inner {
+    margin: 0 auto;
+  }
+  .mf-eyebrow {
+    font-family: var(--mf-font-mono);
+    font-size: 11px;
+    color: var(--mf-leaf);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .mf-section-heading {
+    font-family: var(--mf-font-display);
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--mf-text);
+    margin-bottom: 20px;
+    line-height: 1.12;
+  }
+  .mf-section-desc {
+    font-family: var(--mf-font-body);
+    font-size: 17px;
+    color: var(--mf-text-mid);
+    max-width: 620px;
+    margin: 0 auto 56px;
+    line-height: 1.7;
+  }
+
+  /* ── Problem cards ── */
+  .mf-problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    text-align: left;
+    margin-top: 56px;
+  }
+  .mf-problem-card {
+    background: var(--mf-surface);
+    border: 1px solid var(--mf-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .mf-problem-title {
+    font-family: var(--mf-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--mf-text);
+    margin-bottom: 8px;
+  }
+  .mf-problem-desc {
+    font-family: var(--mf-font-body);
+    font-size: 14px;
+    color: var(--mf-text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── Steps ── */
+  .mf-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    text-align: left;
+    margin-top: 56px;
+  }
+  .mf-step-card {
+    background: var(--mf-surface-2);
+    border: 1px solid var(--mf-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .mf-step-number {
+    font-family: var(--mf-font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--mf-leaf);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .mf-step-title {
+    font-family: var(--mf-font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--mf-text);
+    margin-bottom: 8px;
+  }
+  .mf-step-desc {
+    font-family: var(--mf-font-body);
+    font-size: 14px;
+    color: var(--mf-text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── Features grid ── */
+  .mf-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 56px;
+  }
+  .mf-feature-card {
+    background: var(--mf-surface);
+    border: 1px solid var(--mf-border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .mf-feature-title {
+    font-family: var(--mf-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--mf-text);
+    margin-bottom: 8px;
+  }
+  .mf-feature-desc {
+    font-family: var(--mf-font-body);
+    font-size: 14px;
+    color: var(--mf-text-mid);
+    line-height: 1.6;
+  }
+
+  /* ── Code block ── */
+  .mf-code-block {
+    background: #23312a;
+    border: 1px solid var(--mf-border-strong);
+    border-radius: 12px;
+    padding: 20px 28px;
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    text-align: left;
+  }
+  .mf-code-block code {
+    font-family: var(--mf-font-mono);
+    font-size: 13px;
+    line-height: 1.8;
+    color: #a4c9b1;
+    white-space: pre;
+  }
+  .mf-inline-code {
+    font-family: var(--mf-font-mono);
+    font-size: 0.9em;
+    background: var(--mf-surface-2);
+    border: 1px solid var(--mf-border);
+    border-radius: 6px;
+    padding: 1px 6px;
+  }
+  .mf-security-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    justify-content: center;
+    max-width: 520px;
+    margin: 20px auto 0;
+    font-size: 13px;
+    color: var(--mf-text-dim);
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  /* ── FAQ ── */
+  .mf-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mf-faq-item {
+    background: var(--mf-surface);
+    border: 1px solid var(--mf-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .mf-faq-question {
+    padding: 18px 20px;
+    font-family: var(--mf-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--mf-text);
+    cursor: pointer;
+    list-style: none;
+  }
+  .mf-faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .mf-faq-answer {
+    padding: 0 20px 18px;
+    font-family: var(--mf-font-body);
+    font-size: 14px;
+    color: var(--mf-text-mid);
+    line-height: 1.6;
+  }
+</style>

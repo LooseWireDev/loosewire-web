@@ -1,0 +1,37 @@
+---
+title: "AI Meal Planning Without Another Subscription"
+description: "Meal planning apps have converged on the same model: a recipe catalog, an account, and $60 a year. There's another way — use the AI you already have and keep the data yourself."
+pubDate: "2026-07-05"
+keywords: ["ai meal planning free", "meal planning without subscription", "free meal planner app", "meal planning app alternative"]
+tldr: "Mealforge is MIT-licensed and self-hosted — no accounts, no tiers, no recurring fee for the app itself. You bring the AI chat you already use; the app is the free, permanent home for the plans."
+readTime: "4 min read"
+---
+
+Somewhere along the way, planning dinner became a SaaS category. The pattern is always the same: a catalog of other people's recipes, an account, a free tier that nags, and a subscription that quietly renews at $5–10 a month for what is — structurally — a list of meals and a grocery list.
+
+If you're already paying for (or self-hosting) an AI assistant, you have the hard part covered. A capable model plans a genuinely good week: it knows what a household is, respects constraints, uses what's in the freezer, and doesn't repeat last Tuesday. What it lacks is a place to put the plan.
+
+## What you actually need
+
+Break the problem down and the subscription evaporates:
+
+- **Planning intelligence** — the AI chat you already use (LibreChat with your own keys, Claude, anything MCP-capable).
+- **Structure** — recipes with real quantities and steps, not a wall of chat text.
+- **A grocery list** — aggregated across the week, grouped by store aisle, checkable on your phone in the store.
+- **Memory** — favorites and history, so good meals come back and recent ones don't.
+
+Mealforge covers the last three, free. It's MIT-licensed and runs as one Docker container on your own hardware — there is no hosted tier, no account system, and no way for the price to change, because there is no price.
+
+## "Free" with honest fine print
+
+Nothing here is free-as-in-someone-else-pays. The honest accounting:
+
+- **You need somewhere to run it.** Any box that runs Docker works — a NAS, a Raspberry-class machine, the mini PC that runs your other containers. If you self-host anything already, this adds effectively zero cost.
+- **You need AI access.** That might be a subscription you already have, or your own API keys in LibreChat. Mealforge doesn't bill you for it and doesn't proxy it — the model talks to Mealforge directly over MCP.
+- **You do the setup once.** Two commands (`curl` the compose file, `docker compose up -d`), then connect your chat client to the MCP endpoint. It's designed for a household on a private network — put it on your VPN or behind your auth proxy rather than the open internet.
+
+## Why not just keep plans in the chat?
+
+You can — for a week. Then you're scrolling on your phone in the store, the quantities for two recipes need adding up in your head, and last month's great chili is buried under three hundred messages. Structure is the feature: recipe cards, a step-by-step cook mode for when your hands are covered in flour, and a grocery list that derives itself from the week.
+
+The plan is a conversation. The kitchen half should be an app — yours.

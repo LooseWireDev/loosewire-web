@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="26" fill="#23312a"/>
+  <!-- Top-down skillet: rosemary-green pan, deep-green cooking surface,
+       butter pat accent in the middle -->
+  <circle cx="52" cy="60" r="27" fill="#7fae8f"/>
+  <circle cx="52" cy="60" r="19" fill="#2e523c"/>
+  <rect x="74" y="54.5" width="32" height="11" rx="5.5" fill="#7fae8f"/>
+  <rect x="46" y="54" width="12" height="12" rx="3" fill="#f0be3a"/>
+</svg>

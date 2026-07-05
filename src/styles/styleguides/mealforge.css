@@ -1,0 +1,65 @@
+/* src/styles/styleguides/mealforge.css
+   Mealforge — "flour & cast iron".
+   Light: flour-white paper, cast-iron green-black ink, rosemary green
+   interactive, butter yellow accent. Dark: cast iron at night.
+   Palette mirrors the app's tokens (apps/web/src/index.css). */
+
+:root,
+[data-theme="light"] {
+  /* ── Surfaces ── */
+  --mf-bg:            #faf7f0;
+  --mf-surface:       #ffffff;
+  --mf-surface-2:     #f3efe4;
+  --mf-border:        #e6dfd0;
+  --mf-border-strong: #d8cfba;
+
+  /* ── Text ── */
+  --mf-text:          #23312a;
+  --mf-text-mid:      #5c6a61;
+  --mf-text-dim:      #9aa89f;
+
+  /* ── Brand ── */
+  --mf-leaf:          #3e6b4f;
+  --mf-leaf-deep:     #2e523c;
+  --mf-leaf-subtle:   rgba(62,107,79,0.08);
+  --mf-leaf-border:   rgba(62,107,79,0.18);
+  --mf-butter:        #f0be3a;
+  --mf-butter-soft:   #fbf0d2;
+  --mf-tomato:        #bc4b2f;
+
+  /* ── Shadows ── */
+  --mf-shadow-sm:     0 1px 3px rgba(35,49,42,0.08);
+  --mf-shadow-md:     0 4px 16px rgba(35,49,42,0.10);
+
+  /* ── Typography ── */
+  --mf-font-display:  'Fraunces', Georgia, serif;
+  --mf-font-body:     ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mf-font-mono:     'Geist Mono', ui-monospace, monospace;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --mf-bg:            #161c18;
+  --mf-surface:       #1f2721;
+  --mf-surface-2:     #253029;
+  --mf-border:        #2e3831;
+  --mf-border-strong: #3c4a41;
+
+  --mf-text:          #ece8dd;
+  --mf-text-mid:      #a3ada5;
+  --mf-text-dim:      #5c6a61;
+
+  --mf-leaf:          #7fae8f;
+  --mf-leaf-deep:     #a4c9b1;
+  --mf-leaf-subtle:   rgba(127,174,143,0.10);
+  --mf-leaf-border:   rgba(127,174,143,0.22);
+  --mf-butter:        #e0b53e;
+  --mf-butter-soft:   #33301f;
+  --mf-tomato:        #d97757;
+
+  --mf-shadow-sm:     0 1px 3px rgba(0,0,0,0.5);
+  --mf-shadow-md:     0 4px 16px rgba(0,0,0,0.55);
+
+  color-scheme: dark;
+}

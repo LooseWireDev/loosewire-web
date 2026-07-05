@@ -1,0 +1,140 @@
+---
+// src/components/mealforge/Nav.astro
+import Wordmark from './Wordmark.astro';
+---
+<nav class="mf-nav">
+  <a href="/mealforge" class="mf-nav-home">
+    <Wordmark logoSize={24} fontSize="15px" />
+  </a>
+  <div class="mf-nav-links">
+    <a href="/mealforge/blog">Blog</a>
+    <a href="#features">Features</a>
+    <a href="#selfhost">Self-host</a>
+    <a href="https://github.com/LooseWireDev/mealforge">GitHub</a>
+    <a href="#selfhost" class="mf-nav-cta">Get started</a>
+  </div>
+  <button class="mf-nav-burger" aria-label="Toggle menu" aria-expanded="false">
+    <svg class="mf-burger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line class="mf-burger-top" x1="3" y1="6" x2="21" y2="6" />
+      <line class="mf-burger-mid" x1="3" y1="12" x2="21" y2="12" />
+      <line class="mf-burger-bot" x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+  <div class="mf-nav-mobile">
+    <a href="/mealforge/blog">Blog</a>
+    <a href="#features">Features</a>
+    <a href="#selfhost">Self-host</a>
+    <a href="https://github.com/LooseWireDev/mealforge">GitHub</a>
+    <a href="#selfhost" class="mf-nav-cta">Get started</a>
+  </div>
+</nav>
+
+<script>
+  const burger = document.querySelector('.mf-nav-burger');
+  const mobileMenu = document.querySelector('.mf-nav-mobile');
+  if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('is-open');
+      burger.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('is-open');
+        burger.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
+
+<style>
+  .mf-nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .mf-nav-home {
+    text-decoration: none;
+  }
+  .mf-nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .mf-nav-links a {
+    font-family: var(--mf-font-body);
+    font-size: 14px;
+    color: var(--mf-text-mid);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .mf-nav-links a:hover {
+    color: var(--mf-text);
+  }
+  .mf-nav-cta {
+    font-size: 13px !important;
+    font-weight: 600;
+    color: #ffffff !important;
+    background: var(--mf-leaf);
+    padding: 8px 18px;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .mf-nav-cta:hover {
+    background: var(--mf-leaf-deep);
+  }
+
+  .mf-nav-burger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--mf-text);
+    cursor: pointer;
+    padding: 4px;
+  }
+  .mf-nav-mobile {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .mf-nav-links { display: none; }
+    .mf-nav-burger { display: block; }
+    .mf-nav-mobile {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      gap: 4px;
+      padding-top: 16px;
+    }
+    .mf-nav-mobile.is-open { display: flex; }
+    .mf-nav-mobile a {
+      font-family: var(--mf-font-body);
+      font-size: 15px;
+      color: var(--mf-text-mid);
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--mf-border);
+    }
+    .mf-nav-mobile .mf-nav-cta {
+      display: inline-block;
+      text-align: center;
+      margin-top: 8px;
+      border-bottom: none;
+    }
+
+    .mf-burger-top,
+    .mf-burger-mid,
+    .mf-burger-bot {
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      transform-origin: center;
+    }
+    .mf-nav-burger.is-open .mf-burger-top { transform: translateY(6px) rotate(45deg); }
+    .mf-nav-burger.is-open .mf-burger-mid { opacity: 0; }
+    .mf-nav-burger.is-open .mf-burger-bot { transform: translateY(-6px) rotate(-45deg); }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+// src/components/mealforge/Wordmark.astro
+// Logotype lockup: upright "meal" + italic leaf-green "forge"
+import Logo from './Logo.astro';
+
+interface Props {
+  logoSize?: number;
+  fontSize?: string;
+  class?: string;
+}
+
+const { logoSize = 30, fontSize = '18px', class: className } = Astro.props;
+---
+<div class:list={["mf-wordmark", className]}>
+  <Logo size={logoSize} />
+  <span class="mf-wordmark-text" style={`font-size: ${fontSize};`}>meal<span class="accent">forge</span></span>
+</div>
+
+<style>
+  .mf-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .mf-wordmark-text {
+    font-family: var(--mf-font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--mf-text);
+  }
+  .mf-wordmark-text .accent {
+    color: var(--mf-leaf);
+    font-style: italic;
+    font-weight: 600;
+  }
+</style>

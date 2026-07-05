@@ -1,0 +1,83 @@
+---
+// src/pages/mealforge/blog/[slug].astro
+import MealforgeLayout from '../../../layouts/MealforgeLayout.astro';
+import { getCollection } from 'astro:content';
+import { articleSchema } from '../../../lib/schema';
+import Nav from '../../../components/mealforge/Nav.astro';
+import Footer from '../../../components/mealforge/Footer.astro';
+import ArticleHeader from '../../../components/blog/ArticleHeader.astro';
+import Prose from '../../../components/blog/Prose.astro';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = await getCollection('mealforge-blog');
+  return posts.map(post => ({ params: { slug: post.slug }, props: { post, allPosts: posts } }));
+}
+
+const { post, allPosts } = Astro.props;
+const otherPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
+  .slice(0, 3);
+const { Content } = await post.render();
+const canonicalUrl = `https://loosewire.dev/mealforge/blog/${post.slug}`;
+const schema = articleSchema({
+  title: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate,
+  dateModified: post.data.updatedDate,
+  url: canonicalUrl,
+  keywords: post.data.keywords,
+});
+---
+<MealforgeLayout
+  title={`${post.data.title} — Mealforge Blog`}
+  description={post.data.description}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+  schema={schema}
+  articleMeta={{
+    publishedTime: post.data.pubDate,
+    modifiedTime: post.data.updatedDate,
+    section: 'Meal Planning',
+    tags: post.data.keywords,
+  }}
+>
+  <Nav />
+
+  <article style="max-width: 720px; margin: 0 auto; padding: 64px 32px;">
+    <ArticleHeader
+      title={post.data.title}
+      date={post.data.pubDate}
+      description={post.data.description}
+      readTime={post.data.readTime}
+      tldr={post.data.tldr}
+    />
+
+    <Prose>
+      <Content />
+    </Prose>
+
+    <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--mf-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <a href="/mealforge" style="font-size: 14px; color: var(--mf-leaf); text-decoration: none; font-weight: 600;">Learn about Mealforge &#8594;</a>
+      <a href="/mealforge/blog" style="font-size: 14px; color: var(--mf-text-mid); text-decoration: none;">&#8592; All articles</a>
+    </div>
+
+    {otherPosts.length > 0 && (
+      <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--mf-border);">
+        <p style="font-family: var(--mf-font-mono); font-size: 11px; color: var(--mf-text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">More articles</p>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          {otherPosts.map(p => (
+            <a href={`/mealforge/blog/${p.slug}`} style="text-decoration: none;">
+              <p style="font-family: var(--mf-font-display); font-size: 15px; font-weight: 600; color: var(--mf-text); margin-bottom: 4px;">{p.data.title}</p>
+              <p style="font-size: 13px; color: var(--mf-text-mid); line-height: 1.5;">{p.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </article>
+
+  <Footer />
+</MealforgeLayout>

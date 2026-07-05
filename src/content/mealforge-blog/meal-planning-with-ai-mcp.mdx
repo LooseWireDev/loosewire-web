@@ -1,0 +1,52 @@
+---
+title: "Planning a Week of Meals with AI over MCP"
+description: "How Mealforge uses the Model Context Protocol to turn a planning conversation — in LibreChat, Claude, or any MCP client — into recipe cards, a cook mode, and a grocery list."
+pubDate: "2026-07-05"
+keywords: ["mcp meal planning", "ai meal planner", "model context protocol", "librechat mcp"]
+tldr: "You plan the week conversationally in any MCP-capable AI chat. When it's right, the model calls push_meal_plan and the whole week lands in Mealforge as structured recipes with a derived grocery list."
+readTime: "5 min read"
+---
+
+The best meal planner is a conversation. "Lots of crock pot this week. Salmon once. Use the pork shoulder in the freezer. Nothing that dirties three pans on a Tuesday." A good model handles this easily — the problem has always been what happens next, when a great plan is stranded in the chat scroll.
+
+That's the gap the Model Context Protocol closes.
+
+## What MCP does here
+
+MCP is an open standard that lets AI chat apps call external tools. Mealforge exposes its meal planning as MCP tools over streamable HTTP, so any compatible client — LibreChat, Claude, and friends — can read your history and publish plans:
+
+| Tool | What it does |
+|---|---|
+| `create_recipe` | Save one recipe and get back an id — the reliable first step |
+| `push_meal_plan` | Publish the finalized week (new recipes and/or reused ids) |
+| `get_recent_meal_plans` | Recent weeks, so the model avoids repeating meals |
+| `list_favorites` | Recipes your household starred in the UI |
+| `search_recipes` | Find past recipes by title, tag, or ingredient |
+
+The flow in practice:
+
+1. **Talk through the week.** Iterate in chat until it sounds right. The model can check `list_favorites` ("give me one of our favorites") and `get_recent_meal_plans` (no salmon two weeks running).
+2. **Publish on command.** The model saves each recipe, then pushes the week — ingredients with quantities, units, and store sections, plus markdown cooking steps.
+3. **Mealforge derives the grocery list.** "2 cups" here plus "1 cup" there becomes "3 cups," grouped by store section, checkable in the store. Re-push a revised week and unchanged items stay checked.
+
+## Connecting a client
+
+For LibreChat, it's a few lines of `librechat.yaml`:
+
+```yaml
+mcpServers:
+  mealforge:
+    type: streamable-http
+    url: http://<host>:8090/mcp
+    timeout: 60000
+```
+
+If Mealforge runs on a private IP, also exempt it from LibreChat's SSRF guard under `mcpSettings.allowedAddresses`. Any other MCP client works the same way — point it at `/mcp`.
+
+## Teach the model the workflow
+
+The difference between a decent planning agent and a great one is instructions. The Mealforge repo ships a ready-made skill at `skills/weekly-meal-planning/SKILL.md` that teaches the whole loop: gather history first, draft in conversation, publish only on explicit command, keep ingredient data grocery-list-clean, and recover from validation errors. Copy it into your agent's instructions — especially worthwhile with smaller models.
+
+## No catalog is the point
+
+Recipe-catalog apps make the model (and you) pick from what's already written down. Mealforge has no catalog: every recipe is generated for your household, this week, in your conversation. The app's job is to be the structured, shoppable, cookable home for what you and the model decide together.

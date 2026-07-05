@@ -1,0 +1,87 @@
+---
+// src/layouts/MealforgeLayout.astro
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: string;
+  schema?: object;
+  noindex?: boolean;
+  articleMeta?: { publishedTime?: string; modifiedTime?: string; section?: string; tags?: string[] };
+}
+
+const { title, description, canonicalUrl, ogImage, ogType, schema, noindex, articleMeta } = Astro.props;
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, 'https://loosewire.dev').href;
+const image = ogImage ?? 'https://loosewire.dev/og-mealforge.png';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon-mealforge.svg" />
+
+  <!-- Auto theme: set before any CSS to avoid flash -->
+  <script is:inline>
+    (function() {
+      const t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      });
+    })();
+  </script>
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <meta property="og:site_name" content="Mealforge by Loose Wire" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={image} />
+  <meta property="og:type" content={ogType ?? 'website'} />
+  <meta property="og:locale" content="en_US" />
+  {articleMeta?.publishedTime && <meta property="article:published_time" content={articleMeta.publishedTime} />}
+  {articleMeta?.modifiedTime && <meta property="article:modified_time" content={articleMeta.modifiedTime} />}
+  {articleMeta?.section && <meta property="article:section" content={articleMeta.section} />}
+  {articleMeta?.tags?.map(tag => <meta property="article:tag" content={tag} />)}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Mealforge Blog" href="/mealforge/rss.xml" />
+</head>
+<body style="background: var(--mf-bg); color: var(--mf-text); font-family: var(--mf-font-body);">
+  <slot />
+</body>
+<style>
+  body {
+    --blog-accent:         var(--mf-leaf);
+    --blog-accent-subtle:  var(--mf-leaf-subtle);
+    --blog-accent-border:  var(--mf-leaf-border);
+    --blog-text-primary:   var(--mf-text);
+    --blog-text-secondary: var(--mf-text-mid);
+    --blog-text-tertiary:  var(--mf-text-dim);
+    --blog-surface-1:      var(--mf-surface);
+    --blog-surface-2:      var(--mf-surface-2);
+    --blog-border:         var(--mf-border);
+    --blog-border-subtle:  var(--mf-border);
+    --blog-error:          var(--mf-tomato);
+    --blog-warning:        var(--mf-butter);
+  }
+</style>
+</html>
