@@ -1,4 +1,5 @@
 /* src/styles/global.css */
+@import './fonts.css';
 @import './styleguides/loosewire.css';
 @import './styleguides/harknotes.css';
 @import './styleguides/farscry.css';

@@ -88,6 +88,9 @@ import { Icon } from 'astro-icon/components';
 ```
 Configured via `astro-icon` integration + `@iconify-json/lucide`.
 
+### Fonts — self-hosted only
+All web fonts are latin woff2 subsets in `public/fonts/`, declared in `src/styles/fonts.css` (imported by global.css). Never add Google Fonts `<link>`s or `@import`s — the CSP (`font-src 'self'`) will block them, and zero third-party requests is a deliberate brand point. To add a font, download its latin woff2 and add an `@font-face` to fonts.css.
+
 ### CSS
 - All design tokens are CSS custom properties (no preprocessors)
 - Token prefixes: `--lw-*` (Loose Wire), `--hk-*` (Harknotes), `--fc-*` (Farscry), `--uc-*` (Unclouded), `--mf-*` (Mealforge)
