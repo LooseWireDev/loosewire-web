@@ -1,101 +1,235 @@
 ---
-// src/pages/blog/index.astro
+// src/pages/blog/index.astro — the Loose Wire journal + product posts
 import LooseWireLayout from '../../layouts/LooseWireLayout.astro';
 import { getCollection } from 'astro:content';
 
-const harknotePosts = (await getCollection('harknotes-blog')).sort(
-  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
-);
+const byDate = (a: { data: { pubDate: string } }, b: { data: { pubDate: string } }) =>
+  new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf();
 
-const farscryPosts = (await getCollection('farscry-blog')).sort(
-  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
-);
+const journalEntries = (await getCollection('loosewire-journal')).sort(byDate);
+const harknotePosts = (await getCollection('harknotes-blog')).sort(byDate);
+const farscryPosts = (await getCollection('farscry-blog')).sort(byDate);
+const uncloudedPosts = (await getCollection('unclouded-blog')).sort(byDate);
+const mealforgePosts = (await getCollection('mealforge-blog')).sort(byDate);
 
-const uncloudedPosts = (await getCollection('unclouded-blog')).sort(
-  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
-);
+const productSections = [
+  { name: 'Harknotes', base: '/harknotes/blog', posts: harknotePosts },
+  { name: 'Farscry', base: '/farscry/blog', posts: farscryPosts },
+  { name: 'Unclouded', base: '/unclouded/blog', posts: uncloudedPosts },
+  { name: 'Mealforge', base: '/mealforge/blog', posts: mealforgePosts },
+].filter(s => s.posts.length > 0);
 ---
 <LooseWireLayout
-  title="Loose Wire Blog — Software, Privacy, and Building in Public"
-  description="Articles from Loose Wire LLC on privacy-first software, local AI, and the products we build."
+  title="Journal — Loose Wire"
+  description="Handwritten notes from Gav's degoogle and self-hosting journey, plus posts from the Loose Wire products."
 >
-  <main style="max-width: 740px; margin: 0 auto; padding: 0 32px;">
+  <main class="blog-page">
 
-    <header style="padding: 80px 0 48px;">
-      <a href="/" style="font-family: var(--lw-font-mono); font-size: 12px; color: var(--lw-text-dim); text-decoration: none; letter-spacing: 0.06em; display: block; margin-bottom: 32px;">
-        ← loosewire.dev
-      </a>
-      <h1 style="font-family: var(--lw-font-display); font-size: clamp(32px, 5vw, 44px); font-weight: 800; letter-spacing: -0.035em; color: var(--lw-text); margin-bottom: 12px; line-height: 1.1;">Blog</h1>
-      <p style="font-size: 16px; color: var(--lw-text-mid); line-height: 1.6;">Articles on privacy-first software, local AI, and building focused tools.</p>
+    <header class="blog-header">
+      <a href="/" class="blog-back">&larr; loosewire.dev</a>
+      <h1 class="blog-title">Journal.</h1>
+      <p class="blog-intro">
+        Handwritten notes from the degoogle &amp; self-hosting journey — what I tried,
+        what broke, what I'd do differently. The same journey, on video:
+        <a href="https://www.youtube.com/@loosewiredev" target="_blank" rel="noopener">youtube.com/@loosewiredev</a>.
+      </p>
     </header>
 
-    {harknotePosts.length > 0 && (
-      <section style="padding-bottom: 64px; border-bottom: 1px solid var(--lw-border);">
-        <p style="font-family: var(--lw-font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lw-text-dim); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--lw-border);">
-          Harknotes
+    {journalEntries.length > 0 ? (
+      <section class="blog-section">
+        {journalEntries.map(entry => (
+          <a href={`/blog/${entry.slug}`} class="blog-item">
+            <p class="blog-item-date">{entry.data.pubDate}{entry.data.readTime && ` · ${entry.data.readTime}`}</p>
+            <h2 class="blog-item-title">{entry.data.title}</h2>
+            <p class="blog-item-desc">{entry.data.description}</p>
+          </a>
+        ))}
+      </section>
+    ) : (
+      <section class="blog-empty">
+        <p>
+          First entries are being written. Until then, the journey lives on
+          <a href="https://www.youtube.com/@loosewiredev" target="_blank" rel="noopener"> YouTube</a>.
         </p>
-        <div>
-          {harknotePosts.map(post => (
-            <a href={`/harknotes/blog/${post.slug}`}
-               style="display: block; padding: 24px 0; border-bottom: 1px solid var(--lw-border); text-decoration: none;">
-              <p style="font-family: var(--lw-font-mono); font-size: 11px; color: var(--lw-text-dim); margin-bottom: 6px;">{post.data.pubDate}</p>
-              <h2 style="font-family: var(--lw-font-display); font-size: 17px; font-weight: 700; color: var(--lw-text); margin-bottom: 6px; letter-spacing: -0.02em;">{post.data.title}</h2>
-              <p style="font-size: 14px; color: var(--lw-text-mid); line-height: 1.6;">{post.data.description}</p>
-            </a>
-          ))}
-        </div>
       </section>
     )}
 
-    {farscryPosts.length > 0 && (
-      <section style="padding-bottom: 64px; border-bottom: 1px solid var(--lw-border); margin-top: 48px;">
-        <p style="font-family: var(--lw-font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lw-text-dim); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--lw-border);">
-          Farscry
-        </p>
-        <div>
-          {farscryPosts.map(post => (
-            <a href={`/farscry/blog/${post.slug}`}
-               style="display: block; padding: 24px 0; border-bottom: 1px solid var(--lw-border); text-decoration: none;">
-              <p style="font-family: var(--lw-font-mono); font-size: 11px; color: var(--lw-text-dim); margin-bottom: 6px;">{post.data.pubDate}</p>
-              <h2 style="font-family: var(--lw-font-display); font-size: 17px; font-weight: 700; color: var(--lw-text); margin-bottom: 6px; letter-spacing: -0.02em;">{post.data.title}</h2>
-              <p style="font-size: 14px; color: var(--lw-text-mid); line-height: 1.6;">{post.data.description}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
-
-    {uncloudedPosts.length > 0 && (
-      <section style="padding-bottom: 64px; border-bottom: 1px solid var(--lw-border); margin-top: 48px;">
-        <p style="font-family: var(--lw-font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lw-text-dim); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--lw-border);">
-          Unclouded
-        </p>
-        <div>
-          {uncloudedPosts.map(post => (
-            <a href={`/unclouded/blog/${post.slug}`}
-               style="display: block; padding: 24px 0; border-bottom: 1px solid var(--lw-border); text-decoration: none;">
-              <p style="font-family: var(--lw-font-mono); font-size: 11px; color: var(--lw-text-dim); margin-bottom: 6px;">{post.data.pubDate}</p>
-              <h2 style="font-family: var(--lw-font-display); font-size: 17px; font-weight: 700; color: var(--lw-text); margin-bottom: 6px; letter-spacing: -0.02em;">{post.data.title}</h2>
-              <p style="font-size: 14px; color: var(--lw-text-mid); line-height: 1.6;">{post.data.description}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
-
-    {harknotePosts.length === 0 && farscryPosts.length === 0 && uncloudedPosts.length === 0 && (
-      <p style="color: var(--lw-text-dim); padding: 48px 0;">Articles coming soon.</p>
+    {productSections.length > 0 && (
+      <div class="blog-products">
+        <p class="blog-products-label">From the products</p>
+        {productSections.map(({ name, base, posts }) => (
+          <section class="blog-section">
+            <p class="blog-section-label">{name}</p>
+            {posts.map(post => (
+              <a href={`${base}/${post.slug}`} class="blog-item">
+                <p class="blog-item-date">{post.data.pubDate}</p>
+                <h2 class="blog-item-title">{post.data.title}</h2>
+                <p class="blog-item-desc">{post.data.description}</p>
+              </a>
+            ))}
+          </section>
+        ))}
+      </div>
     )}
 
   </main>
 
-  <footer style="border-top: 1px solid var(--lw-border); padding: 32px; text-align: center; margin-top: 64px;">
-    <p style="font-size: 13px; color: var(--lw-text-dim);">
-      © 2026 Loose Wire LLC ·
-      <a href="/" style="color: var(--lw-text-mid); text-decoration: none;">Home</a> ·
-      <a href="/harknotes" style="color: var(--lw-text-mid); text-decoration: none;">Harknotes</a> ·
-      <a href="/farscry" style="color: var(--lw-text-mid); text-decoration: none;">Farscry</a> ·
-      <a href="/unclouded" style="color: var(--lw-text-mid); text-decoration: none;">Unclouded</a>
+  <footer class="blog-footer">
+    <p>
+      &copy; {new Date().getFullYear()} Loose Wire LLC &middot;
+      <a href="/">Home</a> &middot;
+      <a href="/harknotes">Harknotes</a> &middot;
+      <a href="/farscry">Farscry</a> &middot;
+      <a href="/unclouded">Unclouded</a> &middot;
+      <a href="/mealforge">Mealforge</a>
     </p>
   </footer>
 </LooseWireLayout>
+
+<style>
+  .blog-page {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .blog-header {
+    padding: 80px 0 48px;
+  }
+  .blog-back {
+    font-family: var(--lw-font-mono);
+    font-size: 12px;
+    color: var(--lw-ash);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 32px;
+  }
+  .blog-back:hover {
+    color: var(--lw-ink);
+  }
+  .blog-title {
+    font-family: var(--lw-font-display);
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--lw-ink);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+  .blog-intro {
+    font-family: var(--lw-font-prose);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--lw-graphite);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+  .blog-intro a {
+    color: var(--lw-graphite);
+    text-decoration: underline;
+    text-decoration-color: var(--lw-dust);
+    text-underline-offset: 3px;
+  }
+  .blog-intro a:hover {
+    color: var(--lw-ink);
+  }
+
+  .blog-empty {
+    padding: 40px 0 56px;
+    border-top: 1px solid var(--lw-rule-strong);
+  }
+  .blog-empty p {
+    font-family: var(--lw-font-body);
+    font-size: 14px;
+    color: var(--lw-ash);
+    line-height: 1.7;
+  }
+  .blog-empty a {
+    color: var(--lw-graphite);
+    text-decoration: underline;
+    text-decoration-color: var(--lw-dust);
+    text-underline-offset: 3px;
+  }
+
+  .blog-section {
+    padding-bottom: 48px;
+  }
+  .blog-section-label {
+    font-family: var(--lw-font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lw-ash);
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--lw-rule-strong);
+  }
+  .blog-item {
+    display: block;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--lw-rule-strong);
+    text-decoration: none;
+  }
+  .blog-item-date {
+    font-family: var(--lw-font-mono);
+    font-size: 11px;
+    color: var(--lw-ash);
+    margin-bottom: 6px;
+  }
+  .blog-item-title {
+    font-family: var(--lw-font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--lw-ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .blog-item-desc {
+    font-size: 14px;
+    color: var(--lw-graphite);
+    line-height: 1.6;
+  }
+  .blog-item:hover .blog-item-title {
+    text-decoration: underline;
+    text-decoration-color: var(--lw-dust);
+    text-underline-offset: 3px;
+  }
+
+  .blog-products {
+    margin-top: 32px;
+  }
+  .blog-products-label {
+    font-family: var(--lw-font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lw-dust);
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--lw-rule-strong);
+  }
+
+  .blog-footer {
+    border-top: 1px solid var(--lw-rule-strong);
+    padding: 32px;
+    text-align: center;
+    margin-top: 64px;
+    position: relative;
+    z-index: 1;
+  }
+  .blog-footer p {
+    font-family: var(--lw-font-mono);
+    font-size: 12px;
+    color: var(--lw-ash);
+  }
+  .blog-footer a {
+    color: var(--lw-graphite);
+    text-decoration: none;
+  }
+  .blog-footer a:hover {
+    color: var(--lw-ink);
+  }
+</style>

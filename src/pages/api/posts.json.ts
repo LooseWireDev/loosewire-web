@@ -3,12 +3,24 @@ import { getCollection } from 'astro:content'
 export const prerender = true
 
 export async function GET() {
+  const journalEntries = await getCollection('loosewire-journal')
   const harknotePosts = await getCollection('harknotes-blog')
   const farscryPosts = await getCollection('farscry-blog')
   const uncloudedPosts = await getCollection('unclouded-blog')
+  const mealforgePosts = await getCollection('mealforge-blog')
   const comparisons = await getCollection('harknotes-vs')
 
   const posts = [
+    ...journalEntries.map((entry) => ({
+      slug: entry.slug,
+      title: entry.data.title,
+      description: entry.data.description,
+      date: entry.data.pubDate,
+      keywords: entry.data.keywords,
+      readTime: entry.data.readTime ?? null,
+      url: `https://loosewire.dev/blog/${entry.slug}`,
+      product: 'loosewire' as const,
+    })),
     ...harknotePosts.map((post) => ({
       slug: post.slug,
       title: post.data.title,
@@ -38,6 +50,16 @@ export async function GET() {
       readTime: post.data.readTime ?? null,
       url: `https://loosewire.dev/unclouded/blog/${post.slug}`,
       product: 'unclouded' as const,
+    })),
+    ...mealforgePosts.map((post) => ({
+      slug: post.slug,
+      title: post.data.title,
+      description: post.data.description,
+      date: post.data.pubDate,
+      keywords: post.data.keywords,
+      readTime: post.data.readTime ?? null,
+      url: `https://loosewire.dev/mealforge/blog/${post.slug}`,
+      product: 'mealforge' as const,
     })),
     ...comparisons.map((comp) => ({
       slug: comp.data.competitorSlug,

@@ -1,14 +1,17 @@
 ---
 // src/pages/index.astro
 import LooseWireLayout from '../layouts/LooseWireLayout.astro';
+import { orgSchema } from '../lib/schema';
 import Logo from '../components/loosewire/Logo.astro';
 import HarknotesLogo from '../components/harknotes/Logo.astro';
 import FarscryLogo from '../components/farscry/Logo.astro';
 import UncloudedLogo from '../components/unclouded/Logo.astro';
+import MealforgeLogo from '../components/mealforge/Logo.astro';
 ---
 <LooseWireLayout
   title="Loose Wire — Independent dev, shipping products"
-  description="Making the software I wish existed. One person, multiple products. Currently: Harknotes, Farscry, and Unclouded."
+  description="Making the software I wish existed. One person, multiple products. Currently: Harknotes, Farscry, Unclouded, and Mealforge."
+  schema={orgSchema()}
 >
 
   <!-- ─── Topbar ──────────────────────────────────────────── -->
@@ -20,6 +23,7 @@ import UncloudedLogo from '../components/unclouded/Logo.astro';
       </a>
       <nav class="topbar-nav">
         <a href="/blog">Blog</a>
+        <a href="https://www.youtube.com/@loosewiredev" target="_blank" rel="noopener">YouTube</a>
         <a href="https://github.com/LooseWireDev" target="_blank" rel="noopener">GitHub</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark">
           <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -47,8 +51,9 @@ import UncloudedLogo from '../components/unclouded/Logo.astro';
       </p>
 
       <p class="hero-prose anim" style="animation-delay: 0.24s">
-        I build the software I wish existed. One person. Multiple products.
-        Each one solves a single problem and stays out of the way.
+        I'm Gav &mdash; one person building the software I wish existed.
+        Most of it you can run on your own server, because I'm slowly
+        untangling my life from big tech and taking my tools with me.
       </p>
     </section>
 
@@ -124,12 +129,69 @@ import UncloudedLogo from '../components/unclouded/Logo.astro';
           Learn more &rarr;
         </span>
       </a>
+      <!-- Mealforge -->
+      <a href="/mealforge" class="product-card anim" style="animation-delay: 0.56s">
+        <div class="product-card-top">
+          <div class="product-card-identity">
+            <span class="product-dot" style="background: #5a9873;"></span>
+            <span class="product-name">Mealforge</span>
+          </div>
+          <MealforgeLogo size={28} />
+        </div>
+
+        <p class="product-meta">Self-hosted &middot; Docker &middot; Free &middot; Open source</p>
+
+        <p class="product-desc">
+          AI-planned weekly meals, in a real app. Plan the week conversationally
+          with any MCP-capable AI chat — the plan becomes recipe cards, a cook
+          mode, and a grocery list you check off in the store.
+        </p>
+
+        <span class="product-cta" style="color: #5a9873;">
+          Learn more &rarr;
+        </span>
+      </a>
     </section>
 
     <hr class="rule anim" style="animation-delay: 0.56s" />
 
-    <!-- ─── About ─────────────────────────────────────────────── -->
-    <section class="about anim" style="animation-delay: 0.54s">
+    <!-- ─── The journey ───────────────────────────────────────── -->
+    <section class="about anim" style="animation-delay: 0.58s">
+      <p class="section-label">02 &mdash; The journey</p>
+      <p class="about-body">
+        I'm pulling my life out of Google &mdash; mail, photos, maps, the lot &mdash;
+        and moving it onto hardware I own. The
+        <a href="/blog" class="inline-link">journal</a> is where I write up what
+        worked, what broke, and what I'd do differently. The
+        <a href="https://www.youtube.com/@loosewiredev" class="inline-link" target="_blank" rel="noopener">YouTube channel</a>
+        is the same journey with the terminal open.
+      </p>
+      <div class="link-row">
+        <a href="/blog" class="link-chip">Read the journal &rarr;</a>
+        <a href="https://www.youtube.com/@loosewiredev" class="link-chip" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+      </div>
+    </section>
+
+    <hr class="rule anim" style="animation-delay: 0.60s" />
+
+    <!-- ─── Support ───────────────────────────────────────────── -->
+    <section class="about anim" style="animation-delay: 0.62s">
+      <p class="section-label">03 &mdash; Support</p>
+      <p class="about-body">
+        No investors, no ads, no analytics. Loose Wire is funded by people who
+        find these tools useful. If that's you, you can chip in &mdash; and
+        telling a friend works too.
+      </p>
+      <div class="link-row">
+        <a href="https://ko-fi.com/loosewire" class="link-chip" target="_blank" rel="noopener">Buy me a coffee &rarr;</a>
+        <a href="https://github.com/sponsors/LooseWireDev" class="link-chip" target="_blank" rel="noopener">GitHub Sponsors &rarr;</a>
+      </div>
+    </section>
+
+    <hr class="rule anim" style="animation-delay: 0.64s" />
+
+    <!-- ─── Contact ───────────────────────────────────────────── -->
+    <section class="about anim" style="animation-delay: 0.66s">
       <p class="section-label">Contact</p>
       <p class="about-body">
         Made by Gav &mdash; <a href="mailto:info@loosewire.dev" class="inline-link">info@loosewire.dev</a>
@@ -144,9 +206,12 @@ import UncloudedLogo from '../components/unclouded/Logo.astro';
       </div>
       <div class="footer-right">
         <a href="/blog">Blog</a>
+        <a href="https://www.youtube.com/@loosewiredev" target="_blank" rel="noopener">YouTube</a>
         <a href="/harknotes">Harknotes</a>
         <a href="/farscry">Farscry</a>
         <a href="/unclouded">Unclouded</a>
+        <a href="/mealforge">Mealforge</a>
+        <a href="https://ko-fi.com/loosewire" target="_blank" rel="noopener">Ko-fi</a>
         <span class="footer-copy">&copy; {new Date().getFullYear()} Loose Wire LLC</span>
       </div>
     </footer>
@@ -380,6 +445,28 @@ import UncloudedLogo from '../components/unclouded/Logo.astro';
   .inline-link:hover {
     color: var(--lw-ink);
   }
+  .link-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .link-chip {
+    font-family: var(--lw-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--lw-graphite);
+    text-decoration: none;
+    border: 1px solid var(--lw-rule-strong);
+    border-radius: 8px;
+    padding: 8px 14px;
+    transition: color 0.12s, border-color 0.12s, background 0.15s;
+  }
+  .link-chip:hover {
+    color: var(--lw-ink);
+    border-color: var(--lw-graphite);
+    background: var(--lw-paper-2);
+  }
 
   /* ─── Footer ─────────────────────────────────────────── */
   .footer {
@@ -435,5 +522,11 @@ import UncloudedLogo from '../components/unclouded/Logo.astro';
   .anim {
     opacity: 0;
     animation: fadeUp 0.5s ease forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .anim {
+      opacity: 1;
+      animation: none;
+    }
   }
 </style>

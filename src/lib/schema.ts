@@ -35,6 +35,24 @@ export function faqPageSchema(items: FaqItem[]) {
   };
 }
 
+export const SAME_AS = [
+  'https://github.com/LooseWireDev',
+  'https://www.youtube.com/@loosewiredev',
+  'https://ko-fi.com/loosewire',
+];
+
+export function orgSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Loose Wire LLC',
+    url: 'https://loosewire.dev',
+    email: 'info@loosewire.dev',
+    founder: { '@type': 'Person', name: 'Gav' },
+    sameAs: SAME_AS,
+  };
+}
+
 interface ArticleOpts {
   title: string;
   description: string;
@@ -42,9 +60,24 @@ interface ArticleOpts {
   url: string;
   dateModified?: string;
   keywords?: string[];
+  /** 'person' for handwritten journal entries; defaults to the org */
+  author?: 'person' | 'org';
 }
 
 export function articleSchema(opts: ArticleOpts) {
+  const author =
+    opts.author === 'person'
+      ? {
+          '@type': 'Person',
+          name: 'Gav',
+          url: 'https://loosewire.dev',
+          sameAs: SAME_AS,
+        }
+      : {
+          '@type': 'Organization',
+          name: 'Loose Wire LLC',
+          url: 'https://loosewire.dev',
+        };
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -54,11 +87,7 @@ export function articleSchema(opts: ArticleOpts) {
     dateModified: opts.dateModified ?? opts.datePublished,
     url: opts.url,
     ...(opts.keywords?.length && { keywords: opts.keywords }),
-    author: {
-      '@type': 'Organization',
-      name: 'Loose Wire LLC',
-      url: 'https://loosewire.dev',
-    },
+    author,
     publisher: {
       '@type': 'Organization',
       name: 'Loose Wire LLC',

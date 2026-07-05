@@ -1,0 +1,253 @@
+---
+// src/pages/blog/[slug].astro — handwritten Loose Wire journal entries
+import LooseWireLayout from '../../layouts/LooseWireLayout.astro';
+import { getCollection } from 'astro:content';
+import { articleSchema } from '../../lib/schema';
+import Logo from '../../components/loosewire/Logo.astro';
+import Prose from '../../components/blog/Prose.astro';
+import { Icon } from 'astro-icon/components';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const entries = await getCollection('loosewire-journal');
+  return entries.map(entry => ({ params: { slug: entry.slug }, props: { entry, allEntries: entries } }));
+}
+
+const { entry, allEntries } = Astro.props;
+const otherEntries = allEntries
+  .filter(e => e.slug !== entry.slug)
+  .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
+  .slice(0, 3);
+const { Content } = await entry.render();
+const canonicalUrl = `https://loosewire.dev/blog/${entry.slug}`;
+const schema = articleSchema({
+  title: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.pubDate,
+  dateModified: entry.data.updatedDate,
+  url: canonicalUrl,
+  keywords: entry.data.keywords,
+  author: 'person',
+});
+---
+<LooseWireLayout
+  title={`${entry.data.title} — Loose Wire Journal`}
+  description={entry.data.description}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+  schema={schema}
+>
+  <div class="journal-page">
+    <header class="journal-topbar">
+      <a href="/" class="journal-topbar-id" aria-label="Home">
+        <Logo size={28} />
+        <span class="journal-topbar-name">loosewire</span>
+      </a>
+      <nav class="journal-topbar-nav">
+        <a href="/blog">Journal</a>
+        <a href="https://www.youtube.com/@loosewiredev" target="_blank" rel="noopener">YouTube</a>
+      </nav>
+    </header>
+
+    <article>
+      <header class="entry-header">
+        <p class="entry-meta">
+          <span>{entry.data.pubDate}</span>
+          {entry.data.readTime && <span>&middot; {entry.data.readTime}</span>}
+          <span>&middot; by Gav</span>
+        </p>
+        <h1 class="entry-title">{entry.data.title}</h1>
+        <p class="entry-desc">{entry.data.description}</p>
+        {entry.data.video && (
+          <a href={entry.data.video} class="entry-video" target="_blank" rel="noopener">
+            <Icon name="lucide:play" style="width: 14px; height: 14px;" />
+            Watch the video that goes with this entry
+          </a>
+        )}
+      </header>
+
+      <Prose>
+        <Content />
+      </Prose>
+    </article>
+
+    {otherEntries.length > 0 && (
+      <aside class="entry-more">
+        <p class="entry-more-label">More from the journal</p>
+        {otherEntries.map(e => (
+          <a href={`/blog/${e.slug}`} class="entry-more-link">
+            <span class="entry-more-date">{e.data.pubDate}</span>
+            <span class="entry-more-title">{e.data.title}</span>
+          </a>
+        ))}
+      </aside>
+    )}
+
+    <footer class="journal-footer">
+      <a href="/blog">&larr; Back to the journal</a>
+    </footer>
+  </div>
+</LooseWireLayout>
+
+<style>
+  .journal-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px 120px;
+    position: relative;
+    z-index: 1;
+
+    /* Map the shared blog components onto the notebook palette */
+    --blog-accent:         var(--lw-graphite);
+    --blog-accent-subtle:  var(--lw-paper-2);
+    --blog-accent-border:  var(--lw-rule-strong);
+    --blog-text-primary:   var(--lw-ink);
+    --blog-text-secondary: var(--lw-graphite);
+    --blog-text-tertiary:  var(--lw-ash);
+    --blog-surface-1:      var(--lw-paper-2);
+    --blog-surface-2:      var(--lw-paper-3);
+    --blog-border:         var(--lw-rule-strong);
+    --blog-border-subtle:  var(--lw-rule-strong);
+    --blog-error:          #b04848;
+    --blog-warning:        #a08030;
+  }
+
+  .journal-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--lw-paper);
+    border-bottom: 1px solid var(--lw-rule-strong);
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 64px;
+  }
+  .journal-topbar-id {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .journal-topbar-name {
+    font-family: var(--lw-font-display);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--lw-ink);
+  }
+  .journal-topbar-nav {
+    display: flex;
+    gap: 20px;
+  }
+  .journal-topbar-nav a {
+    font-family: var(--lw-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lw-ash);
+    text-decoration: none;
+    transition: color 0.12s;
+  }
+  .journal-topbar-nav a:hover {
+    color: var(--lw-ink);
+  }
+
+  .entry-header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--lw-rule-strong);
+  }
+  .entry-meta {
+    font-family: var(--lw-font-mono);
+    font-size: 11px;
+    color: var(--lw-ash);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .entry-title {
+    font-family: var(--lw-font-display);
+    font-size: clamp(28px, 4.5vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--lw-ink);
+    line-height: 1.12;
+    margin-bottom: 16px;
+  }
+  .entry-desc {
+    font-family: var(--lw-font-prose);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--lw-graphite);
+  }
+  .entry-video {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-family: var(--lw-font-mono);
+    font-size: 12px;
+    color: var(--lw-graphite);
+    text-decoration: underline;
+    text-decoration-color: var(--lw-dust);
+    text-underline-offset: 3px;
+  }
+  .entry-video:hover {
+    color: var(--lw-ink);
+  }
+
+  .entry-more {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--lw-rule-strong);
+  }
+  .entry-more-label {
+    font-family: var(--lw-font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lw-dust);
+    margin-bottom: 16px;
+  }
+  .entry-more-link {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    padding: 10px 0;
+    text-decoration: none;
+    border-bottom: 1px solid var(--lw-rule);
+  }
+  .entry-more-date {
+    font-family: var(--lw-font-mono);
+    font-size: 10px;
+    color: var(--lw-ash);
+    flex-shrink: 0;
+  }
+  .entry-more-title {
+    font-family: var(--lw-font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--lw-graphite);
+  }
+  .entry-more-link:hover .entry-more-title {
+    color: var(--lw-ink);
+  }
+
+  .journal-footer {
+    margin-top: 56px;
+  }
+  .journal-footer a {
+    font-family: var(--lw-font-mono);
+    font-size: 12px;
+    color: var(--lw-ash);
+    text-decoration: none;
+  }
+  .journal-footer a:hover {
+    color: var(--lw-ink);
+  }
+</style>

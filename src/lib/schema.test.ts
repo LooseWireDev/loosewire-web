@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { softwareAppSchema, faqPageSchema, articleSchema } from './schema';
+import { softwareAppSchema, faqPageSchema, articleSchema, orgSchema } from './schema';
 
 describe('softwareAppSchema', () => {
   it('returns valid SoftwareApplication schema', () => {
@@ -33,5 +33,31 @@ describe('articleSchema', () => {
     expect(schema['@type']).toBe('Article');
     expect(schema.headline).toBe('Test Article');
     expect(schema.datePublished).toBe('2026-03-06');
+  });
+
+  it('defaults to Organization author', () => {
+    const schema = articleSchema({
+      title: 'T', description: 'D', datePublished: '2026-03-06', url: 'https://loosewire.dev/x',
+    });
+    expect(schema.author['@type']).toBe('Organization');
+  });
+
+  it('uses Person author with sameAs for journal entries', () => {
+    const schema = articleSchema({
+      title: 'T', description: 'D', datePublished: '2026-03-06', url: 'https://loosewire.dev/x',
+      author: 'person',
+    });
+    expect(schema.author['@type']).toBe('Person');
+    expect(schema.author.name).toBe('Gav');
+    expect(schema.author.sameAs).toContain('https://www.youtube.com/@loosewiredev');
+  });
+});
+
+describe('orgSchema', () => {
+  it('returns Organization schema with sameAs links', () => {
+    const schema = orgSchema();
+    expect(schema['@type']).toBe('Organization');
+    expect(schema.sameAs).toContain('https://github.com/LooseWireDev');
+    expect(schema.sameAs).toContain('https://www.youtube.com/@loosewiredev');
   });
 });
