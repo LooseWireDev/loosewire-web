@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
   <rect width="120" height="120" rx="26" fill="#f5f1e8"/>
-  <path d="M14 30 C22 30 22 90 33 90 C46 90 46 30 58 30 C70 30 70 90 83 90 C96 90 96 30 106 30"
-    stroke="#1c1a14" stroke-width="4" stroke-linecap="round" opacity="0.25"/>
-  <path d="M22 30 C32 30 32 90 44 90 C56 90 56 30 66 30 C76 30 76 90 88 90 C100 90 100 30 110 30"
-    stroke="#1c1a14" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
-  <path d="M10 30 C20 30 20 90 38 90 C52 52 52 30 62 30 C72 30 72 90 86 90 C100 90 100 30 116 30"
-    stroke="#1c1a14" stroke-width="4.5" stroke-linecap="round" opacity="1"/>
+  <!-- Same three-strand W-wave as src/components/loosewire/Logo.astro,
+       redrawn in square space with favicon-weight strokes -->
+  <path d="M20 38 C28 38 28 82 37 82 C46 82 46 38 55 38 C64 38 64 82 73 82 C82 82 82 38 91 38"
+    stroke="#1c1a14" stroke-width="5" stroke-linecap="round" opacity="0.25"/>
+  <path d="M25 38 C33 38 33 82 42 82 C51 82 51 38 60 38 C69 38 69 82 78 82 C87 82 87 38 96 38"
+    stroke="#1c1a14" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+  <path d="M30 38 C38 38 38 82 47 82 C56 82 56 38 65 38 C74 38 74 82 83 82 C92 82 92 38 101 38"
+    stroke="#1c1a14" stroke-width="5.5" stroke-linecap="round" opacity="1"/>
 </svg>

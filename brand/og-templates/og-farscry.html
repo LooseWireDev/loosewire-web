@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #09060f;
+    background-image: radial-gradient(ellipse 900px 500px at 80% 110%, rgba(167,139,250,0.16), transparent);
+    font-family: 'Geist', sans-serif;
+    color: #f4f1fa;
+    position: relative;
+  }
+  .content { position: absolute; left: 96px; top: 120px; }
+  .row { display: flex; align-items: center; gap: 28px; margin-bottom: 48px; }
+  .name { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; }
+  h1 {
+    font-size: 76px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
+    max-width: 950px; margin-bottom: 30px;
+  }
+  h1 em { font-style: normal; color: #a78bfa; }
+  .sub { font-size: 28px; color: #a79fc0; line-height: 1.5; max-width: 840px; }
+  .badge {
+    position: absolute; left: 96px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #a78bfa;
+  }
+  .url {
+    position: absolute; right: 72px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; color: #6a6284;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="row">
+      <svg width="88" height="88" viewBox="0 0 512 512" fill="none">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512">
+            <stop offset="0%" stop-color="#110c1a"/><stop offset="100%" stop-color="#09060f"/>
+          </linearGradient>
+        </defs>
+        <rect width="512" height="512" rx="112" fill="url(#bg)" stroke="rgba(167,139,250,0.25)" stroke-width="4"/>
+        <circle cx="256" cy="256" r="40" fill="#a78bfa"/>
+        <circle cx="256" cy="256" r="90" stroke="#a78bfa" stroke-width="26" fill="none" opacity="0.45"/>
+        <circle cx="256" cy="256" r="148" stroke="#a78bfa" stroke-width="22" fill="none" opacity="0.2"/>
+        <circle cx="256" cy="256" r="200" stroke="#a78bfa" stroke-width="16" fill="none" opacity="0.08"/>
+      </svg>
+      <span class="name">Farscry</span>
+    </div>
+    <h1>Private video calling. <em>No chat. No bloat.</em></h1>
+    <p class="sub">Self-hostable, end-to-end encrypted video calls for iOS and Android. One Docker container.</p>
+  </div>
+  <div class="badge">E2E encrypted &middot; Self-hosted &middot; Open source</div>
+  <div class="url">loosewire.dev/farscry</div>
+</body>
+</html>

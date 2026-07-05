@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loose Wire — Avatars</title>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700&family=DM+Mono:wght@0,400;0,500&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --paper:#f5f1e8;--paper-2:#ece8dd;--paper-3:#e2ddd0;
+  --ink:#1c1a14;--graphite:#4e4940;--ash:#8c8478;--dust:#b8b2a4;
+  --rule:rgba(28,26,20,.07);--rule-strong:rgba(28,26,20,.15);
+  color-scheme:light;
+}
+[data-theme="dark"]{
+  --paper:#0f0f0f;--paper-2:#1a1a1a;--paper-3:#222;
+  --ink:#f0f0f0;--graphite:#aaa;--ash:#666;--dust:#444;
+  --rule:rgba(255,255,255,.05);--rule-strong:rgba(255,255,255,.14);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'DM Mono',monospace;font-size:13px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+  background-image:repeating-linear-gradient(to bottom,transparent,transparent 27px,var(--rule) 27px,var(--rule) 28px);
+  background-attachment:fixed;min-height:100vh;
+}
+.page{max-width:900px;margin:0 auto;padding:0 32px 100px;position:relative;z-index:1}
+.topbar{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:1px solid var(--rule-strong);padding:10px 0;display:flex;align-items:center;justify-content:space-between}
+.topbar-id{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
+.pills{display:flex;gap:2px;padding:3px;background:var(--paper-3);border:1px solid var(--rule-strong);border-radius:6px}
+.pill{height:24px;padding:0 10px;border:1px solid transparent;border-radius:4px;background:transparent;color:var(--ash);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .12s}
+.pill.on{background:var(--paper);border-color:var(--rule-strong);color:var(--ink)}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.f{opacity:0;animation:up .5s ease forwards}
+.srule{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dust);margin:52px 0 12px;padding-bottom:10px;border-bottom:1px solid var(--rule-strong)}
+.note{font-size:10px;color:var(--ash);margin-bottom:28px;line-height:1.7;max-width:560px}
+
+/* avatar display */
+.av-row{display:flex;gap:32px;align-items:flex-end;flex-wrap:wrap;margin-bottom:8px}
+.av-item{display:flex;flex-direction:column;align-items:center;gap:10px}
+.av-lbl{font-size:9px;color:var(--dust);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+
+/* crop helpers */
+.crop-sq  { border-radius: 22.5%; overflow:hidden; display:block; }
+.crop-ci  { border-radius: 50%;   overflow:hidden; display:block; }
+.crop-raw { border-radius: 0;     overflow:hidden; display:block; }
+
+/* spec table */
+.tbl{border-radius:12px;border:1px solid var(--rule-strong);overflow:hidden}
+.tr{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--rule-strong)}
+.tr:last-child{border-bottom:none}
+.tr:nth-child(odd){background:var(--paper-2)}
+.tr:nth-child(even){background:var(--paper)}
+.tk{padding:11px 16px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);border-right:1px solid var(--rule-strong)}
+.tv{padding:11px 16px;font-family:'Courier Prime',monospace;font-size:13px;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="topbar">
+  <span class="topbar-id">loosewire.dev · avatars · profile pictures</span>
+  <div class="pills" id="theme">
+    <button class="pill on" data-t="light">light</button>
+    <button class="pill" data-t="dark">dark</button>
+  </div>
+</div>
+
+<div style="padding:56px 0 36px">
+  <h1 class="f" style="animation-delay:.05s;font-family:'Courier Prime',monospace;font-size:42px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px">Avatars.</h1>
+  <p class="f" style="animation-delay:.1s;font-size:12px;color:var(--ash);max-width:520px;line-height:1.8">
+    512×512 squares. Right-click any avatar → "Open image in new tab" or view source to grab the SVG.
+    Upload the square; platforms crop to circle automatically.
+  </p>
+</div>
+
+<!--
+  Mark centred in 512×512 using a nested <svg>.
+  Nested SVG is placed at x=66 y=150 with width=380 height=212.
+  That maps viewBox "0 0 180 100" into a 380×211px region — correct aspect ratio.
+  Result: mark fills ~74% of width with even top/bottom breathing room.
+-->
+
+<!-- ─── VARIANT A: PAPER (LIGHT) ─────────────────────── -->
+<div class="srule f" style="animation-delay:.12s">A — Light · Paper</div>
+<p class="note f" style="animation-delay:.14s">Default. Google account, Apple ID, light-mode platforms. Works as both square and circle.</p>
+
+<div class="av-row f" style="animation-delay:.16s">
+
+  <!-- 512 square -->
+  <div class="av-item">
+    <span class="crop-sq" style="width:220px;height:220px">
+      <svg width="220" height="220" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#f5f1e8"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#1c1a14" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">220px · square</span>
+  </div>
+
+  <!-- 220 circle -->
+  <div class="av-item">
+    <span class="crop-ci" style="width:220px;height:220px">
+      <svg width="220" height="220" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#f5f1e8"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#1c1a14" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">220px · circle</span>
+  </div>
+
+  <!-- 80 circle preview -->
+  <div class="av-item">
+    <span class="crop-ci" style="width:80px;height:80px">
+      <svg width="80" height="80" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#f5f1e8"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#1c1a14" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">80px</span>
+  </div>
+
+  <!-- 40 circle preview -->
+  <div class="av-item">
+    <span class="crop-ci" style="width:40px;height:40px">
+      <svg width="40" height="40" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#f5f1e8"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#1c1a14" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">40px</span>
+  </div>
+
+</div>
+
+<!-- ─── VARIANT B: DARK ──────────────────────────────── -->
+<div class="srule f" style="animation-delay:.2s">B — Dark · Near-black</div>
+<p class="note f" style="animation-delay:.22s">GitHub, Discord, dark-mode platforms, terminal-adjacent contexts.</p>
+
+<div class="av-row f" style="animation-delay:.24s">
+
+  <div class="av-item">
+    <span class="crop-sq" style="width:220px;height:220px">
+      <svg width="220" height="220" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#0f0f0f"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#f0f0f0" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">220px · square</span>
+  </div>
+
+  <div class="av-item">
+    <span class="crop-ci" style="width:220px;height:220px">
+      <svg width="220" height="220" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#0f0f0f"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#f0f0f0" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">220px · circle</span>
+  </div>
+
+  <div class="av-item">
+    <span class="crop-ci" style="width:80px;height:80px">
+      <svg width="80" height="80" viewBox="0 0 512 512">
+        <rect width="512" height="512" fill="#0f0f0f"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#f0f0f0" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">80px</span>
+  </div>
+
+  <div class="av-item">
+    <span class="crop-ci" style="width:40px;height:40px">
+      <svg width="40" height="40" viewBox="0 0 512 512">
+        <rect width="512" height="512" fill="#0f0f0f"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#f0f0f0" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">40px</span>
+  </div>
+
+</div>
+
+<!-- ─── VARIANT C: INK ON WHITE ──────────────────────── -->
+<div class="srule f" style="animation-delay:.28s">C — Stark · Ink on white</div>
+<p class="note f" style="animation-delay:.3s">Pure #fff background. Highest contrast. Good for contexts with white UI chrome where paper would blend in.</p>
+
+<div class="av-row f" style="animation-delay:.32s">
+
+  <div class="av-item">
+    <span class="crop-sq" style="width:220px;height:220px;box-shadow:0 0 0 1px rgba(0,0,0,.08)">
+      <svg width="220" height="220" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#ffffff"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#0a0a0a" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">220px · square</span>
+  </div>
+
+  <div class="av-item">
+    <span class="crop-ci" style="width:220px;height:220px;box-shadow:0 0 0 1px rgba(0,0,0,.08)">
+      <svg width="220" height="220" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <rect width="512" height="512" fill="#ffffff"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#0a0a0a" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">220px · circle</span>
+  </div>
+
+  <div class="av-item">
+    <span class="crop-ci" style="width:80px;height:80px;box-shadow:0 0 0 1px rgba(0,0,0,.08)">
+      <svg width="80" height="80" viewBox="0 0 512 512">
+        <rect width="512" height="512" fill="#ffffff"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#0a0a0a" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">80px</span>
+  </div>
+
+  <div class="av-item">
+    <span class="crop-ci" style="width:40px;height:40px;box-shadow:0 0 0 1px rgba(0,0,0,.08)">
+      <svg width="40" height="40" viewBox="0 0 512 512">
+        <rect width="512" height="512" fill="#ffffff"/>
+        <svg x="66" y="150" width="380" height="212" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#0a0a0a" stroke-width="4"   stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+      </svg>
+    </span>
+    <span class="av-lbl">40px</span>
+  </div>
+
+</div>
+
+<!-- ─── export ──────────────────────────────────────── -->
+<div class="srule f" style="animation-delay:.36s">How to export</div>
+<div class="tbl f" style="animation-delay:.38s">
+  <div class="tr"><span class="tk">Google / Apple</span><span class="tv">Use variant A or C. Right-click the 220px square → "Open in new tab" → save → upload. Platform circles it.</span></div>
+  <div class="tr"><span class="tk">GitHub org</span><span class="tv">Use variant B. Same method. GitHub rounds with its own radius.</span></div>
+  <div class="tr"><span class="tk">High-res PNG</span><span class="tv">View source → copy the outer &lt;svg&gt; → paste into Figma or Inkscape → export at 512×512.</span></div>
+  <div class="tr"><span class="tk">Favicon</span><span class="tv">Export dark variant at 32×32, convert to .ico. At 16px the opacity layering simplifies but still reads.</span></div>
+</div>
+
+<!-- footer -->
+<div style="margin-top:52px;padding-top:18px;border-top:1px solid var(--rule-strong);font-size:9px;color:var(--dust);display:flex;justify-content:space-between;align-items:center;padding-bottom:80px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <svg width="28" height="16" viewBox="0 0 180 100">
+      <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+      <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+      <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+    </svg>
+    <span>loosewire.dev</span>
+  </div>
+  <span>Avatars · 2026</span>
+</div>
+
+</div>
+
+<script>
+document.getElementById('theme').addEventListener('click', e => {
+  const b = e.target.closest('.pill');
+  if (!b) return;
+  document.querySelectorAll('.pill').forEach(p => p.classList.toggle('on', p === b));
+  document.documentElement.setAttribute('data-theme', b.dataset.t);
+});
+</script>
+</body>
+</html>

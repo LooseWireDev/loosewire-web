@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #faf7f0;
+    background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(240,190,58,0.18), transparent);
+    font-family: 'Fraunces', serif;
+    color: #23312a;
+    position: relative;
+  }
+  .content { position: absolute; left: 96px; top: 110px; }
+  .row { display: flex; align-items: center; gap: 28px; margin-bottom: 46px; }
+  .name { font-size: 56px; font-weight: 700; letter-spacing: -0.02em; }
+  h1 {
+    font-size: 78px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.08;
+    max-width: 980px; margin-bottom: 30px;
+  }
+  h1 em { font-style: italic; color: #3e6b4f; }
+  .sub { font-size: 28px; color: #5c6a61; line-height: 1.55; max-width: 860px; font-family: 'Fraunces', serif; }
+  .badge {
+    position: absolute; left: 96px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #3e6b4f;
+  }
+  .url {
+    position: absolute; right: 72px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; color: #9aa89f;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="row">
+      <svg width="88" height="88" viewBox="0 0 120 120" fill="none">
+        <rect width="120" height="120" rx="26" fill="#23312a"/>
+        <circle cx="52" cy="60" r="27" fill="#7fae8f"/>
+        <circle cx="52" cy="60" r="19" fill="#2e523c"/>
+        <rect x="74" y="54.5" width="32" height="11" rx="5.5" fill="#7fae8f"/>
+        <rect x="46" y="54" width="12" height="12" rx="3" fill="#f0be3a"/>
+      </svg>
+      <span class="name">Mealforge</span>
+    </div>
+    <h1>Plan the week in chat. <em>Cook it from a real app.</em></h1>
+    <p class="sub">AI-planned weekly meals — recipe cards, cook mode, and a grocery list derived automatically. Self-hosted, no catalog.</p>
+  </div>
+  <div class="badge">Self-hosted &middot; Open source &middot; MCP</div>
+  <div class="url">loosewire.dev/mealforge</div>
+</body>
+</html>

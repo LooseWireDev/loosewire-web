@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loose Wire — Final Mark</title>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{--paper:#f5f1e8;--paper-2:#ece8dd;--paper-3:#e2ddd0;--ink:#1c1a14;--ink-mid:#4e4940;--ink-dim:#8c8478;--ink-ghost:#b8b2a4;--rule:rgba(28,26,20,0.07);--rule-strong:rgba(28,26,20,0.15);color-scheme:light}
+[data-theme="dark"]{--paper:#0f0f0f;--paper-2:#1a1a1a;--paper-3:#222;--ink:#f0f0f0;--ink-mid:#8a8270;--ink-dim:#524e42;--ink-ghost:#342f26;--rule:rgba(232,227,214,0.05);--rule-strong:rgba(232,227,214,0.12);color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'DM Mono',monospace;font-size:13px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:repeating-linear-gradient(to bottom,transparent,transparent 27px,var(--rule) 27px,var(--rule) 28px);background-attachment:fixed;min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:calc(50% - 430px - 44px);width:1px;height:100%;background:rgba(180,60,60,0.10);pointer-events:none;z-index:0}
+.page{max-width:960px;margin:0 auto;padding:0 44px 100px;position:relative;z-index:1}
+.controls{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--rule-strong);padding:10px 0;display:flex;align-items:center;justify-content:space-between;z-index:50}
+.controls-left{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+.pill-group{display:flex;gap:2px;padding:3px;background:var(--paper-3);border:1px solid var(--rule-strong);border-radius:6px}
+.pill{height:24px;padding:0 10px;border:1px solid transparent;border-radius:4px;background:transparent;color:var(--ink-dim);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .12s}
+.pill:hover{color:var(--ink-mid)}.pill.active{background:var(--paper);border-color:var(--rule-strong);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,0.06)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .5s ease forwards}
+.section-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-ghost);margin:52px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--rule-strong)}
+.hero{min-height:340px;display:flex;align-items:center;justify-content:center;margin:52px 0 0;border-radius:16px;border:1px solid var(--rule-strong);background:var(--paper-2);transition:background .3s;position:relative}
+.hero-spec{position:absolute;bottom:14px;right:18px;font-size:9px;letter-spacing:.1em;color:var(--ink-ghost);text-transform:uppercase}
+.sizes-row{display:flex;align-items:center;gap:44px;padding:40px 36px;border-radius:16px;border:1px solid var(--rule-strong);background:var(--paper-2);flex-wrap:wrap}
+.size-cell{display:flex;flex-direction:column;align-items:center;gap:12px}
+.size-cell-label{font-size:9px;color:var(--ink-ghost);letter-spacing:.08em}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.split-cell{border-radius:16px;border:1px solid var(--rule-strong);padding:56px 32px;display:flex;align-items:center;justify-content:center}
+.split-cell.on-paper{background:var(--paper)}.split-cell.on-lamp{background:#1a1713}
+.lockup-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lockup-cell{border-radius:16px;border:1px solid var(--rule-strong);background:var(--paper-2);padding:40px 36px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:180px}
+.lockup-cell.dark-bg{background:#1a1713}
+.lockup-inner-h{display:flex;align-items:center;gap:14px}
+.lockup-inner-v{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.lockup-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-ghost)}
+.lockup-cell.dark-bg .lockup-label{color:#524e42}
+.spec-table{border-radius:12px;border:1px solid var(--rule-strong);overflow:hidden}
+.spec-row{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--rule-strong)}
+.spec-row:last-child{border-bottom:none}
+.spec-row:nth-child(odd){background:var(--paper-2)}.spec-row:nth-child(even){background:var(--paper)}
+.spec-key{padding:11px 16px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-ghost);border-right:1px solid var(--rule-strong)}
+.spec-val{padding:11px 16px;font-family:'Courier Prime',monospace;font-size:13px;color:var(--ink)}
+.footer-bar{margin-top:52px;padding-top:18px;border-top:1px solid var(--rule-strong);font-size:10px;color:var(--ink-ghost);display:flex;justify-content:space-between;align-items:center}
+.footer-mark{display:flex;align-items:center;gap:10px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="controls">
+    <span class="controls-left">loosewire.dev · final mark · bare</span>
+    <div class="pill-group" id="themeGroup">
+      <button class="pill active" data-mode="light">light</button>
+      <button class="pill" data-mode="dark">dark</button>
+    </div>
+  </div>
+
+  <!--
+    No translate attribute on any path.
+    Every path is authored with absolute x coords so all endpoints sit
+    comfortably inside the viewBox (0 0 180 100), with ≥6px margin
+    so round linecaps render fully without any clipping.
+
+    The three paths share the same W curve shape, each shifted ~18px
+    horizontally, with slightly different start/end x so ends stagger:
+
+    Ghost  (30%, 3.5pt): M6  → x=128  — shortest, inset both ends
+    Mid    (60%, 3.5pt): M18 → x=150  — medium span
+    Solid (100%,   4pt): M32 → x=172  — longest, runs furthest both sides
+
+    All six endpoints: 6, 128, 18, 150, 32, 172 — all inside 180-wide viewBox ✓
+  -->
+
+  <div class="section-label fade-up" style="animation-delay:.05s;margin-top:52px">mark</div>
+  <div class="hero fade-up" style="animation-delay:.1s">
+    <svg width="300" height="167" viewBox="0 0 180 100">
+      <!-- ghost: inset both ends -->
+      <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10"
+        stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+      <!-- mid: standard span -->
+      <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10"
+        stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+      <!-- solid: longest -->
+      <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10"
+        stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+    </svg>
+    <div class="hero-spec">3.5pt · staggered ends · 30/60/100 · round caps</div>
+  </div>
+
+  <div class="section-label fade-up" style="animation-delay:.15s">sizes</div>
+  <div class="sizes-row fade-up" style="animation-delay:.2s">
+
+    <div class="size-cell">
+      <svg width="160" height="89" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+      <span class="size-cell-label">160px</span>
+    </div>
+
+    <div class="size-cell">
+      <svg width="96" height="53" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+      <span class="size-cell-label">96px</span>
+    </div>
+
+    <div class="size-cell">
+      <svg width="64" height="36" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+      <span class="size-cell-label">64px</span>
+    </div>
+
+    <div class="size-cell">
+      <svg width="40" height="22" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+      <span class="size-cell-label">40px</span>
+    </div>
+
+    <div class="size-cell">
+      <svg width="24" height="13" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+      <span class="size-cell-label">24px</span>
+    </div>
+
+  </div>
+
+  <div class="section-label fade-up" style="animation-delay:.25s">light · dark</div>
+  <div class="split fade-up" style="animation-delay:.3s">
+    <div class="split-cell on-paper">
+      <svg width="200" height="111" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#1c1a14" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+    </div>
+    <div class="split-cell on-lamp">
+      <svg width="200" height="111" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#f0f0f0" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="section-label fade-up" style="animation-delay:.35s">lockups</div>
+  <div class="lockup-grid fade-up" style="animation-delay:.4s">
+
+    <div class="lockup-cell">
+      <div class="lockup-inner-h">
+        <svg width="52" height="29" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#1c1a14" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+        <span style="font-family:'Courier Prime',monospace;font-size:26px;font-weight:700;color:#1c1a14;letter-spacing:-.02em">loosewire</span>
+      </div>
+      <span class="lockup-label">horizontal · light</span>
+    </div>
+
+    <div class="lockup-cell dark-bg">
+      <div class="lockup-inner-h">
+        <svg width="52" height="29" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#f0f0f0" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+        <span style="font-family:'Courier Prime',monospace;font-size:26px;font-weight:700;color:#e8e3d6;letter-spacing:-.02em">loosewire</span>
+      </div>
+      <span class="lockup-label">horizontal · dark</span>
+    </div>
+
+    <div class="lockup-cell" style="align-items:center">
+      <div class="lockup-inner-v" style="align-items:center">
+        <svg width="88" height="49" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#1c1a14" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#1c1a14" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#4e4940">loosewire</span>
+      </div>
+      <span class="lockup-label">stacked · light</span>
+    </div>
+
+    <div class="lockup-cell dark-bg" style="align-items:center">
+      <div class="lockup-inner-v" style="align-items:center">
+        <svg width="88" height="49" viewBox="0 0 180 100">
+          <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+          <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="#f0f0f0" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+          <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="#f0f0f0" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+        </svg>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#888">loosewire</span>
+      </div>
+      <span class="lockup-label">stacked · dark</span>
+    </div>
+
+  </div>
+
+  <div class="section-label fade-up" style="animation-delay:.45s">spec</div>
+  <div class="spec-table fade-up" style="animation-delay:.5s">
+    <div class="spec-row"><span class="spec-key">shape</span><span class="spec-val">sine W — smooth cubic bezier, W orientation</span></div>
+    <div class="spec-row"><span class="spec-key">instances</span><span class="spec-val">3 × absolute paths, no transform</span></div>
+    <div class="spec-row"><span class="spec-key">horizontal offset</span><span class="spec-val">~18px between each instance</span></div>
+    <div class="spec-row"><span class="spec-key">endpoints</span><span class="spec-val">ghost x6→128 · mid x18→150 · solid x32→172</span></div>
+    <div class="spec-row"><span class="spec-key">stroke weight</span><span class="spec-val">3.5pt (ghost + mid) · 4pt (solid)</span></div>
+    <div class="spec-row"><span class="spec-key">opacity</span><span class="spec-val">30% · 60% · 100%</span></div>
+    <div class="spec-row"><span class="spec-key">stroke cap</span><span class="spec-val">round — all endpoints inside viewBox, unconstrained</span></div>
+    <div class="spec-row"><span class="spec-key">container</span><span class="spec-val">none — bare mark only</span></div>
+    <div class="spec-row"><span class="spec-key">color · light</span><span class="spec-val">Ink #1c1a14</span></div>
+    <div class="spec-row"><span class="spec-key">color · dark</span><span class="spec-val">Linen #e8e3d6</span></div>
+    <div class="spec-row"><span class="spec-key">wordmark · h</span><span class="spec-val">Courier Prime Bold · loosewire</span></div>
+    <div class="spec-row"><span class="spec-key">wordmark · v</span><span class="spec-val">DM Mono · LOOSEWIRE · tracking +0.20em</span></div>
+  </div>
+
+  <div class="footer-bar fade-up" style="animation-delay:.55s">
+    <div class="footer-mark">
+      <svg width="36" height="20" viewBox="0 0 180 100">
+        <path d="M6 10 C18 10 18 90 33 90 C50 90 50 10 66 10 C82 10 82 90 99 90 C116 90 116 10 128 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".30"/>
+        <path d="M18 10 C34 10 34 90 51 90 C68 90 68 10 84 10 C100 10 100 90 117 90 C134 90 134 10 150 10" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".60"/>
+        <path d="M32 10 C48 10 48 90 69 90 C88 90 88 10 102 10 C116 10 116 90 135 90 C152 90 152 10 172 10" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" fill="none" opacity="1"/>
+      </svg>
+      <span>loosewire.dev</span>
+    </div>
+    <span>final mark · 2026</span>
+  </div>
+
+</div>
+<script>
+document.getElementById('themeGroup').addEventListener('click', e => {
+  const btn = e.target.closest('.pill');
+  if (!btn) return;
+  document.querySelectorAll('#themeGroup .pill').forEach(b => b.classList.toggle('active', b === btn));
+  document.documentElement.setAttribute('data-theme', btn.dataset.mode);
+});
+</script>
+</body>
+</html>

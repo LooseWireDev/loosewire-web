@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #141414;
+    background-image: radial-gradient(ellipse 1000px 400px at 50% 115%, rgba(237,208,106,0.14), transparent);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #f2efe6;
+    position: relative;
+  }
+  .content { position: absolute; left: 96px; top: 120px; }
+  .row { display: flex; align-items: center; gap: 28px; margin-bottom: 48px; }
+  .name { font-size: 56px; font-weight: 700; letter-spacing: -0.02em; }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 84px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.08;
+    max-width: 950px; margin-bottom: 30px;
+  }
+  h1 .it { font-style: italic; }
+  h1 .hl { color: #EDD06A; font-weight: 600; }
+  .sub { font-size: 27px; color: #b0aa97; line-height: 1.5; max-width: 860px; }
+  .badge {
+    position: absolute; left: 96px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #EDD06A;
+  }
+  .url {
+    position: absolute; right: 72px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; color: #736f60;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="row">
+      <svg width="88" height="88" viewBox="0 0 120 120" fill="none">
+        <rect width="120" height="120" rx="26" fill="#1A1A1A" stroke="rgba(237,208,106,0.3)" stroke-width="1.5"/>
+        <line x1="18" y1="72" x2="102" y2="72" stroke="#B89030" stroke-width="2.5" stroke-linecap="round"/>
+        <clipPath id="h"><rect x="0" y="0" width="120" height="72"/></clipPath>
+        <circle cx="60" cy="72" r="22" fill="#EDD06A" clip-path="url(#h)"/>
+        <line x1="60" y1="44" x2="60" y2="35" stroke="#F5E090" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="76" y1="48" x2="81" y2="41" stroke="#F5E090" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="44" y1="48" x2="39" y2="41" stroke="#F5E090" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="84" y1="62" x2="92" y2="58" stroke="#F5E090" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="36" y1="62" x2="28" y2="58" stroke="#F5E090" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="name">Unclouded</span>
+    </div>
+    <h1><span class="it">See clearly.</span> <span class="hl">Switch freely.</span></h1>
+    <p class="sub">Find open-source alternatives to the apps you use, compare them honestly, and generate Obtainium configs to make the switch.</p>
+  </div>
+  <div class="badge">Free &middot; Open source &middot; No account</div>
+  <div class="url">unclouded.app</div>
+</body>
+</html>

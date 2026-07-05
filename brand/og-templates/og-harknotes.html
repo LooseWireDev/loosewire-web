@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #07100d;
+    background-image: radial-gradient(ellipse 900px 500px at 20% 0%, rgba(26,74,58,0.45), transparent);
+    font-family: 'Geist', sans-serif;
+    color: #f2f7f4;
+    position: relative;
+  }
+  .content { position: absolute; left: 96px; top: 120px; }
+  .row { display: flex; align-items: center; gap: 28px; margin-bottom: 48px; }
+  .name { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; }
+  h1 {
+    font-size: 76px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
+    max-width: 950px; margin-bottom: 30px;
+  }
+  h1 em { font-style: normal; color: #3dd68c; }
+  .sub { font-size: 28px; color: #9db4aa; line-height: 1.5; max-width: 820px; }
+  .badge {
+    position: absolute; left: 96px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #3dd68c;
+  }
+  .url {
+    position: absolute; right: 72px; bottom: 52px;
+    font-family: 'Geist Mono', monospace; font-size: 18px; color: #5e756b;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="row">
+      <svg width="88" height="88" viewBox="0 0 512 512" fill="none">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512">
+            <stop offset="0%" stop-color="#0d2520"/><stop offset="100%" stop-color="#061210"/>
+          </linearGradient>
+          <radialGradient id="gl" cx="50%" cy="25%" r="60%">
+            <stop offset="0%" stop-color="#1a4a3a" stop-opacity="0.9"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+        <rect width="512" height="512" rx="112" fill="url(#gl)"/>
+        <rect x="98" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+        <rect x="168" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+        <rect x="98" y="232" width="316" height="48" rx="24" fill="#3dd68c"/>
+        <rect x="300" y="182" width="44" height="148" rx="22" fill="#3dd68c" opacity="0.52"/>
+        <rect x="362" y="138" width="52" height="236" rx="26" fill="#3dd68c"/>
+      </svg>
+      <span class="name">Harknotes</span>
+    </div>
+    <h1>Meeting notes without the <em>privacy trade-off</em></h1>
+    <p class="sub">No bot joins your call. Audio transcribed locally with Whisper. Notes saved as Markdown.</p>
+  </div>
+  <div class="badge">No bot &middot; No cloud audio &middot; macOS + Linux</div>
+  <div class="url">loosewire.dev/harknotes</div>
+</body>
+</html>
