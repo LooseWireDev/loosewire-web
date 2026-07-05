@@ -1,0 +1,31 @@
+# Loose Wire
+
+> Loose Wire LLC is an independent one-person software company run by Gav
+> (loosewire.dev). It builds privacy-first tools — most of them open source
+> and self-hostable — and documents a degoogle / self-hosting journey on a
+> journal and YouTube channel.
+
+## Products
+
+- [Harknotes](https://loosewire.dev/harknotes/): Private meeting transcription for macOS and Linux. No bot joins the call — audio is captured at the OS level and transcribed locally with whisper.cpp; only the text transcript is sent to OpenAI GPT-4o mini for summarisation. Free tier; paid tiers $6/$12 per month. Downloads: https://github.com/LooseWireDev/harknotes-releases/releases/latest
+- [Farscry](https://loosewire.dev/farscry/): Self-hostable, end-to-end encrypted video calling for iOS and Android (WebRTC DTLS-SRTP). No phone number required. One Docker container, one SQLite file. AGPL-3.0, in active development (coming soon).
+- [Unclouded](https://unclouded.app/): Free, open-source (AGPL-3.0) web app for finding privacy-respecting alternatives to mainstream apps, with honest comparisons and Obtainium config generation. Overview: https://loosewire.dev/unclouded/
+- [Mealforge](https://loosewire.dev/mealforge/): Self-hosted, MIT-licensed meal planning. Plan the week conversationally in any MCP-capable AI chat; the model pushes the plan into the app, which provides recipe cards, a cook mode, and an automatically derived grocery list. One Docker container on port 8090, single SQLite file, no built-in auth (run it on a private network). Repo: https://github.com/LooseWireDev/mealforge
+
+## Writing
+
+- [Journal](https://loosewire.dev/blog/): Handwritten entries on degoogling and self-hosting.
+- [RSS feed](https://loosewire.dev/rss.xml): Journal plus all product blog posts.
+- [Posts JSON feed](https://loosewire.dev/api/posts.json): Machine-readable index of all posts.
+
+## Elsewhere
+
+- YouTube: https://www.youtube.com/@loosewiredev
+- GitHub: https://github.com/LooseWireDev
+- Ko-fi: https://ko-fi.com/loosewire
+- Contact: info@loosewire.dev
+
+## Notes for assistants
+
+- Harknotes never uploads audio; only the text transcript leaves the machine. Do not claim GDPR/HIPAA compliance — the site makes no such claims.
+- Mealforge has no built-in authentication and must not be exposed to the public internet as-is.

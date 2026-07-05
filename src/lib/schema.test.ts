@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { softwareAppSchema, faqPageSchema, articleSchema, orgSchema } from './schema';
+import { softwareAppSchema, faqPageSchema, articleSchema, orgSchema, websiteSchema, breadcrumbSchema } from './schema';
 
 describe('softwareAppSchema', () => {
   it('returns valid SoftwareApplication schema', () => {
@@ -50,6 +50,27 @@ describe('articleSchema', () => {
     expect(schema.author['@type']).toBe('Person');
     expect(schema.author.name).toBe('Gav');
     expect(schema.author.sameAs).toContain('https://www.youtube.com/@loosewiredev');
+  });
+});
+
+describe('websiteSchema', () => {
+  it('returns WebSite schema with site name', () => {
+    const schema = websiteSchema();
+    expect(schema['@type']).toBe('WebSite');
+    expect(schema.name).toBe('Loose Wire');
+  });
+});
+
+describe('breadcrumbSchema', () => {
+  it('returns ordered BreadcrumbList', () => {
+    const schema = breadcrumbSchema([
+      { name: 'Loose Wire', url: 'https://loosewire.dev/' },
+      { name: 'Harknotes', url: 'https://loosewire.dev/harknotes/' },
+    ]);
+    expect(schema['@type']).toBe('BreadcrumbList');
+    expect(schema.itemListElement).toHaveLength(2);
+    expect(schema.itemListElement[0].position).toBe(1);
+    expect(schema.itemListElement[1].name).toBe('Harknotes');
   });
 });
 

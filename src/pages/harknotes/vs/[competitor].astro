@@ -2,6 +2,7 @@
 // src/pages/harknotes/vs/[competitor].astro
 import HarknotesLayout from '../../../layouts/HarknotesLayout.astro';
 import { getCollection } from 'astro:content';
+import { articleSchema, breadcrumbSchema } from '../../../lib/schema';
 
 export async function getStaticPaths() {
   const pages = await getCollection('harknotes-vs');
@@ -12,12 +13,30 @@ const { page, allPages } = Astro.props;
 const otherComparisons = allPages.filter(p => p.data.competitorSlug !== page.data.competitorSlug);
 const { Content } = await page.render();
 const canonicalUrl = `https://loosewire.dev/harknotes/vs/${page.data.competitorSlug}`;
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    articleSchema({
+      title: `Harknotes vs ${page.data.competitor} — Privacy-First Alternative`,
+      description: page.data.description,
+      datePublished: page.data.pubDate,
+      url: canonicalUrl,
+      keywords: page.data.keywords,
+    }),
+    breadcrumbSchema([
+      { name: 'Loose Wire', url: 'https://loosewire.dev/' },
+      { name: 'Harknotes', url: 'https://loosewire.dev/harknotes/' },
+      { name: `vs ${page.data.competitor}`, url: `${canonicalUrl}/` },
+    ]),
+  ],
+};
 ---
 <HarknotesLayout
   title={`Harknotes vs ${page.data.competitor} — Privacy-First Alternative`}
   description={page.data.description}
   canonicalUrl={canonicalUrl}
   ogType="article"
+  schema={schema}
   articleMeta={{
     publishedTime: page.data.pubDate,
     section: 'Comparison',

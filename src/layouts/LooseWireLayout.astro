@@ -13,7 +13,9 @@ interface Props {
 }
 
 const { title, description, canonicalUrl, ogImage, ogType, schema, noindex } = Astro.props;
-const canonical = canonicalUrl ?? new URL(Astro.url.pathname, 'https://loosewire.dev').href;
+const rawCanonical = canonicalUrl ?? new URL(Astro.url.pathname, 'https://loosewire.dev').href;
+// Trailing slash to match sitemap/served URLs exactly (avoids split signals)
+const canonical = rawCanonical.endsWith('/') ? rawCanonical : rawCanonical + '/';
 const image = ogImage ?? 'https://loosewire.dev/og-loosewire.png';
 ---
 <!doctype html>
@@ -32,12 +34,14 @@ const image = ogImage ?? 'https://loosewire.dev/og-loosewire.png';
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={image} />
+  <meta property="og:image:alt" content={title} />
   <meta property="og:type" content={ogType ?? 'website'} />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
+  <meta name="twitter:image:alt" content={title} />
 
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 

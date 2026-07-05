@@ -2,7 +2,7 @@
 // src/pages/mealforge/blog/[slug].astro
 import MealforgeLayout from '../../../layouts/MealforgeLayout.astro';
 import { getCollection } from 'astro:content';
-import { articleSchema } from '../../../lib/schema';
+import { articleSchema, breadcrumbSchema } from '../../../lib/schema';
 import Nav from '../../../components/mealforge/Nav.astro';
 import Footer from '../../../components/mealforge/Footer.astro';
 import ArticleHeader from '../../../components/blog/ArticleHeader.astro';
@@ -22,14 +22,25 @@ const otherPosts = allPosts
   .slice(0, 3);
 const { Content } = await post.render();
 const canonicalUrl = `https://loosewire.dev/mealforge/blog/${post.slug}`;
-const schema = articleSchema({
-  title: post.data.title,
-  description: post.data.description,
-  datePublished: post.data.pubDate,
-  dateModified: post.data.updatedDate,
-  url: canonicalUrl,
-  keywords: post.data.keywords,
-});
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    articleSchema({
+      title: post.data.title,
+      description: post.data.description,
+      datePublished: post.data.pubDate,
+      dateModified: post.data.updatedDate,
+      url: canonicalUrl,
+      keywords: post.data.keywords,
+    }),
+    breadcrumbSchema([
+      { name: 'Loose Wire', url: 'https://loosewire.dev/' },
+      { name: 'Mealforge', url: 'https://loosewire.dev/mealforge/' },
+      { name: 'Blog', url: 'https://loosewire.dev/mealforge/blog/' },
+      { name: post.data.title, url: `${canonicalUrl}/` },
+    ]),
+  ],
+};
 ---
 <MealforgeLayout
   title={`${post.data.title} — Mealforge Blog`}

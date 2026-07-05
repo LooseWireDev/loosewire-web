@@ -105,7 +105,13 @@ Use generators from `src/lib/schema.ts`:
 - `softwareAppSchema()` — Harknotes product page
 - `faqPageSchema(items)` — FAQ sections
 - `articleSchema(opts)` — blog posts; pass `author: 'person'` for journal entries
-- `orgSchema()` — homepage Organization with sameAs (GitHub, YouTube @loosewiredev)
+- `orgSchema()` / `websiteSchema()` — homepage @graph, sameAs (GitHub, YouTube @loosewiredev, Ko-fi)
+- `breadcrumbSchema(items)` — on every blog post and vs page
+
+### SEO conventions
+- Canonical URLs always end with a trailing slash (layouts normalize this) — keep sitemap and canonicals identical
+- Every page needs a unique title + description; blog posts get breadcrumbs in their @graph
+- `public/llms.txt` describes the site for AI assistants — update it when products change
 (Farscry/Unclouded/Mealforge pages define their SoftwareApplication schema inline.)
 
 ### OG Images

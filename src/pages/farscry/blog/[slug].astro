@@ -2,7 +2,7 @@
 // src/pages/farscry/blog/[slug].astro
 import FarscryLayout from '../../../layouts/FarscryLayout.astro';
 import { getCollection } from 'astro:content';
-import { articleSchema } from '../../../lib/schema';
+import { articleSchema, breadcrumbSchema } from '../../../lib/schema';
 import Nav from '../../../components/farscry/Nav.astro';
 import Footer from '../../../components/farscry/Footer.astro';
 import ArticleHeader from '../../../components/blog/ArticleHeader.astro';
@@ -22,14 +22,25 @@ const otherPosts = allPosts
   .slice(0, 3);
 const { Content } = await post.render();
 const canonicalUrl = `https://loosewire.dev/farscry/blog/${post.slug}`;
-const schema = articleSchema({
-  title: post.data.title,
-  description: post.data.description,
-  datePublished: post.data.pubDate,
-  dateModified: post.data.updatedDate,
-  url: canonicalUrl,
-  keywords: post.data.keywords,
-});
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    articleSchema({
+      title: post.data.title,
+      description: post.data.description,
+      datePublished: post.data.pubDate,
+      dateModified: post.data.updatedDate,
+      url: canonicalUrl,
+      keywords: post.data.keywords,
+    }),
+    breadcrumbSchema([
+      { name: 'Loose Wire', url: 'https://loosewire.dev/' },
+      { name: 'Farscry', url: 'https://loosewire.dev/farscry/' },
+      { name: 'Blog', url: 'https://loosewire.dev/farscry/blog/' },
+      { name: post.data.title, url: `${canonicalUrl}/` },
+    ]),
+  ],
+};
 ---
 <FarscryLayout
   title={`${post.data.title} — Farscry Blog`}

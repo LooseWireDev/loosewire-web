@@ -2,7 +2,7 @@
 // src/pages/unclouded/blog/[slug].astro
 import UncloudedLayout from '../../../layouts/UncloudedLayout.astro';
 import { getCollection } from 'astro:content';
-import { articleSchema } from '../../../lib/schema';
+import { articleSchema, breadcrumbSchema } from '../../../lib/schema';
 import Nav from '../../../components/unclouded/Nav.astro';
 import Footer from '../../../components/unclouded/Footer.astro';
 import ArticleHeader from '../../../components/blog/ArticleHeader.astro';
@@ -22,14 +22,25 @@ const otherPosts = allPosts
   .slice(0, 3);
 const { Content } = await post.render();
 const canonicalUrl = `https://loosewire.dev/unclouded/blog/${post.slug}`;
-const schema = articleSchema({
-  title: post.data.title,
-  description: post.data.description,
-  datePublished: post.data.pubDate,
-  dateModified: post.data.updatedDate,
-  url: canonicalUrl,
-  keywords: post.data.keywords,
-});
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    articleSchema({
+      title: post.data.title,
+      description: post.data.description,
+      datePublished: post.data.pubDate,
+      dateModified: post.data.updatedDate,
+      url: canonicalUrl,
+      keywords: post.data.keywords,
+    }),
+    breadcrumbSchema([
+      { name: 'Loose Wire', url: 'https://loosewire.dev/' },
+      { name: 'Unclouded', url: 'https://loosewire.dev/unclouded/' },
+      { name: 'Blog', url: 'https://loosewire.dev/unclouded/blog/' },
+      { name: post.data.title, url: `${canonicalUrl}/` },
+    ]),
+  ],
+};
 ---
 <UncloudedLayout
   title={`${post.data.title} — Unclouded Blog`}

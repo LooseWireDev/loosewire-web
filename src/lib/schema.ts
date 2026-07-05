@@ -53,6 +53,36 @@ export function orgSchema() {
   };
 }
 
+export function websiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Loose Wire',
+    alternateName: 'loosewire.dev',
+    url: 'https://loosewire.dev/',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Loose Wire LLC',
+      url: 'https://loosewire.dev',
+    },
+  };
+}
+
+interface Crumb { name: string; url: string; }
+
+export function breadcrumbSchema(items: Crumb[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
 interface ArticleOpts {
   title: string;
   description: string;
