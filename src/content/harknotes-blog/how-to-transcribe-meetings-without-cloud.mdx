@@ -77,15 +77,15 @@ If you want local transcription without managing the infrastructure yourself, [H
 
 <FeatureBox title="Harknotes pipeline">
 
-1. **Record** — click the menu bar icon to start capturing
-2. **Transcribe** — whisper.cpp runs locally when you stop recording
-3. **Notes** — summary, action items, and transcript saved as Markdown
+1. **Record** — click record to start capturing
+2. **Transcribe** — whisper.cpp runs locally, live while you record
+3. **Notes** — summary, action items, and transcript, exportable as Markdown
 
 Harknotes bundles whisper.cpp as a compiled binary and downloads the model on first run. After setup, it works completely offline for the transcription step.
 
 </FeatureBox>
 
-The only cloud call it makes is for AI summarisation — sending the text transcript (not audio) to generate structured notes. You can skip this step if you want the raw transcript only.
+Summaries run through any OpenAI-compatible endpoint — a local model via Ollama keeps the whole pipeline offline, or you can bring your own API key for a cloud provider (which sends the text transcript, never audio). You can skip this step if you want the raw transcript only.
 
 ## Comparing the approaches
 
@@ -107,6 +107,6 @@ The main limitation is speed on CPU. On a modern Apple Silicon Mac or a machine 
 
 ## Getting started with Harknotes
 
-Harknotes is free to download with 10 AI summaries per month on the free tier. Local transcription is unlimited.
+Harknotes is free and open source (AGPL-3.0). Transcription and summaries are unlimited — you bring the AI, either a local model or your own API key.
 
 [Download Harknotes →](https://loosewire.dev/harknotes#download)

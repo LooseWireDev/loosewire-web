@@ -3,7 +3,7 @@ title: "The Best Meeting Transcription App for Linux"
 description: "Most meeting transcription tools don't support Linux. Harknotes does — with native PulseAudio and PipeWire support, local Whisper AI, and no cloud audio."
 pubDate: "2026-03-06"
 keywords: ["meeting transcription linux", "linux meeting recorder", "whisper transcription linux"]
-tldr: "Most meeting transcription tools skip Linux entirely. Harknotes runs natively on Linux with PulseAudio and PipeWire support, local Whisper transcription, and no bot joining your calls. Available as AppImage, DEB, and RPM."
+tldr: "Most meeting transcription tools skip Linux entirely. Harknotes runs natively on Linux with PulseAudio and PipeWire support, local Whisper transcription, and no bot joining your calls. Free and open source, available as DEB and RPM."
 readTime: "4 min read"
 ---
 
@@ -39,17 +39,11 @@ Harknotes is tested on:
 - **Pop!_OS 22.04** — PulseAudio
 - **openSUSE Tumbleweed** — PipeWire
 
-AppImage, DEB, and RPM packages are available, covering the major package formats across these distributions.
+DEB and RPM packages are available, covering the major package formats across these distributions — and Harknotes is [open source](https://github.com/LooseWireDev/harknotes), so you can also build it from source on anything else.
 
 <SectionHeading label="Getting set up" />
 
 ## Installation
-
-**AppImage** — works on any Linux distro without installation:
-```bash
-chmod +x Harknotes-*.AppImage
-./Harknotes-*.AppImage
-```
 
 **DEB** — for Debian, Ubuntu, Mint, Pop!_OS:
 ```bash
@@ -61,13 +55,13 @@ sudo dpkg -i harknotes_*.deb
 sudo rpm -i harknotes-*.rpm
 ```
 
-On first launch, Harknotes downloads the Whisper model weights (~1.5GB). After that, transcription is fully offline.
+On first launch, Harknotes downloads the Whisper model you pick — from ~75MB for `tiny` up to the large models — sized to your hardware. After that, transcription is fully offline.
 
-## Speaker diarisation on Linux
+## Speaker labels on Linux
 
-Harknotes captures your microphone and system audio as separate streams. Your voice (microphone) is labelled "You". Other participants' voices (system audio) are separated using tinydiarize, a local speaker diarisation model.
+Harknotes captures your microphone and system audio as separate streams. Your voice (microphone) is labelled "User"; everyone else comes through system audio and is labelled "Meeting". You can rename speakers on the transcript after the meeting, and full per-person diarisation is on the roadmap.
 
-This works on Linux the same as on macOS — no cloud processing, no data leaving your machine.
+No cloud processing, no data leaving your machine.
 
 ## Why not just use Whisper directly?
 
@@ -75,10 +69,10 @@ You can run whisper.cpp on Linux from the command line. If you're comfortable wi
 
 <FeatureBox title="What Harknotes adds over raw whisper.cpp">
 
-- Manual recording via menu bar
+- One-click recording with live transcription while you talk
 - Separate mic and system audio capture configured correctly
 - Post-processing into structured notes (summary, action items, decisions)
-- Markdown output to your chosen folder
+- Markdown export to your chosen folder
 
 It's the difference between a capable tool and a tool you'll actually use.
 

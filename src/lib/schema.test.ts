@@ -6,8 +6,9 @@ describe('softwareAppSchema', () => {
     const schema = softwareAppSchema();
     expect(schema['@type']).toBe('SoftwareApplication');
     expect(schema.name).toBe('Harknotes');
-    expect(schema.operatingSystem).toContain('macOS');
-    expect(schema.offers).toBeDefined();
+    expect(schema.operatingSystem).toContain('Linux');
+    expect(schema.offers).toHaveLength(1);
+    expect(schema.offers[0].price).toBe('0');
   });
 });
 

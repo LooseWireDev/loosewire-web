@@ -3,7 +3,7 @@ title: "How to Get Meeting Notes Using Local Whisper AI"
 description: "Whisper is OpenAI's open-source speech recognition model. Here's how to use it locally to transcribe meetings — without sending audio to the cloud."
 pubDate: "2026-03-06"
 keywords: ["local whisper meeting notes", "whisper ai transcription", "offline meeting transcription"]
-tldr: "Whisper is an open-source speech model that runs locally. Harknotes bundles whisper.cpp to handle recording, transcription, and note generation — all on-device. Only the text transcript is sent to GPT-4o mini for optional AI summaries."
+tldr: "Whisper is an open-source speech model that runs locally. Harknotes bundles whisper.cpp to handle recording, transcription, and note generation — all on-device. AI summaries run against a local model or your own API key, so audio never leaves your machine."
 readTime: "5 min read"
 ---
 
@@ -48,7 +48,7 @@ For a tool you'd use several times a day, this pipeline breaks down quickly.
 
 [Harknotes](https://loosewire.dev/harknotes) bundles whisper.cpp as a compiled binary and handles the full pipeline for you:
 
-1. **Recording** — click record in the menu bar to start capturing
+1. **Recording** — click record in the app to start capturing
 2. **Capture** — mic and system audio are captured as separate streams (important for speaker separation)
 3. **Transcription** — when you stop, whisper.cpp runs on the audio locally, with no internet required
 4. **Notes** — the transcript is structured into a summary, action items, decisions, and full text, then saved as a Markdown file
@@ -57,23 +57,23 @@ The Whisper model is downloaded once on first run. After that, transcription is 
 
 ## Accuracy and model selection
 
-Harknotes uses `large-v3` by default, which gives the best accuracy for English and performs well across many other languages. You can switch to a smaller model if you're on older hardware or prefer faster processing.
+Harknotes lets you pick the model that fits your hardware — from `tiny` for older laptops up to the large models for maximum accuracy. Because transcription happens live in small chunks during the meeting, even modest hardware keeps up comfortably with the smaller models.
 
-For most meeting audio — two to eight speakers, typical background noise — `large-v3` produces transcripts that are accurate enough to be genuinely useful without editing.
+For most meeting audio — two to eight speakers, typical background noise — Whisper produces transcripts that are accurate enough to be genuinely useful without editing.
 
 ## Speaker identification
 
-Raw Whisper output is a single stream of text. Harknotes adds speaker diarisation using a local model called tinydiarize, which separates your microphone input (labelled "You") from system audio (other participants). You can rename speakers in the app after the meeting.
+Raw Whisper output is a single stream of text. Harknotes captures your microphone and system audio as separate streams, so your voice (labelled "User") is always distinguished from other participants (labelled "Meeting"). You can rename speakers and edit any transcript line in the app after the meeting.
 
-It's not perfect — particularly when multiple people talk simultaneously — but it's accurate enough to make the transcript significantly more useful than a wall of undifferentiated text.
+Full per-person diarisation — telling apart individual voices within the meeting — is on the roadmap.
 
 <Callout type="tip" title="What stays local, what doesn't">
-Transcription is entirely local — audio never leaves your machine. The only external request is sending the text transcript to GPT-4o mini for AI summarisation. You can skip this step and keep the raw transcript only.
+Transcription is entirely local — audio never leaves your machine. Summaries talk to any OpenAI-compatible endpoint: a local model via Ollama keeps everything on-device, or bring your own API key for a cloud provider. You can also skip summaries entirely and keep the raw transcript.
 </Callout>
 
 ## What goes to the cloud
 
-Transcription is entirely local. The only thing Harknotes sends externally is the completed text transcript, which is used to generate the AI summary via GPT-4o mini. No audio, no recording, no raw data.
+Nothing, by default. Transcription is entirely local, and summaries can run against a local model. If you opt in to a cloud provider with your own API key, only the completed text transcript is sent — directly to your provider. No audio, no recording, no raw data, no middleman server.
 
 <ComparisonBox>
   <div slot="left">
@@ -88,14 +88,14 @@ Transcription is entirely local. The only thing Harknotes sends externally is th
   <div slot="right">
     <h4>Harknotes</h4>
     <ul>
-      <li>One-click recording from menu bar</li>
-      <li>Automatic local transcription</li>
-      <li>Speaker diarisation built in</li>
+      <li>One-click recording</li>
+      <li>Live local transcription while you talk</li>
+      <li>Mic and meeting labelled separately</li>
       <li>Structured Markdown notes</li>
     </ul>
   </div>
 </ComparisonBox>
 
-If you prefer, you can use the local transcript without generating an AI summary at all — it's saved to your chosen Markdown folder either way.
+If you prefer, you can use the local transcript without generating an AI summary at all — it's stored locally either way, and exports to Markdown whenever you want.
 
 [Download Harknotes →](https://loosewire.dev/harknotes#download)

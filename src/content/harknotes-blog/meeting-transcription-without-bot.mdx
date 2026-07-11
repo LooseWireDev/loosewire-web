@@ -34,17 +34,17 @@ Meeting bots work by joining your call as a participant and capturing the audio 
 
 The alternative is to capture audio at the operating system level — the same way a screen recorder works. Your application captures the audio output (system sound) and your microphone input as separate streams, directly on your machine.
 
-This is what [Harknotes](https://loosewire.dev/harknotes) does. It runs as a menu bar app on macOS and Linux. When you start recording, it captures both audio streams locally. No bot joins the call. No participant sees anything different. The meeting proceeds normally.
+This is what [Harknotes](https://loosewire.dev/harknotes) does. It's a desktop app for Linux (macOS support is on the way back). When you start recording, it captures both audio streams locally. No bot joins the call. No participant sees anything different. The meeting proceeds normally.
 
-When you stop recording, a local Whisper AI model transcribes the audio on your machine. This step requires no internet connection. The audio never leaves your device.
+While you record, a local Whisper AI model transcribes the audio on your machine — live, in small chunks, so the transcript is ready the moment the meeting ends. This requires no internet connection. The audio never leaves your device.
 
 <Callout type="tip" title="Audio stays on your machine">
-Harknotes captures and transcribes audio entirely on-device using whisper.cpp. The only data sent externally is the text transcript, used for AI summarisation. No audio ever leaves your machine.
+Harknotes captures and transcribes audio entirely on-device using whisper.cpp. Summaries run against a local model or your own API key — audio never leaves your machine, and by default nothing does.
 </Callout>
 
 ## What you do send to the cloud
 
-The only data that leaves your machine is the text transcript — sent to an AI model for summarisation. No audio. No metadata. Just the words spoken in the meeting, in text form.
+Nothing, by default — summaries can run against a local model via any OpenAI-compatible endpoint. If you opt in to a cloud provider with your own API key, the only data that leaves your machine is the text transcript, sent directly to that provider. No audio. No metadata. Just the words spoken in the meeting, in text form.
 
 This is a fundamentally different privacy model. A transcript of your meeting is sensitive, but it's a fraction of the risk of handing over the raw audio.
 
@@ -63,7 +63,7 @@ This is a fundamentally different privacy model. A transcript of your meeting is
     <ul>
       <li>No bot — OS-level audio capture</li>
       <li>Audio stays on your device</li>
-      <li>Only text transcript sent for summarisation</li>
+      <li>Summaries via local model or your own API key</li>
       <li>Meeting proceeds normally</li>
     </ul>
   </div>
@@ -81,6 +81,6 @@ This is a fundamentally different privacy model. A transcript of your meeting is
 
 ## Getting started
 
-Harknotes is free to download. It works on macOS 13+ and Linux. Local transcription is unlimited on all tiers — you only pay for AI-generated summaries beyond the free tier.
+Harknotes is free and open source (AGPL-3.0). It runs natively on Linux today, with macOS next on the roadmap. Transcription and summaries are unlimited — you bring the AI, either a local model or your own API key.
 
 [Download Harknotes →](https://loosewire.dev/harknotes#download)

@@ -6,7 +6,6 @@ import Nav from '../../components/harknotes/Nav.astro';
 import Hero from '../../components/harknotes/Hero.astro';
 import StepCard from '../../components/harknotes/StepCard.astro';
 import FeatureCard from '../../components/harknotes/FeatureCard.astro';
-import PricingCard from '../../components/harknotes/PricingCard.astro';
 import FaqItem from '../../components/harknotes/FaqItem.astro';
 import Footer from '../../components/harknotes/Footer.astro';
 import { Icon } from 'astro-icon/components';
@@ -14,31 +13,35 @@ import { Icon } from 'astro-icon/components';
 const faqItems = [
   {
     q: 'Does a bot join my meeting?',
-    a: 'No. Harknotes captures your system audio and microphone directly on your Mac or Linux machine. No bot, no meeting link, no recording indicator visible to other participants.',
+    a: 'No. Harknotes captures your system audio and microphone directly on your machine. No bot, no meeting link, no recording indicator visible to other participants.',
   },
   {
     q: 'Does my audio ever leave my machine?',
-    a: 'Never. Transcription runs entirely locally using whisper.cpp. Only the text transcript is sent to OpenAI GPT-4o mini for summarisation.',
+    a: 'Never. Transcription runs entirely locally using whisper.cpp, and summaries are local too by default — Harknotes talks to any OpenAI-compatible endpoint, like Ollama running on your own machine. If you opt in to a cloud provider with your own API key, only the text transcript is sent, directly to that provider.',
+  },
+  {
+    q: 'Is Harknotes really free?',
+    a: 'Yes. Harknotes is free and open source under the AGPL-3.0 license. No account, no tiers, no usage limits, no telemetry. The full source is on GitHub.',
   },
   {
     q: 'Which platforms are supported?',
-    a: 'macOS 13+ and Linux (AppImage, DEB, RPM). Windows support is on the roadmap.',
-  },
-  {
-    q: 'How does speaker identification work?',
-    a: 'Harknotes captures microphone and system audio as separate streams. Your mic is labelled "You". Full speaker diarisation — identifying individual speakers — is on the roadmap.',
+    a: 'Linux today, with DEB and RPM packages. macOS support is being rebuilt on the new engine and is next on the roadmap; Windows will follow.',
   },
   {
     q: 'What AI model generates the notes?',
-    a: 'OpenAI GPT-4o mini. The transcript text is sent for summarisation — no audio, no personal metadata.',
+    a: 'Whichever one you want. Point Harknotes at any OpenAI-compatible endpoint: a local model via Ollama or llama.cpp keeps everything on-device, or bring your own API key for OpenRouter, Groq, OpenAI, and friends.',
   },
   {
-    q: 'What is the free tier?',
-    a: 'The free tier includes 10 AI note summaries per month. Recording and local transcription are unlimited on all tiers.',
+    q: 'Can I take my own notes during a meeting?',
+    a: 'Yes — a live notepad sits beside the transcript while you record, and your notes steer the AI summary: whatever you flagged gets emphasised in the final notes.',
+  },
+  {
+    q: 'How does speaker identification work?',
+    a: 'Harknotes captures microphone and system audio as separate streams. Your mic is labelled "User", everyone else comes through as "Meeting" — and you can rename speakers on the transcript afterwards. Full per-person diarisation is on the roadmap.',
   },
   {
     q: 'Where are my notes saved?',
-    a: 'Notes are saved as Markdown files to a folder you choose on your machine — great for Obsidian, Notion imports, or plain file storage.',
+    a: 'Everything lives in a local SQLite database on your machine, and any meeting exports to a clean Markdown file — great for Obsidian, Notion imports, or plain file storage.',
   },
 ];
 
@@ -51,40 +54,35 @@ const schema = {
 };
 
 const steps = [
-  { n: '01', title: 'Record', desc: 'Click record in the menu bar. Mic and system audio captured separately.' },
-  { n: '02', title: 'Transcribe locally', desc: 'When the meeting ends, whisper.cpp runs on your machine. No internet required. Your mic and system audio are transcribed separately.' },
-  { n: '03', title: 'Get structured notes', desc: 'A clean summary, action items, decisions, and full transcript are generated and saved as Markdown to your chosen folder.' },
+  { n: '01', title: 'Record', desc: 'Hit record. Mic and system audio are captured as separate streams — no bot, nothing visible to anyone else. Jot your own notes in the live notepad while you talk.' },
+  { n: '02', title: 'Transcribed live', desc: 'whisper.cpp transcribes in small chunks while the meeting is still happening, entirely on your machine. When you stop, the transcript is already there.' },
+  { n: '03', title: 'Get structured notes', desc: 'Your local model — or your own API key — turns the transcript into a summary, action items, and decisions, shaped by the notes you took. Export any meeting as Markdown.' },
 ];
 
 const features = [
   { title: 'No bot, no trace', desc: 'Silent capture — no recording indicator visible to other participants.' },
-  { title: 'Local Whisper AI', desc: 'whisper.cpp runs as a bundled binary. Transcription works offline.' },
-  { title: 'Mic vs system audio', desc: 'Captures your mic and system audio as separate streams. Your voice is always labelled "You".' },
-  { title: 'Markdown output', desc: 'Notes saved to any folder. Works with Obsidian, Notion imports, git.' },
-  { title: 'macOS + Linux', desc: 'Native audio capture on both platforms. AppImage, DEB, RPM available.' },
-  { title: 'Structured notes', desc: 'Summary, action items, decisions, full transcript — every time.' },
-  { title: 'Usage control', desc: "See exactly how many summaries you've used. Hard limits, no surprise bills." },
-];
-
-const pricingTiers = [
-  { name: 'Free', price: '$0', period: 'forever', summaries: '10 summaries / month', features: ['Unlimited recording', 'Local transcription', 'Mic & system audio separation', 'Markdown export'], highlight: false },
-  { name: 'Local', price: '$6', period: '/month', summaries: '50 summaries / month', features: ['Everything in Free', 'Priority transcription', 'Email support'], highlight: true },
-  { name: 'Pro Local', price: '$12', period: '/month', summaries: '200 summaries / month', features: ['Everything in Local', 'Longer recording limit', 'Priority support'], highlight: false },
+  { title: 'Live local transcription', desc: 'whisper.cpp transcribes during the meeting, fully offline. No cloud, no waiting at the end.' },
+  { title: 'Your notes shape the AI', desc: 'Take notes while you record — the summary emphasises what you flagged, not just what was said.' },
+  { title: 'Local or BYOK summaries', desc: 'Use a local model via Ollama, or bring your own API key. Any OpenAI-compatible endpoint works.' },
+  { title: 'Mic vs system audio', desc: 'Your voice is always labelled. Rename any speaker, edit any transcript line.' },
+  { title: 'Markdown output', desc: 'Export notes to any folder. Works with Obsidian, Notion imports, git.' },
+  { title: 'Search and tags', desc: 'Full-text search across transcripts, notes, and summaries. Tag meetings to keep them organised.' },
+  { title: 'Free & open source', desc: 'AGPL-3.0. No account, no telemetry, no usage limits. Audit every line on GitHub.' },
 ];
 ---
 <HarknotesLayout
-  title="Harknotes — Private Meeting Transcription. No Bot."
-  description="Meeting transcription that doesn't join your call. Local whisper AI, speaker labels, markdown notes. macOS & Linux."
+  title="Harknotes — Private Meeting Transcription. No Bot. Open Source."
+  description="Open-source meeting transcription that doesn't join your call. Live local whisper AI, speaker labels, markdown notes. Built for Linux."
   schema={schema}
 >
   <!-- HERO -->
   <header style="background: var(--hk-bg); border-bottom: 1px solid var(--hk-border-subtle);">
     <Nav />
     <Hero
-      badge="No bot. No cloud audio. Local whisper."
+      badge="No bot. No cloud audio. Open source."
       headline="Meeting notes without the privacy trade-off"
       highlightedText="privacy trade-off"
-      subtitle="Harknotes transcribes your meetings locally using Whisper AI. No bot joins your call. No audio leaves your machine. You get clean, structured notes saved as Markdown."
+      subtitle="Harknotes transcribes your meetings locally with Whisper AI — live, while you talk. No bot joins your call. No audio leaves your machine. Free and open source, with clean structured notes saved as Markdown."
       primaryCta={{ label: 'Download free', href: '#download' }}
       secondaryCta={{ label: 'How it works', href: '#how-it-works' }}
     />
@@ -148,23 +146,22 @@ const pricingTiers = [
       </div>
     </section>
 
-    <!-- PRICING -->
-    <section id="pricing" style="background: var(--hk-surface-1); border-top: 1px solid var(--hk-border-subtle); border-bottom: 1px solid var(--hk-border-subtle);">
-      <div style="max-width: 900px; margin: 0 auto; padding: 96px 32px; text-align: center;">
-        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Pricing</p>
-        <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 16px; line-height: 1.1;">Simple, honest pricing</h2>
-        <p style="font-size: 17px; color: var(--hk-text-secondary); margin-bottom: 56px;">Recording and local transcription are unlimited on all tiers. You pay for AI summaries.</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; text-align: left;">
-          {pricingTiers.map(tier => (
-            <PricingCard
-              name={tier.name}
-              price={tier.price}
-              period={tier.period}
-              summaries={tier.summaries}
-              features={tier.features}
-              highlight={tier.highlight}
-            />
-          ))}
+    <!-- OPEN SOURCE -->
+    <section id="open-source" style="background: var(--hk-surface-1); border-top: 1px solid var(--hk-border-subtle); border-bottom: 1px solid var(--hk-border-subtle);">
+      <div style="max-width: 720px; margin: 0 auto; padding: 96px 32px; text-align: center;">
+        <p style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Open source</p>
+        <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 16px; line-height: 1.1;">Free. Open source. Yours.</h2>
+        <p style="font-size: 17px; color: var(--hk-text-secondary); margin-bottom: 40px; line-height: 1.7;">
+          Harknotes is licensed under the AGPL-3.0. There's no account, no subscription, no usage limit, and no telemetry — a privacy tool you don't have to take on faith. You bring the AI: run a local model for a fully offline setup, or plug in your own API key.
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+          <a href="https://github.com/LooseWireDev/harknotes" style="display: inline-flex; align-items: center; gap: 8px; background: var(--hk-mint); color: var(--hk-text-inverse); font-size: 14px; font-weight: 600; padding: 12px 24px; border-radius: 10px; text-decoration: none;">
+            <Icon name="lucide:github" style="width: 16px; height: 16px;" />
+            View on GitHub
+          </a>
+          <a href="#download" style="display: inline-flex; align-items: center; background: var(--hk-surface-2, var(--hk-bg)); border: 1px solid var(--hk-border); color: var(--hk-text-primary); font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 10px; text-decoration: none;">
+            Download
+          </a>
         </div>
       </div>
     </section>
@@ -175,26 +172,23 @@ const pricingTiers = [
       <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: var(--hk-text-primary); margin-bottom: 16px; line-height: 1.1;">
         Get Harknotes
       </h2>
-      <p style="font-size: 17px; color: var(--hk-text-secondary); margin-bottom: 48px;">Free to download. No account required to try it.</p>
+      <p style="font-size: 17px; color: var(--hk-text-secondary); margin-bottom: 48px;">Free forever. No account required.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 24px;">
-        <a href="https://github.com/LooseWireDev/harknotes-releases/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
-          <span>macOS</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">DMG</span>
-        </a>
-        <a href="https://github.com/LooseWireDev/harknotes-releases/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
-          <span>Linux</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">AppImage</span>
-        </a>
-        <a href="https://github.com/LooseWireDev/harknotes-releases/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
+        <a href="https://github.com/LooseWireDev/harknotes/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
           <span>Linux</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">DEB</span>
         </a>
-        <a href="https://github.com/LooseWireDev/harknotes-releases/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
+        <a href="https://github.com/LooseWireDev/harknotes/releases/latest" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
           <span>Linux</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">RPM</span>
+        </a>
+        <a href="https://github.com/LooseWireDev/harknotes" style="display: flex; align-items: center; gap: 10px; background: var(--hk-surface-1); border: 1px solid var(--hk-border); border-radius: 10px; padding: 14px 24px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--hk-text-primary);">
+          <span>Build from source</span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--hk-text-tertiary);">GIT</span>
         </a>
       </div>
       <p style="font-size: 13px; color: var(--hk-text-tertiary); margin-bottom: 16px;">
-        View all releases on <a href="https://github.com/LooseWireDev/harknotes-releases/releases" style="color: var(--hk-text-secondary);">GitHub</a>
+        View all releases on <a href="https://github.com/LooseWireDev/harknotes/releases" style="color: var(--hk-text-secondary);">GitHub</a>
       </p>
       <p style="font-size: 12px; color: var(--hk-text-tertiary); max-width: 480px; margin: 0 auto; line-height: 1.5;">
-        <strong style="color: var(--hk-text-secondary);">macOS:</strong> Harknotes is not yet notarized. After opening the DMG, go to System Settings → Privacy &amp; Security and click "Open Anyway".
+        <strong style="color: var(--hk-text-secondary);">macOS:</strong> support is being rebuilt on the new engine and is next on the roadmap — watch the GitHub repo for updates.
       </p>
     </section>
 
